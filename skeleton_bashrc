@@ -1,0 +1,18 @@
+# .bashrc
+
+# User specific aliases and functions
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+# Set EPICS environment
+
+. /nfs/slac/g/lcls/build/epics/setup/epicsReset.bash
+
+# Any further customization that is needed should be handled by the user below:
+
+
+
+
