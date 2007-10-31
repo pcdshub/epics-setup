@@ -1,0 +1,34 @@
+EPICS Environment Setup Files
+-----------------------------
+epicsReset.bash, .csh - Resets PATHs and key env vars and sources epicsSetup
+                        (Use especially if env has been set already for
+                         another project like PEPII or SPEAR)
+epicsSetup.bash, .csh - Sets PATHs and other env vars, sources envSet
+envSet.sh,       .csh - Sets EPICS base env vars
+envSetLocal.sh,  .csh - Overrides envSet env vars for users that want to
+                        use ONLY a CA server running locally
+jcaSetup.bash,   .csh - Copies the appropriate JCALibrary.properties to
+                        the user's ~/.JCALibrary area (see note below)
+epicsEnvSetDev,Dmz,Prod  - Script to invoke from a RTEMS or soft IOC startup 
+                        file to set common non-default environment variables 
+			for development IOCs, production IOCs on the DMZ
+			subnet, or production IOCs on the private network. 
+
+If you change any EPICS environment variables in envSet.*, also make the 
+same change to the appropriate epicsEnvSet file.
+
+If you change any environment variables, such as EPICS_CA_ADDR_LIST, 
+in envSet.* or envSetLocal.*, also make the same change to the counterpart 
+java property in the JCALibrary.properties.remote or .local file 
+(ie, for EPICS_CA_ADDR_LIST this would be property
+gov.aps.jca.jni.JNIContext.addr_list). JCALibrary.properties is read by some 
+java tools which use jca, such as xal apps and the vdct jca plugin. 
+
+The JCALibrary.properties file is copied to the user's home directory using 
+jcaSetup.* by any executable script that needs the latest
+JCALibrary.properties file (ie, xal apps and vdct). 
+
+Java jars that use jca and that want to deviate from the java properties
+established in JCALibrary.properties can use the "java -D<propertyName=value>" 
+command line option. For a useage example, see script 
+$XAL/script/virtualaccelerator.
