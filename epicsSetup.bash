@@ -120,7 +120,7 @@ export IOC_DATA=$EPICS_DATA/ioc/data
 export IOC_OWNER=laci
 export IOC_OWNER_OS=Linux
 export IOC_OWNER_SHELL=bash
-export IOC_SCREEN=$LCLS_AFS/epics/ioc/iocBoot
+export IOC_SCREEN=$LCLS_ROOT/epics/ioc/iocBoot
 export IOC_PRIM_MAP=slc/primary.map
 #
 # For CVS
