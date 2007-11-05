@@ -1,0 +1,19 @@
+# .bash_profile
+#
+# .bash_profile is executed at login time, only once!
+# 
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+
+# Any user specific that should only set or run once per login 
+# goes below. 
+
+PATH=$PATH:$HOME/bin
+
+export PATH
+unset USERNAME
+
+
