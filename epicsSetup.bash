@@ -315,7 +315,7 @@ fi
 ########################################################################
 # For cmlog
 ########################################################################
-export CMLOGSETUP=$LCLS_ROOT/cmlog/config
+export CMLOGSETUP=$LCLS_ROOT/package/cmlog/config
 if [ -r $CMLOGSETUP/cmlogSetup.bash ]; then
   . $CMLOGSETUP/cmlogSetup.bash > /dev/null
 fi
