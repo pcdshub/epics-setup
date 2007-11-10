@@ -6,8 +6,7 @@
 #                                                                   #
 #  History:                                                         #
 #                                                                   #
-#  09nov2007 starting this initial version - NOT DONE YET, NOR IN   #
-#            IN CVS!                                                #
+#  09nov2007 starting this initial version                          #
 #                                                                   #
 # oracle is in /usr/local/lcls/package/oracle                       #
 
