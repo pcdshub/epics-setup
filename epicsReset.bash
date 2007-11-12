@@ -65,7 +65,7 @@ else
 fi
 
 if [ -z $EPICS_BASE_TAG ]; then
-	export EPICS_BASE_TAG=base-R3-14-8-2-lcls2
+	export EPICS_BASE_VER=base-R3-14-8-2-lcls2
 fi
 if [ -z $EPICS_EXTENSIONS_VER ]; then
 	export EPICS_EXTENSIONS_VER=R3-14-8-2
