@@ -37,7 +37,8 @@
 #                          STRIP_FILE_SEARCH_PATH                   #
 # 22May2007 Jingchen Zhou Added PHYSDATA, a data area for physicists #
 # 30Oct2007 Jingchen Zhou updated to support standalone production #
-#            environment                                            #
+#            environment     
+# 07Dec2007 Jingchen Zhou Added $LCLS_ROOT/bin to PATH             #
 #####################################################################
 umask 002      
 HOSTNAME=`hostname`
@@ -179,6 +180,12 @@ fi
 if [ -z `echo $PATH | grep $XAL/script` ]; then
   export PATH=$PATH:$XAL/script
 fi 
+#
+# Add $LCLS_ROOT/bin to PATH
+#
+if [ -z `echo $PATH | grep $LCLS_ROOT/bin` ]; then
+  export PATH=$PATH:$LCLS_ROOT/bin
+fi
 
 if [ ! -z $DEBUG ]; then
   echo PATH is $PATH
