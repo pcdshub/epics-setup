@@ -11,6 +11,8 @@
 #
 #--------------------------------------------------------------
 #  Mod:
+#        17-Jan-2008, Ron M (ronm)
+#        Changed EPICS_IOC_LOG_INET to lcls-daemon1's IP.
 #        30-Oct-2007, J Zhou (jingchen) 
 #        Updated to support standalone production environment.            
 #        29-Mar-2007, T Lahey (lahey)
@@ -68,7 +70,7 @@ elif [ -d /usr/local/lcls ]; then
 	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5069"
 	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5068"
 	export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.151.11"
-	export EPICS_IOC_LOG_INET; EPICS_IOC_LOG_INET="134.79.151.21"   
+	export EPICS_IOC_LOG_INET; EPICS_IOC_LOG_INET="172.27.8.24"   
 else
    echo "ERROR: this ${HOSTNAME} is not supported for LCLS dev/prod" 
    exit 1
@@ -86,4 +88,4 @@ export EPICS_IOC_LOG_FILE_LIMIT; EPICS_IOC_LOG_FILE_LIMIT="1000000"
 export EPICS_IOC_LOG_FILE_COMMAND; EPICS_IOC_LOG_FILE_COMMAND=""
 export EPICS_CMD_PROTO_PORT; EPICS_CMD_PROTO_PORT=""
 export EPICS_AR_PORT; EPICS_AR_PORT="7002"
-export EPICS_CA_MAX_ARRAY_BYTES="10000000"
+export EPICS_CA_MAX_ARRAY_BYTES="80000000"
