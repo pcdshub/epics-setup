@@ -7,6 +7,7 @@
 #                                                                   #
 #  History:                                                         #
 #                                                                   #
+#  29Jan2008 Mike Zelazny  Remove XAL from epics setup              #
 #  14jan2005 Dayle Kotturi Add to LD PATH (linux only) to find jca  #
 #                          lib for XAL                              #
 #  16Feb2005 K. Luchini    Added LCLS_TFTP,LCLS_CVS,IOC,IOC_DATA    #
@@ -84,7 +85,6 @@ fi
 export RTEMS=$LCLS_ROOT/rtems
 export TOOLS=$LCLS_ROOT/tools
 export TOOLS_DATA=$LCLS_DATA/tools
-export XAL=$LCLS_ROOT/xal
 export LCLS_WWW=$WWW_ROOT/grp/lcls/controls
 #export JAVAVER=1.5
 export JAVA_HOME=$LCLS_ROOT/package/java/jdk1.6.0_02
@@ -177,9 +177,6 @@ fi
 if [ -z `echo $PATH | grep $TOOLS/edm/script` ]; then
   export PATH=$PATH:$TOOLS/edm/script
 fi
-if [ -z `echo $PATH | grep $XAL/script` ]; then
-  export PATH=$PATH:$XAL/script
-fi 
 #
 # Add $LCLS_ROOT/bin to PATH
 #
