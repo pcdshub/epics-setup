@@ -7,6 +7,7 @@
 #                                                                   #
 #  History:                                                         #
 #                                                                   #
+#  10Feb2008 Jingchen Zhou Add quotation around CVSEDITOR           #
 #  29Jan2008 Mike Zelazny  Remove XAL from epics setup              #
 #  14jan2005 Dayle Kotturi Add to LD PATH (linux only) to find jca  #
 #                          lib for XAL                              #
@@ -139,7 +140,7 @@ export CVS_RSH=ssh
 if [ -z "$CVSIGNORE" ]; then
   export CVSIGNORE="O.* *~ *.class *.BAK core*"
 fi
-if [ -z $CVSEDITOR ]; then
+if [ -z "$CVSEDITOR" ]; then
   export CVSEDITOR=emacs
 fi
 #
