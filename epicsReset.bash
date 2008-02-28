@@ -64,7 +64,7 @@ else
 	export LCLS_ROOT=/usr/local/lcls
 fi
 
-if [ -z $EPICS_BASE_TAG ]; then
+if [ -z $EPICS_BASE_VER ]; then
 	export EPICS_BASE_VER=base-R3-14-8-2-lcls2
 fi
 if [ -z $EPICS_EXTENSIONS_VER ]; then
