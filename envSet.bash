@@ -52,7 +52,7 @@
 #
 if [ -d /nfs/slac/g/lcls ]; then
     if [ -z `echo $HOSTNAME | grep lcls-prod` ] && [ -z `echo $HOSTNAME | grep lcls-arch` ] && [ -z `echo $HOSTNAME | grep lcls-mcc` ] && [ -z `echo $HOSTNAME | grep lcls-s20` ];then
-	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="lcls-dev2 mccdev lclsdev-26 cdioc3 cdioc4 cdioc5 lcls-fairley lclsdev-17 lcls-ioc03 lclsdev-65 lclsdev-78 lclsdev-79"
+	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="lcls-dev2 mccdev lclsdev-26 cdioc3 cdioc4 cdioc5 lcls-fairley lclsdev-17 lcls-ioc03 lclsdev-65 lclsdev-78 lclsdev-79 pepiiu15"
 	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5067"
 	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5066"
 	export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.16.9"
