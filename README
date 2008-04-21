@@ -30,5 +30,6 @@ JCALibrary.properties file (ie, xal apps and vdct).
 
 Java jars that use jca and that want to deviate from the java properties
 established in JCALibrary.properties can use the "java -D<propertyName=value>" 
-command line option. For a useage example, see script 
+command line option. For a useage example, 
+see script 
 $XAL/script/virtualaccelerator.
