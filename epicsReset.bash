@@ -9,6 +9,8 @@
 #  17Jan2006 Debbie Rogind added export EPICS_HOST_ARCH=""          #
 #  30Oct2007 Jingchen Zhou updated to support standalone production #
 #            environment                                            #
+#  21Apr2008 Jingchen Zhou updated to support AFS based development #
+#            environment                                            #
 #####################################################################
 #
 # Nullify old EPICS environment and export environment for LCLS EPICS.  
@@ -55,11 +57,11 @@ export CDEVTAGTABLE=""
 export CVSROOT=""
 export CVSIGNORE=""
 #
-# Set EPICS environment for AFS/NFS based development or NFS based 
-# standalone produciton   
+# Set EPICS environment for AFS based development or NFS based 
+# standalone production   
 #
-if [ -d /afs/slac/package ]; then 
-	export LCLS_ROOT=/nfs/slac/g/lcls/build
+if [ -d /afs/slac/g/lcls ]; then 
+	export LCLS_ROOT=/afs/slac/g/lcls
 else
 	export LCLS_ROOT=/usr/local/lcls
 fi

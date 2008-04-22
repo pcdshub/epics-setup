@@ -6,13 +6,14 @@
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
 #  History:                                                         #
-#                                                                   #
+#  21Apr2008 Jingchen Zhou Updated to support AFS based development #
+#                          environment                              #
 #  10Feb2008 Jingchen Zhou Add quotation around CVSEDITOR           #
 #  29Jan2008 Mike Zelazny  Remove XAL from epics setup              #
 #  14jan2005 Dayle Kotturi Add to LD PATH (linux only) to find jca  #
 #                          lib for XAL                              #
 #  16Feb2005 K. Luchini    Added LCLS_TFTP,LCLS_CVS,IOC,IOC_DATA    #
-#                          EPICS_SITE,EPICS_BASE_RELEASE,LCLS_WWW           #
+#                          EPICS_SITE,EPICS_BASE_RELEASE,LCLS_WWW   #
 #  18feb2005 Dayle Kotturi Added quotes around $CVSIGNORE in the if #
 #                          zero length string test to protect       #
 #                          contents from being parsed as an error   #
@@ -45,8 +46,15 @@
 umask 002      
 HOSTNAME=`hostname`
 #
-# Set LCLS_DATA based on if the system is a 
-# standalone or public machine 
+# Set up LCLS_ROOT
+#
+if [ -d /afs/slac/g/lcls ]; then
+   export LCLS_ROOT=/afs/slac/g/lcls
+else 
+   export LCLS_ROOT=/usr/local/lcls 
+fi
+#
+# Set up LCLS_DATA
 #
 if [ -d /nfs/slac/g/lcls ]; then
    export LCLS_DATA=/nfs/slac/g/lcls  
@@ -57,22 +65,6 @@ else
    exit 1		
 fi
 #
-# Set up LCLS_ROOT
-#
-if [ -d /nfs/slac/g/lcls/build ]; then
-   export LCLS_ROOT=/nfs/slac/g/lcls/build
-else 
-   export LCLS_ROOT=/usr/local/lcls 
-fi
-#
-# Set up LCLS_AFS (for files still kept in AFS land)
-# 
-if [ -d /afs/slac/g/lcls ]; then
-   export LCLS_AFS=/afs/slac/g/lcls
-else 
-   export LCLS_AFS=/usr/local/lcls  
-fi
-#
 # Set up WWW_ROOT
 #
 if [ -d /afs/slac/www ]; then
@@ -80,8 +72,9 @@ if [ -d /afs/slac/www ]; then
 else 
    export WWW_ROOT=/usr/local/www 
 fi
+
 #
-# Set up the reset of environment variables
+# Set up the rest of environment variables based on above root variables 
 #
 export RTEMS=$LCLS_ROOT/rtems
 export TOOLS=$LCLS_ROOT/tools
@@ -96,7 +89,7 @@ export EPICS_SETUP=$LCLS_ROOT/epics/setup
 export HOST_ARCH=`$EPICS_SETUP/HostArch`
 
 export EPICS_TOP=$LCLS_ROOT/epics
-export EPICS_BASE_TOP=$LCLS_ROOT/epics/base
+export EPICS_BASE_TOP=$EPICS_TOP/base
 export EPICS_BASE_RELEASE=$EPICS_BASE_TOP/${EPICS_BASE_VER}
 export EPICS_EXTENSIONS=$EPICS_TOP/extensions/extensions-${EPICS_EXTENSIONS_VER}
 
@@ -104,7 +97,7 @@ export EPICS_MODULES_TOP=$EPICS_TOP/modules
 export EPICS_IOC_TOP=$EPICS_TOP/iocTop
 export APP=$EPICS_IOC_TOP
 
-export EPICS_IOCS=$LCLS_ROOT/epics/iocCommon
+export EPICS_IOCS=$EPICS_TOP/iocCommon
 
 export EPICS_DATA=$LCLS_DATA/epics
 export EPICS_WWW=$WWW_ROOT/comp/unix/package/epics
@@ -122,7 +115,7 @@ export IOC_DATA=$EPICS_DATA/ioc/data
 export IOC_OWNER=laci
 export IOC_OWNER_OS=Linux
 export IOC_OWNER_SHELL=bash
-export IOC_SCREEN=$LCLS_ROOT/epics/iocCommon
+export IOC_SCREEN=$EPICS_TOP/iocCommon
 export IOC_PRIM_MAP=slc/primary.map
 #
 # For CVS
@@ -144,7 +137,7 @@ if [ -z "$CVSEDITOR" ]; then
   export CVSEDITOR=emacs
 fi
 #
-# Setup remaining EPICS environment variables
+# Setup remaining EPICS CA environment variables
 #
 if [ -e $EPICS_SETUP/envSet.bash ]; then
   . $EPICS_SETUP/envSet.bash
@@ -309,13 +302,6 @@ export ALHCONFIGFILES=$TOOLS/alh/config
 export ALARMHANDLER=$ALHCONFIGFILES
 export ALHLOGFILES=$TOOLS_DATA/alh/log
 
-########################################################################
-# For matlab
-########################################################################
-export MATLABSETUP=$LCLS_ROOT/matlab/config
-if [ -r $MATLABSETUP/matlabSetup.bash ]; then
-  . $MATLABSETUP/matlabSetup.bash > /dev/null
-fi
 
 ########################################################################
 # For cmlog

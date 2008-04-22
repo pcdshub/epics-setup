@@ -2,7 +2,7 @@
 #
 #  Abs:  Setup EPICS build environment variables
 #
-#  Name: envSet.sh
+#  Name: envSet.bash
 #
 #  Facility:  SLAC
 #
@@ -11,10 +11,12 @@
 #
 #--------------------------------------------------------------
 #  Mod:
+#        21-Apr-2008, J Zhou
+#         Updated to support AFS based development environment
 #        17-Jan-2008, Ron M (ronm)
-#        Changed EPICS_IOC_LOG_INET to lcls-daemon1's IP.
+#         Changed EPICS_IOC_LOG_INET to lcls-daemon1's IP.
 #        30-Oct-2007, J Zhou (jingchen) 
-#        Updated to support standalone production environment.            
+#         Updated to support standalone production environment.            
 #        29-Mar-2007, T Lahey (lahey)
 #         Add lcls-s20* nodes to list of production nodes. These
 #         are located at sector 20, for commissioning.
@@ -50,15 +52,17 @@
 # Set LCLS environment based on if the system is a 
 # standalone for production or public machine for development
 #
-if [ -d /nfs/slac/g/lcls ]; then
-    if [ -z `echo $HOSTNAME | grep lcls-prod` ] && [ -z `echo $HOSTNAME | grep lcls-arch` ] && [ -z `echo $HOSTNAME | grep lcls-mcc` ] && [ -z `echo $HOSTNAME | grep lcls-s20` ];then
-	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="lcls-dev2 mccdev lclsdev-26 cdioc3 cdioc4 cdioc5 lcls-fairley lclsdev-17 lcls-ioc03 lclsdev-65 lclsdev-78 lclsdev-79 pepiiu15"
+if [ -d /afs/slac/g/lcls ]; then
+    # setup for dev
+    if [ -z `echo $HOSTNAME | grep lcls-prod` ]; then
+	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="134.79.219.255"
 	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5067"
 	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5066"
 	export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.16.9"
 	export EPICS_IOC_LOG_INET; EPICS_IOC_LOG_INET="134.79.219.12"
+    # setup for prod on dev
     else
-	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="mcc "
+	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="lcls-prod01 mcc-dmz"
 	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5069"
 	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5068"
 	export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.48.11"
