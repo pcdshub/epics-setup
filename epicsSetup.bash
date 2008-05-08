@@ -61,8 +61,9 @@ if [ -d /nfs/slac/g/lcls ]; then
 elif [ -d /u1/lcls ]; then
    export LCLS_DATA=/u1/lcls
 else
-   echo "ERROR: this ${HOSTNAME} is not supported for LCLS dev/prod" 
-   exit 1		
+   export LCLS_DATA=	
+#   echo "ERROR: this ${HOSTNAME} is not supported for LCLS dev/prod" 
+#   exit 1		
 fi
 #
 # Set up WWW_ROOT
