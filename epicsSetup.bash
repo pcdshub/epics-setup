@@ -5,7 +5,8 @@
 #  Purpose: '.' this file to set your EPICS environment correctly   #
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
-#  History:                                                         #
+#  History: 
+#  02Jun2008 Jingchen Zhou add export NETSCAPEPATH=firefox for ALH  #
 #  21Apr2008 Jingchen Zhou Updated to support AFS based development #
 #                          environment                              #
 #  10Feb2008 Jingchen Zhou Add quotation around CVSEDITOR           #
@@ -302,7 +303,7 @@ export ARCHDATAFILES=$TOOLS_DATA/ArchiveBrowser/data
 export ALHCONFIGFILES=$TOOLS/alh/config
 export ALARMHANDLER=$ALHCONFIGFILES
 export ALHLOGFILES=$TOOLS_DATA/alh/log
-
+export NETSCAPEPATH=firefox
 
 ########################################################################
 # For cmlog
