@@ -12,8 +12,12 @@
 #  07-Dec-07 Greg Added ORACLE_PATH
 #  $log$ 
 #====================================================================
-export ORACLE_HOME=/usr/local/lcls/package/oracle/product/10.2.0/client_1
-export LD_LIBRARY_PATH=$ORACLE_HOME/lib:$LD_LIBRARY_PATH
-export PATH=$ORACLE_HOME/bin:$PATH
-export TWO_TASK=MCCO
-export ORACLE_PATH=/usr/local/lcls/tools/oracle
+if [ -d /usr/local/lcls/package/oracle/product/10.2.0/client_1 ]; then
+   export ORACLE_HOME=/usr/local/lcls/package/oracle/product/10.2.0/client_1
+   export LD_LIBRARY_PATH=$ORACLE_HOME/lib:$LD_LIBRARY_PATH
+   export PATH=$ORACLE_HOME/bin:$PATH
+   export TWO_TASK=MCCO
+   export ORACLE_PATH=/usr/local/lcls/tools/oracle
+else
+   source /afs/slac/package/oracle/common/oraenv_new
+fi
