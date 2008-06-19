@@ -6,6 +6,7 @@
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
 #  History: 
+#  18Jun2008 Jingchen Zhou Updated PRINTER and PSPRINTER            #
 #  02Jun2008 Jingchen Zhou add export NETSCAPEPATH=firefox for ALH  #
 #  21Apr2008 Jingchen Zhou Updated to support AFS based development #
 #                          environment                              #
@@ -257,7 +258,10 @@ fi
 # Printer related environment variables
 ########################################################################
 if [ -z $PSPRINTER ]; then
-  export PSPRINTER=betsy
+  export PSPRINTER=mcc_big
+fi
+if [ -z $PRINTER ]; then
+  export PRINTER=mcc_big
 fi
 if [ -z $PSFILENAME ]; then
   export PSFILENAME=${USER}_default.ps
