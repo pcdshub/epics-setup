@@ -5,7 +5,10 @@
 #  Purpose: '.' this file to set your EPICS environment correctly   #
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
-#  History: 
+#  History:                                                         #      
+#  15Sep2008 Jingchen Zhou Added a logic to EPICS_MODULES_TOP and   #
+#                          EPICS_IOC_TOP to allow user defined on   #
+#                          Ernest's request for relocatability      #    
 #  18Jun2008 Jingchen Zhou Updated PRINTER and PSPRINTER            #
 #  02Jun2008 Jingchen Zhou add export NETSCAPEPATH=firefox for ALH  #
 #  21Apr2008 Jingchen Zhou Updated to support AFS based development #
@@ -96,8 +99,13 @@ export EPICS_BASE_TOP=$EPICS_TOP/base
 export EPICS_BASE_RELEASE=$EPICS_BASE_TOP/${EPICS_BASE_VER}
 export EPICS_EXTENSIONS=$EPICS_TOP/extensions/extensions-${EPICS_EXTENSIONS_VER}
 
-export EPICS_MODULES_TOP=$EPICS_TOP/modules
-export EPICS_IOC_TOP=$EPICS_TOP/iocTop
+if [ -z $EPICS_MODULES_TOP ]; then
+   export EPICS_MODULES_TOP=$EPICS_TOP/modules
+fi
+if [ -z $EPICS_IOC_TOP ]; then
+   export EPICS_IOC_TOP=$EPICS_TOP/iocTop
+fi
+
 export APP=$EPICS_IOC_TOP
 
 export EPICS_IOCS=$EPICS_TOP/iocCommon
