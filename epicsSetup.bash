@@ -5,7 +5,9 @@
 #  Purpose: '.' this file to set your EPICS environment correctly   #
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
-#  History:                                                         #      
+#  History:  
+#  11Nov2008 Jingchen Zhou Added /usr/X11R6/bin in PATH             #
+#                          to ensure xwd available for nonlogin     #
 #  15Sep2008 Jingchen Zhou Added a logic to EPICS_MODULES_TOP and   #
 #                          EPICS_IOC_TOP to allow user defined on   #
 #                          Ernest's request for relocatability      #    
@@ -188,7 +190,12 @@ fi
 if [ -z `echo $PATH | grep $LCLS_ROOT/bin` ]; then
   export PATH=$PATH:$LCLS_ROOT/bin
 fi
-
+#
+# Add X to PATH
+#
+if [ -z `echo $PATH | grep /usr/X11R6/bin` ]; then
+  export PATH=$PATH:/usr/X11R6/bin
+fi
 if [ ! -z $DEBUG ]; then
   echo PATH is $PATH
 fi
