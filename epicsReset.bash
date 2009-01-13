@@ -35,13 +35,17 @@ fi
 # Now the rest.
 export LD_LIBRARY_PATH=""
 export CLASSPATH=""
+export JAVA_HOME=""
 export JAVAVER=""
 #
 export EPICS_DISPLAY_PATH=""
 export EPICS_HOST_ARCH=""
 export EDMDATAFILES=""
 export EPICS_PR_LIST=""
+export EPICS_BASE_RELEASE=""
 export EPICS_EXTENSIONS=""
+#export EPICS_BASE_VER=""
+#export EPICS_EXTENSIONS_VER=""
 #
 export MATLAB_ROOT=""
 export MATLAB_VER=""
