@@ -88,8 +88,8 @@ export RTEMS=$LCLS_ROOT/rtems
 export TOOLS=$LCLS_ROOT/tools
 export TOOLS_DATA=$LCLS_DATA/tools
 export LCLS_WWW=$WWW_ROOT/grp/lcls/controls
-#export JAVAVER=1.5
-export JAVA_HOME=$LCLS_ROOT/package/java/jdk1.6.0_02
+
+export JAVA_HOME=$LCLS_ROOT/package/java/jdk${JAVAVER}
 export ANT_HOME=$LCLS_ROOT/package/ant/apache-ant-1.7.0
 export PHYSDATA=$LCLS_DATA/physics
 
