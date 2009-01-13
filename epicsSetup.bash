@@ -167,10 +167,10 @@ if [ -z `echo $PATH | grep $EPICS_BASE_RELEASE/bin/$EPICS_HOST_ARCH` ]; then
   if [ ! -z $DEBUG ]; then
     echo Unable to find $EPICS_BASE_RELEASE/bin/$EPICS_HOST_ARCH in PATH so adding
   fi
-  export PATH=$PATH:$EPICS_BASE_RELEASE/bin/$EPICS_HOST_ARCH
+  export PATH=$EPICS_BASE_RELEASE/bin/$EPICS_HOST_ARCH:$PATH
 fi
 if [ -z `echo $PATH | grep $EPICS_EXTENSIONS/bin/$EPICS_HOST_ARCH` ]; then
-   export PATH=$PATH:$EPICS_EXTENSIONS/bin/$EPICS_HOST_ARCH   
+   export PATH=$EPICS_EXTENSIONS/bin/$EPICS_HOST_ARCH:$PATH   
 fi
 #
 # Add xal and tool scripts to PATH
