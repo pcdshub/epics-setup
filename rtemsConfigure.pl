@@ -27,7 +27,6 @@ sub usage()
         print "rtemsConfigure.pl\n";
         print "========================================================================\n";
         print " These environment variables must be defined:\n";
-        print "    EPICS_SITE_TOP\n";
         print "    RTEMS_SITE_TOP\n";
         print "    RTEMS_VER  (required format is rtems-versionnum, e.g. rtems-4.7.1)\n";
         print "========================================================================\n";
@@ -149,7 +148,7 @@ print ">>>rtemsConfigure.pl\n";
 if ($#ARGV >= 0)
 { if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help") { usage(); } }
 
-# first test to see if EPICS_SITE_TOP and RTEMS_SITE_TOP are defined
+# first test to see if RTEMS_SITE_TOP is defined
 if (!(defined $ENV{RTEMS_SITE_TOP}))
    { die ">>>RTEMS_SITE_TOP is not defined; exiting now!\n"; }
 else
