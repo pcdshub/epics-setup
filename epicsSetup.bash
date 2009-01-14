@@ -201,6 +201,16 @@ if [ ! -z $DEBUG ]; then
 fi
 # Add procServ
 export PATH=$TOOLS/procServ:$PATH
+
+# Add our LCLS Java Package to the path.
+# Do not use the java provided by SCCS!!
+if [ -z `echo $PATH | grep $JAVA_HOME/bin` ]; then
+  export PATH=$JAVA_HOME/bin:$PATH
+fi
+
+
+
+
 #
 # Add system areas to LD_LIBRARY_PATH (for graphics and java)
 #
