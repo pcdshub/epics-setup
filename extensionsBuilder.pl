@@ -39,10 +39,25 @@ sub usage()
         print "=====================================================================\n";
         print " These environment variables must be defined:\n";
         print "    EPICS_SITE_TOP\n";
-        print "    EXTENSIONS_SITE_TOP\n";
         print "    EPICS_BASE_VER\n";
+        print "    EXTENSIONS_SITE_TOP\n";
         print "=====================================================================\n";
 	exit;
+}
+
+sub confirmVars()
+{
+        print "---------------------------------------------------------\n";
+        print "Will build with these environment settings:\n";
+        print "   EPICS_SITE_TOP:        $epicsSiteTop\n";
+        print "   EPICS_BASE_VER:        $epicsBaseVer\n";
+        print "   EXTENSIONS_SITE_TOP:   $epicsSiteTop\n";
+        print "---------------------------------------------------------\n";
+
+        print "Please enter go or GO to continue, any other key to EXIT NOW  ==> ";
+        my $continue = <STDIN>;
+        unless ($continue eq "GO\n" || $continue eq "go\n")
+           { die "exiting now!\n" };
 }
 
 sub makeReleaseFile($$)
@@ -99,7 +114,7 @@ sub makeReleaseFile($$)
 ##################################################
 print ">>>extensionsBuilder.pl\n";
 if ($#ARGV < 0) { usage(); }
-if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help") { usage(); } 
+if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help" || $ARGV[0] eq "-help" || $ARGV[0] eq "-HELP" || $ARGV[0] eq "-Help" ) { usage(); } 
 
 # first test to see if EPICS_HOST_ARCH and SITE_TOP are defined
 # build will fail if they are not.
@@ -121,8 +136,11 @@ if (!(defined $ENV{EPICS_BASE_VER}))
 else
    { $epicsBaseVer = $ENV{EPICS_BASE_VER}; }
 
+confirmVars;
+
 die ">>>ERROR:  Directory $epicsSiteTop does not exist!\n" unless -d $epicsSiteTop;
 die ">>>ERROR:  Directory $extSiteTop does not exist!\n" unless -d $extSiteTop;
+
 
 $extListFileName = $ARGV[0];
 if (!open(EXTLIST, $extListFileName))

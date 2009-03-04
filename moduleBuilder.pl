@@ -43,6 +43,21 @@ sub usage()
 	exit;
 }
 
+sub confirmVars()
+{
+        print "---------------------------------------------------------\n";
+        print "Will build with these environment settings:\n";
+        print "   EPICS_SITE_TOP:    $epicsSiteTop\n";
+        print "   EPICS_MODULES_TOP: $epicsModulesTop\n";
+        print "---------------------------------------------------------\n";
+
+        print "Please enter go or GO to continue, any other key to EXIT NOW  ==> ";
+        my $continue = <STDIN>;
+        unless ($continue eq "GO\n" || $continue eq "go\n")
+           { die "exiting now!\n" };
+}
+
+
 sub makeReleaseSiteFile($)
 {
    my $fName = shift;
@@ -134,7 +149,7 @@ sub modRELEASEFile($$)
 ##################################################
 print ">>>moduleBuilder.pl\n";
 if ($#ARGV < 0) { usage(); }
-if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help") { usage(); } 
+if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help" || $ARGV[0] eq "-help" || $ARGV[0] eq "-HELP" || $ARGV[0] eq "-Help" ) { usage(); } 
 
 # first test to see if EPICS_HOST_ARCH and SITE_TOP are defined
 # build will fail if they are not.
@@ -150,6 +165,8 @@ if (!(defined $ENV{EPICS_MODULES_TOP}))
    { die "EPICS_MODULES_TOP is not defined; build will fail, so exiting now!\n"; }
 else
    { $epicsModulesTop = $ENV{EPICS_MODULES_TOP}; }
+
+confirmVars;
 
 die ">>>ERROR:  Directory $epicsSiteTop does not exist!\n" unless -d $epicsSiteTop;
 die ">>>ERROR:  Directory $epicsModulesTop does not exist!\n" unless -d $epicsModulesTop;

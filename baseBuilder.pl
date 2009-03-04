@@ -46,6 +46,23 @@ sub usage()
         exit;
 }
 
+sub confirmVars()
+{
+        print "---------------------------------------------------------\n";
+        print "Will build with these environment settings:\n";
+        print "   EPICS_SITE_TOP:   $epicsSiteTop\n";
+        print "   EPICS_BASE_VER:   $epicsBaseVer\n";
+        print "   RTEMS_SITE_TOP:   $rtemsSiteTop\n";
+        print "   RTEMS_VER:        $rtemsVer\n";
+        print "   EPICS_HOST_ARCH:  " . $ENV{EPICS_HOST_ARCH} . "\n";
+        print "---------------------------------------------------------\n";
+
+        print "Please enter go or GO to continue, any other key to EXIT NOW  ==> ";
+        my $continue = <STDIN>;
+        unless ($continue eq "GO\n" || $continue eq "go\n")
+           { die "exiting now!\n" };
+}
+
 sub wanted
 {
   # collect the full filename if it is Makefile.inc
@@ -203,7 +220,7 @@ print ">>>baseBuilder.pl\n";
 
 # first check for arg of help
 if ($#ARGV >= 0)
-{ if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help") { usage(); } }
+{ if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help" || $ARGV[0] eq "-help" || $ARGV[0] eq "-HELP" || $ARGV[0] eq "-Help" ) { usage(); } }
 
 # first test to see if EPICS_SITE_TOP and RTEMS_SITE_TOP are defined
 # build will fail if they are not.
@@ -239,6 +256,8 @@ if (!(defined $ENV{EPICS_HOST_ARCH}))
 
 $baseLoc = $epicsSiteTop . "/base/" . $epicsBaseVer;
 $rtemsLoc = $rtemsSiteTop . "/" . $rtemsVer;
+
+confirmVars;
 
 die ">>>ERROR:  base directory $baseLoc does not exist!\n" unless -d $baseLoc;
 die ">>>ERROR:  rtems directory $rtemsLoc does not exist!\n" unless -d $rtemsLoc;

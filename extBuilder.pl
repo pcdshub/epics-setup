@@ -31,13 +31,30 @@ sub usage()
         print "    EPICS_SITE_TOP\n";
         print "    EPICS_BASE_VER\n";
         print "    EXTENSIONS_SITE_TOP\n";
-        print "    EXTENSIONS_VER\n";
+        print "    EPICS_EXTENSIONS_VER\n";
         print "=====================================================================\n";
         print " Script calling example:\n";
         print "   extBuilder.pl clean\n";
         print "=====================================================================\n";
 	exit;
 }
+
+sub confirmVars()
+{
+        print "---------------------------------------------------------\n";
+        print "Will build with these environment settings:\n";
+        print "   EPICS_SITE_TOP:       $epicsSiteTop\n";
+        print "   EPICS_BASE_VER:       $epicsBaseVer\n";
+        print "   EXTENSIONS_SITE_TOP:  $extensionsSiteTop\n";
+        print "   EPICS_EXTENSIONS_VER: $extensionsVer\n";
+        print "---------------------------------------------------------\n";
+
+        print "Please enter go or GO to continue, any other key to EXIT NOW  ==> ";
+        my $continue = <STDIN>;
+        unless ($continue eq "GO\n" || $continue eq "go\n")
+           { die "exiting now!\n" };
+}
+
 
 sub makeReleaseFile($$)
 {
@@ -84,7 +101,7 @@ sub makeReleaseFile($$)
 print ">>>extBuilder.pl\n";
 # first check for arg of help
 if ($#ARGV >= 0)
-   { if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help") { usage(); } }
+   { if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help" || $ARGV[0] eq "-help" || $ARGV[0] eq "-HELP" || $ARGV[0] eq "-Help") { usage(); } }
 
 # test to see if EPICS_HOST_ARCH and SITE_TOP are defined
 # build will fail if they are not.
@@ -103,16 +120,18 @@ if (!(defined $ENV{EXTENSIONS_SITE_TOP}))
 else
    { $extensionsSiteTop = $ENV{EXTENSIONS_SITE_TOP}; }
 
-if (!(defined $ENV{EXTENSIONS_VER}))
-   { die ">>>EXTENSIONS_VER is not defined; build will fail, so exiting now!\n"; }
+if (!(defined $ENV{EPICS_EXTENSIONS_VER}))
+   { die ">>>EPICS_EXTENSIONS_VER is not defined; build will fail, so exiting now!\n"; }
 else
-   { $extensionsVer = $ENV{EXTENSIONS_VER}; }
+   { $extensionsVer = $ENV{EPICS_EXTENSIONS_VER}; }
+
+confirmVars;
 
 # now get and check args
 my $baseDir = $epicsSiteTop . "/base/" . $epicsBaseVer; 
 die ">>>ERROR:  base directory $baseDir does not exist!\n" unless -d $baseDir;
 
-my $extDir = $epicsSiteTop . "/extensions/" . $extensionsVer; 
+my $extDir = $epicsSiteTop . "/extensions/extensions-" . $extensionsVer; 
 die ">>>ERROR:  extensions directory $extDir does not exist!\n" unless -d $extDir;
 
 if ($#ARGV > -1)
@@ -134,7 +153,7 @@ print ">>>Building extensions in $extDir using command \"make $makeParam\"\n";
 print ">>>EPICS_SITE_TOP is $epicsSiteTop\n";
 print ">>>EPICS_BASE_VER is $epicsBaseVer\n";
 print ">>>EXTENSIONS_SITE_TOP is $extensionsSiteTop\n";
-print ">>>EXTENSIONS_VER is $extensionsVer\n";
+print ">>>EPICS_EXTENSIONS_VER is $extensionsVer\n";
 print ">>>\n";
 
 my $startDir = getcwd();

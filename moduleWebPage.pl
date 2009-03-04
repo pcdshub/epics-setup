@@ -30,6 +30,20 @@ sub usage()
 	exit;
 }
 
+sub confirmVars()
+{
+        print "---------------------------------------------------------\n";
+        print "Will operate with this environment setting:\n";
+        print "   EPICS_MODULES_TOP:  $epicsModulesTop\n";
+        print "---------------------------------------------------------\n";
+
+        print "Please enter go or GO to continue, any other key to EXIT NOW  ==> ";
+        my $continue = <STDIN>;
+        unless ($continue eq "GO\n" || $continue eq "go\n")
+           { die "exiting now!\n" };
+}
+
+
 sub outputModuleBuildOrder()
 {
   my $buildOrderFilename = "./moduleBuildOrder.txt";
@@ -334,7 +348,7 @@ push @{ $moduleHash{$version} }, $lineSplit[1];
 ##################################################
 print ">>>moduleWebPage.pl\n";
 if ($#ARGV < 0) { usage(); }
-if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help") { usage(); } 
+if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help" || $ARGV[0] eq "-help" || $ARGV[0] eq "-HELP" || $ARGV[0] eq "-Help" ) { usage(); } 
 
 my $htmlFilename = $ARGV[0];
 
@@ -346,6 +360,8 @@ else
    { $epicsModulesTop = $ENV{EPICS_MODULES_TOP}; }
 
 die ">>>ERROR:  Directory $epicsModulesTop does not exist!\n" unless -d $epicsModulesTop;
+
+confirmVars;
 
 # This version won't use a module list file
 # It will start in EPICS_MODULES_TOP

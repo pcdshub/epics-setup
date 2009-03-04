@@ -36,6 +36,21 @@ sub usage()
         exit;
 }
 
+sub confirmVars()
+{
+        print "---------------------------------------------------------\n";
+        print "Will operate with these environment settings:\n";
+        print "   RTEMS_SITE_TOP:  $rtemsSiteTop\n";
+        print "   RTEMS_VER:       $rtemsVer\n";
+        print "---------------------------------------------------------\n";
+
+        print "Please enter go or GO to continue, any other key to EXIT NOW  ==> ";
+        my $continue = <STDIN>;
+        unless ($continue eq "GO\n" || $continue eq "go\n")
+           { die "exiting now!\n" };
+}
+
+
 sub wanted
 {
   # collect the full filename if it is Makefile.inc
@@ -146,7 +161,7 @@ print ">>>rtemsConfigure.pl\n";
 
 # first check for arg of help
 if ($#ARGV >= 0)
-{ if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help") { usage(); } }
+{ if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help" || $ARGV[0] eq "-help" || $ARGV[0] eq "-HELP" || $ARGV[0] eq "-Help" ) { usage(); } }
 
 # first test to see if RTEMS_SITE_TOP is defined
 if (!(defined $ENV{RTEMS_SITE_TOP}))
@@ -158,6 +173,8 @@ if (!(defined $ENV{RTEMS_VER}))
    { die ">>>RTEMS_VER is not defined; build will fail, so exiting now!\n"; }
 else
    { $rtemsVer = $ENV{RTEMS_VER}; }
+
+confirmVars;
 
 #extract rtemsWhich ("4.7.1") from rtemsVer ("rtems-4.7.1")
 my @rtemsVerParts = split /-/, $rtemsVer;

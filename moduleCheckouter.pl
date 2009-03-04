@@ -37,6 +37,21 @@ sub usage()
 	exit;
 }
 
+sub confirmVars()
+{
+        print "---------------------------------------------------------\n";
+        print "Will operate with these environment settings:\n";
+        print "   EPICS_MODULES_TOP:  $epicsModulesTop\n";
+        print "   CVSROOT:            $ENV{CVSROOT}\n";
+        print "   CVS_RSH:            $ENV{CVS_RSH}\n";
+        print "---------------------------------------------------------\n";
+
+        print "Please enter go or GO to continue, any other key to EXIT NOW  ==> ";
+        my $continue = <STDIN>;
+        unless ($continue eq "GO\n" || $continue eq "go\n")
+           { die "exiting now!\n" };
+}
+
 
 ##################################################
 # code start
@@ -54,7 +69,7 @@ sub usage()
 ##################################################
 print ">>>moduleCheckout.pl\n";
 if ($#ARGV < 0) { usage(); }
-if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help") { usage(); } 
+if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help" || $ARGV[0] eq "-help" || $ARGV[0] eq "-HELP" || $ARGV[0] eq "-Help" ) { usage(); } 
 my $startDir = getcwd();
 print ">>>running in $startDir\n";
 
@@ -71,6 +86,8 @@ if (!(defined $ENV{EPICS_MODULES_TOP}))
 $epicsModulesTop = $ENV{EPICS_MODULES_TOP};
 die ">>>ERROR:  Directory $epicsModulesTop does not exist!\n" unless -d $epicsModulesTop;
 $epicsModulesTop = $ENV{EPICS_MODULES_TOP}; 
+
+confirmVars;
 
 $moduleListFileName = $ARGV[0];
 die ">>>ERROR: $moduleListFileName does not exist!\n" unless -e $moduleListFileName;

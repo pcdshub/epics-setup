@@ -39,6 +39,21 @@ sub usage()
 	exit;
 }
 
+sub confirmVars()
+{
+        print "---------------------------------------------------------\n";
+        print "Will operate with this environment setting:\n";
+        print "   EPICS_MODULES_TOP:  $epicsModulesTop\n";
+        print "---------------------------------------------------------\n";
+
+        print "Please enter go or GO to continue, any other key to EXIT NOW  ==> ";
+        my $continue = <STDIN>;
+        unless ($continue eq "GO\n" || $continue eq "go\n")
+           { die "exiting now!\n" };
+}
+
+
+
 sub startHTMLFILE
 {
   print HTMLFILE "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">\n";
@@ -130,7 +145,7 @@ sub addModuleToHTML($$$)
 #
 ##################################################
 print ">>>moduleBuilder.pl\n";
-if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help") { usage(); } 
+if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help" || $ARGV[0] eq "-help" || $ARGV[0] eq "-HELP" || $ARGV[0] eq "-Help" ) { usage(); } 
 if ($#ARGV < 1) { usage(); }
 
 if (!(defined $ENV{EPICS_MODULES_TOP}))
@@ -139,6 +154,8 @@ else
    { $epicsModulesTop = $ENV{EPICS_MODULES_TOP}; }
 
 die ">>>ERROR:  Directory $epicsModulesTop does not exist!\n" unless -d $epicsModulesTop;
+
+confirmVars;
 
 $moduleListFileName = $ARGV[0];
 if (!open(MODULELIST, $moduleListFileName))

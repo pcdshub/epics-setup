@@ -44,12 +44,29 @@ sub usage()
         print "============================================================================\n";
         print " These environment variables must be defined:\n";
         print "    EPICS_BASE_VER\n";
-        print "    EXTENSIONS_VER\n";
+        print "    EPICS_EXTENSIONS_VER\n";
         print "    CVSROOT\n";
         print "    CVS_RSH\n";
         print "============================================================================\n";
 	exit;
 }
+
+sub confirmVars()
+{
+        print "---------------------------------------------------------\n";
+        print "Will operate with these environment settings:\n";
+        print "   EPICS_BASE_VER:        $baseVer\n";
+        print "   EPICS_EXTENSIONS_VER:  $extensionsVer\n";
+        print "   CVSROOT:               $ENV{CVSROOT}\n";
+        print "   CVS_RSH:               $ENV{CVS_RSH}\n";
+        print "---------------------------------------------------------\n";
+
+        print "Please enter go or GO to continue, any other key to EXIT NOW  ==> ";
+        my $continue = <STDIN>;
+        unless ($continue eq "GO\n" || $continue eq "go\n")
+           { die "exiting now!\n" };
+}
+
 
 sub updateRELEASEFile($$$$$)
 {
@@ -94,7 +111,7 @@ sub updateRELEASEFile($$$$$)
       elsif ($line =~ /^\s*EXTENSIONS_MODULE_VERSION\s*=\s*/)
          { 
          print OUT "#" . $line; 
-         print OUT "EXTENSIONS_MODULE_VERSION=$extensionsVer\n"; 
+         print OUT "EXTENSIONS_MODULE_VERSION=extensions-$extensionsVer\n"; 
          }
       elsif ($line =~ /^\s*EPICS_MODULES\s*=\s*/)
          { 
@@ -129,7 +146,7 @@ sub updateRELEASEFile($$$$$)
 ##################################################
 print ">>>modulesToDev.pl\n";
 if ($#ARGV < 1) { usage(); }
-if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help") { usage(); } 
+if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help" || $ARGV[0] eq "-help" || $ARGV[0] eq "-HELP" || $ARGV[0] eq "-Help" ) { usage(); } 
 my $startDir = getcwd();
 print ">>>running in $startDir\n";
 
@@ -139,15 +156,17 @@ if (!(defined $ENV{EPICS_BASE_VER}))
    { die ">>>EPICS_BASE_VER is not defined so exiting now!\n"; }
 $baseVer = $ENV{EPICS_BASE_VER};
 
-if (!(defined $ENV{EXTENSIONS_VER}))
-   { die ">>>EXTENSIONS_VER is not defined so exiting now!\n"; }
-$extensionsVer = $ENV{EXTENSIONS_VER};
+if (!(defined $ENV{EPICS_EXTENSIONS_VER}))
+   { die ">>>EPICS_EXTENSIONS_VER is not defined so exiting now!\n"; }
+$extensionsVer = $ENV{EPICS_EXTENSIONS_VER};
 
 if (!(defined $ENV{CVSROOT}))
    { die ">>>CVSROOT is not defined; checkout will fail, so exiting now!\n"; }
 
 if (!(defined $ENV{CVS_RSH}))
    { die "CVS_RSH is not defined; checkout will fail, so exiting now!\n"; }
+
+confirmVars;
 
 $moduleListFileName = $ARGV[0];
 die ">>>ERROR: $moduleListFileName does not exist!\n" unless -e $moduleListFileName;
@@ -209,7 +228,7 @@ MODULE: foreach $moduleName (@moduleNames)
          last MODULE;
          }
 
-      my $CVSCmd = "cvs co -d " . $workingVer . " " . $moduleName . " -dP";
+      my $CVSCmd = "cvs co -d " . $workingVer . " " . $moduleName;
       print "checkout command: " . $CVSCmd . "\n";
       my $sysErr = system($CVSCmd);
       if ($sysErr > 0)
