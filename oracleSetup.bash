@@ -9,6 +9,7 @@
 #--------------------------------------------------------------------
 #  History:
 #  $id$
+#  23-Apr-09 jrock set TWO_TASK to SLACDEV for dev version
 #  07-Dec-07 Greg Added ORACLE_PATH
 #  $log$ 
 #====================================================================
@@ -20,4 +21,6 @@ if [ -d /usr/local/lcls/package/oracle/product/10.2.0/client_1 ]; then
    export ORACLE_PATH=/usr/local/lcls/tools/oracle
 else
    source /afs/slac/package/oracle/common/oraenv_new
+   export TWO_TASK=SLACDEV
 fi
+
