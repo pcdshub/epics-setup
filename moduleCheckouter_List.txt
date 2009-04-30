@@ -1,0 +1,59 @@
+# =============================================
+# Module Build Order
+#  This is one build order that will work!
+# First build:
+#   EPICS Base
+#   EPICS Extensions
+# Do not modify this build order!!
+# The following modules will be checkedout
+# and built against the following packages: 
+# RTEMS:      version ==> 4.9.1
+# EPICS BASE: version ==> base-R3-14-8-2-lcls3
+# =============================================
+seq	          seq-R2-0-11-lcls1
+ipac	          ipac-R2-8-lcls5 
+asyn	          asyn-R4-9-lcls3
+motor64           motor64-R6-4-2-lcls1
+plcAdmin          plcAdmin-R2-0-0
+streamdevice      streamdevice-R2-4-lcls1
+sSubRecord        sSubRecord-R2-0-0 
+miscUtils         miscUtils-R2-0-0
+micro             micro-R2-0-0
+LeCroy_ENET       LeCroy_ENET-R2-0-0
+devBusMapped      devBusMapped-R2-0-0
+ether_ip          ether_ip-R2-16-lcls1 
+sqlite3           sqlite3-R3-6-4-lcls1 
+sscan             sscan-R2-6-3-lcls1
+genSub            genSub-R1-6-lcls3 
+calc              calc-R2-6-1-lcls4
+hytecMotor8601    hytecMotor8601-R2-0-0
+caenADCV965       caenADCV965-R2-0-0
+etherPSC          etherPSC-R2-0-0-lcls1
+generalTime       generalTime-R2-0-0 
+iocAdmin          iocAdmin-R3-0-0 
+EDT_CL            EDT_CL-R2-0-0 
+event             event-R3-0-0 
+xy2440            xy2440-R1-0-lcls1 
+epm2000           epm2000-R2-0-0
+xy2445            xy2445-R1-0-lcls1
+ip330             ip330-R2-0-0
+VHSx0x            VHSx0x-R2-0-0
+autosave          autosave-R4-4-lcls2 
+highlandLVDTV550  highlandLVDTV550-R2-0-0
+vmeCardRecord     vmeCardRecord-R2-0-0
+ModBusTCPClnt     ModBusTCPClnt-R2-0-0
+snmp              snmp-R2-0-0 
+restore           restore-R2-0-0
+vsam              vsam-R2-0-0
+Bx9000_MBT        Bx9000_MBT-R2-0-0    
+hytec8413         hytec8413-R2-0-0
+ip231             ip231-R2-0-0 
+sub               sub-R2-0-0
+ics121            ics121-R2-0-0
+ssi               ssi-R1-1-0-lcls1
+ics130            ics130-R2-0-0
+ip470             ip470-R1-0-0-lcls1
+tds3000           tds3000-R2-0-0        
+caPutLog          caPutLog-R3-1-lcls1
+rtemsutils        rtemsutils-R1-0-0-lcls1
+# =============================================
