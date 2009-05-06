@@ -13,6 +13,7 @@
 seq	          seq-R2-0-11-lcls1
 ipac	          ipac-R2-8-lcls5 
 asyn	          asyn-R4-9-lcls3
+motor59           motor59-R5-9-lcls5
 motor64           motor64-R6-4-2-lcls1
 plcAdmin          plcAdmin-R2-0-0
 streamdevice      streamdevice-R2-4-lcls1
