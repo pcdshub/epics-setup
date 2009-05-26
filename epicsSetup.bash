@@ -5,7 +5,9 @@
 #  Purpose: '.' this file to set your EPICS environment correctly   #
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
-#  History:  
+#  History:                     
+#  28May2009 Judy Rock     Added logic to point to dev SCREENIOCS   #
+#                          on development, prod on production       #
 #  11Nov2008 Jingchen Zhou Added /usr/X11R6/bin in PATH             #
 #                          to ensure xwd available for nonlogin     #
 #  15Sep2008 Jingchen Zhou Added a logic to EPICS_MODULES_TOP and   #
@@ -57,8 +59,10 @@ HOSTNAME=`hostname`
 #
 if [ -d /afs/slac/g/lcls ]; then
    export LCLS_ROOT=/afs/slac/g/lcls
+   export IOCCONSOLE_ENV=Dev
 else 
    export LCLS_ROOT=/usr/local/lcls 
+   export IOCCONSOLE_ENV=Prod
 fi
 #
 # Set up LCLS_DATA
@@ -128,7 +132,7 @@ export IOC_DATA=$EPICS_DATA/ioc/data
 export IOC_OWNER=laci
 export IOC_OWNER_OS=Linux
 export IOC_OWNER_SHELL=bash
-export IOC_SCREEN=$EPICS_TOP/iocCommon
+export IOC_SCREEN=$EPICS_TOP/iocCommon/All/$IOCCONSOLE_ENV
 export IOC_PRIM_MAP=slc/primary.map
 #
 # For CVS
