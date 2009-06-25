@@ -11,6 +11,8 @@
 #
 #--------------------------------------------------------------
 #  Mod:
+#        25-Jun-2009, J Rock
+#         added lcls-daemon3 (Photon PV gateways) to EPICS_CA_ADDR_LIST for production and lcls-prod02
 #        27-Aug-2008, J Zhou
 #         Changed EPICS_IOC_LOG_INET to lcls-daemon2's IP.
 #        21-Apr-2008, J Zhou
@@ -64,7 +66,7 @@ if [ -d /afs/slac/g/lcls ]; then
 	export EPICS_IOC_LOG_INET; EPICS_IOC_LOG_INET="134.79.219.12"
     # setup for prod on dev
     else
-	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="lcls-prod01 mcc-dmz"
+	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="lcls-prod01 mcc-dmz lcls-daemon3"
 	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5069"
 	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5068"
 	export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.48.11"
@@ -72,7 +74,7 @@ if [ -d /afs/slac/g/lcls ]; then
     fi
 elif [ -d /usr/local/lcls ]; then
 	export EPICS_CA_AUTO_ADDR_LIST=NO
-	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="172.27.11.255 mcc-dmz"
+	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="172.27.11.255 mcc-dmz lcls-daemon3"
 	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5069"
 	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5068"
 	export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.151.11"
