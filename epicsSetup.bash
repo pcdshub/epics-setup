@@ -5,7 +5,9 @@
 #  Purpose: '.' this file to set your EPICS environment correctly   #
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
-#  History:                     
+#  History:                                                         # 
+#  05Nov2009 Jingchen Zhou Added to LD_LIBRARY_PATH for python to   #
+#                          to find tcltk.                           # 	
 #  28May2009 Judy Rock     Added logic to point to dev SCREENIOCS   #
 #                          on development, prod on production       #
 #  11Nov2008 Jingchen Zhou Added /usr/X11R6/bin in PATH             #
@@ -236,6 +238,10 @@ if [ $HOST_ARCH=="Linux" ]; then
   # to find libjvm.so
   if [ -z `echo $LD_LIBRARY_PATH | grep $JAVA_HOME/jre/lib/i386/server` ]; then
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/i386/server
+  fi
+  # to find libtcl8.5.so and libtk8.5.so
+  if [ -z `echo $LD_LIBRARY_PATH | grep $LCLS_ROOT/package/python/tcltk/lib` ]; then
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$LCLS_ROOT/package/python/tcltk/lib
   fi
 else
   if [ $HOST_ARCH=="solaris" ]; then
