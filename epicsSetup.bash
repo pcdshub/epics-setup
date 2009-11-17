@@ -6,6 +6,8 @@
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
 #  History:                                                         # 
+#  17Nov2009 Jingchen Zhou Moved CVS part from epicsSetup.bash to   #
+#                          commonSetup.bash                         #
 #  05Nov2009 Jingchen Zhou Added to LD_LIBRARY_PATH for python to   #
 #                          to find tcltk.                           # 	
 #  28May2009 Judy Rock     Added logic to point to dev SCREENIOCS   #
@@ -137,25 +139,6 @@ export IOC_OWNER_SHELL=bash
 export IOC_SCREEN=$EPICS_TOP/iocCommon/All/$IOCCONSOLE_ENV
 export IOC_PRIM_MAP=slc/primary.map
 #
-# For CVS
-#
-if [ -z $CVSROOT ]; then
-   if [ -d /afs/slac/g/lcls/cvs ]; then
-  	export CVSROOT=/afs/slac/g/lcls/cvs
-   else
-	USER=`whoami`
-#	export CVSROOT=:ext:${USER}@lcls-prod02:/afs/slac/g/lcls/cvs
-   fi
-fi
-export CVS_RSH=ssh
-
-if [ -z "$CVSIGNORE" ]; then
-  export CVSIGNORE="O.* *~ *.class *.BAK core*"
-fi
-if [ -z "$CVSEDITOR" ]; then
-  export CVSEDITOR=emacs
-fi
-#
 # Setup remaining EPICS CA environment variables
 #
 if [ -e $EPICS_SETUP/envSet.bash ]; then
@@ -213,9 +196,6 @@ export PATH=$TOOLS/procServ:$PATH
 if [ -z `echo $PATH | grep $JAVA_HOME/bin` ]; then
   export PATH=$JAVA_HOME/bin:$PATH
 fi
-
-
-
 
 #
 # Add system areas to LD_LIBRARY_PATH (for graphics and java)
