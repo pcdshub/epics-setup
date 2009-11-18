@@ -11,6 +11,8 @@
 #            environment                                            #
 #  21Apr2008 Jingchen Zhou updated to support AFS based development #
 #            environment                                            #
+#  17Nov2009 Jingchen Zhou removed /usr/local/bin/environ provided  #
+#                          SCCS                                     #
 #####################################################################
 #
 # Nullify old EPICS environment and export environment for LCLS EPICS.  
@@ -29,9 +31,6 @@ export ENV=""
 export ENVIRONMENT=""
 export ETC=""
 export CLUSTER_DIR=""
-if [ -e /usr/local/bin/environ ]; then 
-  eval `/usr/local/bin/environ /bin/bash -i0`
-fi
 # Now the rest.
 export LD_LIBRARY_PATH=""
 export CLASSPATH=""
