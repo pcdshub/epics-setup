@@ -54,9 +54,6 @@ export CMLOG_PORT=""
 export CMLOG_CONFIG=""
 export CDEVTAGTABLE=""
 #
-export CVSROOT=""
-export CVSIGNORE=""
-#
 # Set EPICS environment for AFS based development or NFS based 
 # standalone production   
 #
