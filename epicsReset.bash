@@ -13,6 +13,7 @@
 #            environment                                            #
 #  17Nov2009 Jingchen Zhou removed /usr/local/bin/environ provided  #
 #                          SCCS                                     #
+#  14Dec2009 Jingchen Zhou removed reset LD_LIBRARY_PATH            #
 #####################################################################
 #
 # Nullify old EPICS environment and export environment for LCLS EPICS.  
@@ -32,7 +33,7 @@ export ENVIRONMENT=""
 export ETC=""
 export CLUSTER_DIR=""
 # Now the rest.
-export LD_LIBRARY_PATH=""
+#export LD_LIBRARY_PATH=""
 export CLASSPATH=""
 export JAVA_HOME=""
 #
