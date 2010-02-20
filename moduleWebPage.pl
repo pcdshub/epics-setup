@@ -8,6 +8,7 @@ use Cwd;
 
 my @filelist;
 my $moduleListFileName;
+my $buildOrderFilename;
 my $epicsModulesTop;
 my $makeParam = "";
 my $epicsSiteTop;
@@ -25,6 +26,7 @@ sub usage()
         print "moduleWebPage.pl\n";
         print "\n";
         print "   Parameter1 = html filename\n";
+        print "   Parameter2 = module build order filename\n";
         print "=====================================================================\n";
         print " These environment variables must be defined:\n";
         print "    EPICS_MODULES_TOP\n";
@@ -50,7 +52,6 @@ sub confirmVars()
 
 sub outputModuleBuildOrder()
 {
-  my $buildOrderFilename = "./moduleBuildOrder.txt";
   if (!(open(BUILDORDER, '>'.$buildOrderFilename)))
    {
    print "Error opening BUILDORDER file\n";
@@ -351,10 +352,11 @@ push @{ $moduleHash{$version} }, $lineSplit[1];
 #
 ##################################################
 print ">>>moduleWebPage.pl\n";
-if ($#ARGV < 0) { usage(); }
+if ($#ARGV < 1) { usage(); }
 if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help" || $ARGV[0] eq "-help" || $ARGV[0] eq "-HELP" || $ARGV[0] eq "-Help" ) { usage(); } 
 
 my $htmlFilename = $ARGV[0];
+$buildOrderFilename = $ARGV[1];
 
 die ">>>ERROR:  Could not open $htmlFilename for write\n" unless (open(HTMLFILE, '>'.$htmlFilename));
 
