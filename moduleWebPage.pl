@@ -11,6 +11,8 @@ my $moduleListFileName;
 my $epicsModulesTop;
 my $makeParam = "";
 my $epicsSiteTop;
+my $epicsBaseVer;
+my $rtemsVer;
 my $prevModuleName = "none";
 my %moduleHash = ();
 my @moduleOrderList;
@@ -26,6 +28,8 @@ sub usage()
         print "=====================================================================\n";
         print " These environment variables must be defined:\n";
         print "    EPICS_MODULES_TOP\n";
+        print "    EPICS_BASE_VER\n";
+        print "    RTEMS_VER\n";
         print "=====================================================================\n";
 	exit;
 }
@@ -107,11 +111,11 @@ sub startHTMLFILE()
  
   
   print HTMLFILE "<p style=\"margin: 5pt 0.5in;\">\n";
-  print HTMLFILE "<b>EPICS Base:</b> base-R3.14.8.2-lcls2 (rtems-4.7.1)<br>\n";
+  print HTMLFILE "<b>EPICS Base:</b> $epicsBaseVer ($rtemsVer)<br>\n";
   print HTMLFILE "<b>Operating system:</b> RTEMS<br>\n";
   print HTMLFILE "<b>CVS Root:</b> /afs/slac/g/lcls/cvs<br>\n";
-  print HTMLFILE "<b>Build directory:</b> /usr/local/lcls/epics/modules<br>\n";
-  print HTMLFILE "<b>Host:</b> lcls-builder<br>\n";
+  print HTMLFILE "<b>Build directory:</b> $epicsModulesTop<br>\n";
+#  print HTMLFILE "<b>Host:</b> $hostName<br>\n";
   print HTMLFILE "<b>Last updated: </b>" . $now . "<br>\n";
   print HTMLFILE "<p style=\"margin: 5pt 0.5in;\">\n";
   print HTMLFILE "<a href=\"http://www.slac.stanford.edu/cgi-wrap/cvsweb/epics/site/src/?cvsroot=LCLS\">Modules CVSWEB</a><br>\n";
@@ -358,6 +362,16 @@ if (!(defined $ENV{EPICS_MODULES_TOP}))
    { die "EPICS_MODULES_TOP is not defined; build will fail, so exiting now!\n"; }
 else
    { $epicsModulesTop = $ENV{EPICS_MODULES_TOP}; }
+
+if (!(defined $ENV{EPICS_BASE_VER}))
+   { die "EPICS_BASE_VER is not defined; build will fail, so exiting now!\n"; }
+else
+   { $epicsBaseVer = $ENV{EPICS_BASE_VER}; }
+
+if (!(defined $ENV{RTEMS_VER}))
+   { die "RTEMS_VER is not defined; build will fail, so exiting now!\n"; }
+else
+   { $rtemsVer = $ENV{RTEMS_VER}; }
 
 die ">>>ERROR:  Directory $epicsModulesTop does not exist!\n" unless -d $epicsModulesTop;
 
