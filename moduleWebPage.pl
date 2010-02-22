@@ -120,7 +120,7 @@ sub startHTMLFILE()
   print HTMLFILE "<b>Last updated: </b>" . $now . "<br>\n";
   print HTMLFILE "<p style=\"margin: 5pt 0.5in;\">\n";
   print HTMLFILE "<a href=\"http://www.slac.stanford.edu/cgi-wrap/cvsweb/epics/site/src/?cvsroot=LCLS\">Modules CVSWEB</a><br>\n";
-  print HTMLFILE "<a href=\"./moduleBuildOrder.txt\">Build Order</a><br>\n";
+  print HTMLFILE "<a href=\"./$buildOrderFilename\">Build Order</a><br>\n";
   print HTMLFILE "<p>\n";
 
   print HTMLFILE "<p style=\"margin: 5pt 0.5in;\">\n";
