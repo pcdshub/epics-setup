@@ -18,6 +18,7 @@ my $prevModuleName = "none";
 my %moduleHash = ();
 my @moduleOrderList;
 my @currDeps = ();
+my $GO="NO";
 
 sub usage()
 {
@@ -27,6 +28,8 @@ sub usage()
         print "\n";
         print "   Parameter1 = html filename\n";
         print "   Parameter2 = module build order filename\n";
+        print "   optional Parameter3: if it's GO, then run without confirmation.\n";
+        print "                        For running in batch scripts\n";
         print "=====================================================================\n";
         print " These environment variables must be defined:\n";
         print "    EPICS_MODULES_TOP\n";
@@ -357,6 +360,7 @@ if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help" || $ARGV[0] e
 
 my $htmlFilename = $ARGV[0];
 $buildOrderFilename = $ARGV[1];
+if ($#ARGV > 1) { $GO = $ARGV[2]; }
 
 die ">>>ERROR:  Could not open $htmlFilename for write\n" unless (open(HTMLFILE, '>'.$htmlFilename));
 
@@ -377,7 +381,8 @@ else
 
 die ">>>ERROR:  Directory $epicsModulesTop does not exist!\n" unless -d $epicsModulesTop;
 
-confirmVars;
+if (!($GO eq "GO"))
+   { confirmVars; }
 
 # This version won't use a module list file
 # It will start in EPICS_MODULES_TOP
