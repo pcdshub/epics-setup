@@ -32,9 +32,9 @@ sub usage()
         print "*** NO UPDATES are done to configure/RELEASE. ***\n";
         print "============================================================================\n";
         print " Script calling examples:\n";
-        print "   modulesToDev.pl ModulesList.txt sandbox\n";
+        print "   modulesToDevNOWRITE.pl ModulesList.txt sandbox\n";
         print "\n";
-        print "   modulesToDev.pl ModulesList.txt sandbox Devl\n";
+        print "   modulesToDevNOWRITE.pl ModulesList.txt sandbox Devl\n";
         print "============================================================================\n";
         print " These environment variables must be defined:\n";
         print "    CVSROOT\n";
@@ -70,7 +70,7 @@ sub confirmVars()
 # comments and are not processed
 #
 ##################################################
-print ">>>modulesToDev.pl\n";
+print ">>>modulesToDevNOWRITE.pl\n";
 if ($#ARGV < 1) { usage(); }
 if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help" || $ARGV[0] eq "-help" || $ARGV[0] eq "-HELP" || $ARGV[0] eq "-Help" ) { usage(); } 
 my $startDir = getcwd();
