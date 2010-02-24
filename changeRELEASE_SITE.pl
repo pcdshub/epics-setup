@@ -17,7 +17,7 @@ sub usage()
 {
         print "===================================================================\n";
 	print "Usage:\n";
-        print "changeRELEASESITE.pl Parameter1 Parameter2\n";
+        print "changeRELEASE_SITE.pl Parameter1 Parameter2\n";
         print "\n";
         print "   Parameter1 = new EPICS_SITE_TOP directory\n";
         print "                e.g. /usr/local/lcls\n";
@@ -26,7 +26,7 @@ sub usage()
         print "                e.g. /usr/local/epics/modules/fastFeedback/modules\n";
         print "=====================================================================\n";
         print " Script calling example:\n";
-        print "   changeRELEASESITE.pl /usr/local /usr/local/epics/modules/fastFeedback/modules\n";
+        print "   changeRELEASE_SITE.pl /usr/local /usr/local/epics/modules/fastFeedback/modules\n";
         print "=====================================================================\n";
         print " operates on all RELEASE_SITE files starting at the Parameter2 dir\n";
         print "=====================================================================\n";
