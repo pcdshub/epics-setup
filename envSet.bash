@@ -11,6 +11,8 @@
 #
 #--------------------------------------------------------------
 #  Mod:
+#        01-April-2010, J. Zhou
+#         updated EPICS_CA_ADDR_LIST to use Photon gateway 
 #        04-Aug-2009, J Zhou
 #         added 172.21.40.63:5068 to access the undulator IOCs through a gateway
 #        29-Jul-2009, J Zhou
@@ -79,7 +81,7 @@ if [ -d /afs/slac/g/lcls ]; then
     fi
 elif [ -d /usr/local/lcls ]; then
 	export EPICS_CA_AUTO_ADDR_LIST=NO
-	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="172.27.11.255:5068 mcc-dmz 172.21.36.255:5064 172.21.40.63:5068"
+	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="172.27.11.255:5068 mcc-dmz 172.21.40.63:5064"
 	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5069"
 	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5068"
 	export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.151.11"
