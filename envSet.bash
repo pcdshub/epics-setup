@@ -11,7 +11,15 @@
 #
 #--------------------------------------------------------------
 #  Mod:
-#        01-April-2010, J. Zhou
+#        09-Aug-2010, J. Zhou
+#        explicitly defining EPICS_CAS_BEACON_ADDR_LIST to prevent softIOCs 
+#        started from command line via st.cmd from sending beacon messages 
+#        to wrong port. 
+#        add lcls-prod01:5061 to  EPICS_CA_ADDR_LIST temporarily to help with
+#        Linac Upgrade transition. Will be taken off when the transition is 
+#        done. 
+#        comment out EPICS_CAS_ as defult
+#        01-Apr-2010, J. Zhou
 #         updated EPICS_CA_ADDR_LIST to use Photon gateway 
 #        04-Aug-2009, J Zhou
 #         added 172.21.40.63:5068 to access the undulator IOCs through a gateway
@@ -81,11 +89,12 @@ if [ -d /afs/slac/g/lcls ]; then
     fi
 elif [ -d /usr/local/lcls ]; then
 	export EPICS_CA_AUTO_ADDR_LIST=NO
-	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="172.27.11.255:5068 mcc-dmz 172.21.40.63:5064"
+	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="172.27.11.255:5068 mcc-dmz 172.21.40.63:5064 134.79.151.21:5061"
 	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5069"
 	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5068"
 	export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.151.11"
-	export EPICS_IOC_LOG_INET; EPICS_IOC_LOG_INET="172.27.8.31"   
+	export EPICS_IOC_LOG_INET; EPICS_IOC_LOG_INET="172.27.8.31"
+        export EPICS_CAS_BEACON_ADDR_LIST; EPICS_CAS_BEACON_ADDR_LIST="172.27.11.255 mcc-dmz"  
 else
    echo "ERROR: this ${HOSTNAME} is not supported for LCLS dev/prod" 
    exit 1
@@ -93,10 +102,10 @@ fi
 
 export EPICS_CA_CONN_TMO; EPICS_CA_CONN_TMO="30.0"
 export EPICS_CA_BEACON_PERIOD; EPICS_CA_BEACON_PERIOD="15.0"
-export EPICS_CAS_INTF_ADDR_LIST; EPICS_CAS_INTF_ADDR_LIST=""
-export EPICS_CAS_BEACON_ADDR_LIST; EPICS_CAS_BEACON_ADDR_LIST=""
-export EPICS_CAS_AUTO_ADDR_LIST; EPICS_CAS_AUTO_ADDR_LIST=""
-export EPICS_CAS_SERVER_PORT; EPICS_CAS_SERVER_PORT=""
+#export EPICS_CAS_INTF_ADDR_LIST; EPICS_CAS_INTF_ADDR_LIST=""
+#export EPICS_CAS_BEACON_ADDR_LIST; EPICS_CAS_BEACON_ADDR_LIST=""
+#export EPICS_CAS_AUTO_ADDR_LIST; EPICS_CAS_AUTO_ADDR_LIST=""
+#export EPICS_CAS_SERVER_PORT; EPICS_CAS_SERVER_PORT=""
 export EPICS_TS_MIN_WEST; EPICS_TS_MIN_WEST="480"
 export EPICS_IOC_LOG_PORT; EPICS_IOC_LOG_PORT="7004"
 export EPICS_IOC_LOG_FILE_LIMIT; EPICS_IOC_LOG_FILE_LIMIT="1000000"
