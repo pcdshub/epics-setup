@@ -111,7 +111,7 @@ export EPICS_BASE_RELEASE=$EPICS_BASE_TOP/${EPICS_BASE_VER}
 export EPICS_EXTENSIONS=$EPICS_TOP/extensions/extensions-${EPICS_EXTENSIONS_VER}
 
 if [ -z $EPICS_MODULES_TOP ]; then
-   export EPICS_MODULES_TOP=$EPICS_TOP/modules/R3-14-8-2
+   export EPICS_MODULES_TOP=$EPICS_TOP/modules/${EPICS_MODULES_VER}
 fi
 if [ -z $EPICS_IOC_TOP ]; then
    export EPICS_IOC_TOP=$EPICS_TOP/iocTop

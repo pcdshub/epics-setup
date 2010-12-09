@@ -43,7 +43,6 @@ export EPICS_HOST_ARCH=""
 export EDMDATAFILES=""
 export EPICS_PR_LIST=""
 export EPICS_BASE_RELEASE=""
-export EPICS_BASE_VER=""
 export EPICS_EXTENSIONS=""
 export EPICS_MODULES_TOP=""
 #
@@ -73,6 +72,10 @@ fi
 if [ -z $EPICS_EXTENSIONS_VER ]; then
 	export EPICS_EXTENSIONS_VER=R3-14-8-2
 fi
+if [ -z $EPICS_MODULES_VER ]; then
+        export EPICS_MODULES_VER=R3-14-8-2
+fi
+
 if [ -z $JAVAVER ]; then
         export JAVAVER=1.5.0_14
 fi
