@@ -13,6 +13,7 @@ fi
 
 export EPICS_BASE_VER=base-R3-14-12
 export EPICS_EXTENSIONS_VER=R3-14-12
+export EPICS_MODULES_VER=R3-14-12
 
-source ${FACET_ROOT}/tools/script/ENVS.bash
+source ${FACET_ROOT}/tools/script/ENVS_facet.bash
 
