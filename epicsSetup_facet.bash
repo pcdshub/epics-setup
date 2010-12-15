@@ -134,7 +134,7 @@ else
   export IOC=$FACET_TFTP/ioc/iocBoot
 fi
 export IOC_DATA=$EPICS_DATA/ioc/data
-export IOC_OWNER=laci
+export IOC_OWNER=flaci
 export IOC_OWNER_OS=Linux
 export IOC_OWNER_SHELL=bash
 export IOC_SCREEN=$EPICS_TOP/iocCommon/All/$IOCCONSOLE_ENV
