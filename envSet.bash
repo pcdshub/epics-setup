@@ -11,6 +11,8 @@
 #
 #--------------------------------------------------------------
 #  Mod:
+#        07-Jan-2011, brobeck
+#	 Added MCCLOGIN check for env setup
 #        09-Aug-2010, J. Zhou
 #        explicitly defining EPICS_CAS_BEACON_ADDR_LIST to prevent softIOCs 
 #        started from command line via st.cmd from sending beacon messages 
@@ -73,7 +75,7 @@
 #
 if [ -d /afs/slac/g/lcls ]; then
     # setup for dev
-    if [ -z `echo $HOSTNAME | grep lcls-prod` ]; then
+    if [ -z `echo $HOSTNAME | grep lcls-prod` ] && [ -z `echo $HOSTNAME | grep mcclogin` ] ; then
 	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="134.79.219.255"
 	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5067"
 	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5066"
