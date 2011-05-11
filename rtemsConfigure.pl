@@ -60,6 +60,8 @@ sub wanted
 sub modMakefileInc($$$)
 {
    my $fName = shift;
+   # we don't need prefix and exeprefix here anymore, because it's just a straight substitution
+   # leave the params in for now tho, in case there's another syntax change.
    my $prefix = shift;
    my $execprefix = shift;
  
@@ -85,11 +87,26 @@ sub modMakefileInc($$$)
    foreach $line (@lines)
       {
       if ($line =~ /^\s*prefix\s*=\s*/)
-         { print OUT "prefix = $prefix\n"; }
+         { 
+         # replace /afs/slac/package/rtems/ with /usr/local/lcls/rtems/rtems-
+         # example: 
+         # /afs/slac/package/rtems/4.9.3//target/rtems_p0 
+         # becomes 
+         # /usr/local/lcls/rtems/rtems-4.9.3//target/rtems_p0
+         $line =~ s/\/afs\/slac\/package\/rtems\//\/usr\/local\/lcls\/rtems\/rtems-/g;
+         }
       elsif ($line =~ /exec_prefix\s*=\s*/)
-         { print OUT "exec_prefix = $execprefix\n"; }
-      else
-         { print OUT $line; }
+         { 
+         # same as for prefix, but keep it separate in case it diverges again
+         # replace /afs/slac/package/rtems/ with /usr/local/lcls/rtems/rtems-
+         # example: 
+         # /afs/slac/package/rtems/4.9.3//target/rtems_p0/i386-rtems 
+         # becomes 
+         # /usr/local/lcls/rtems/rtems-4.9.3//target/rtems_p0/i386-rtems
+         $line =~ s/\/afs\/slac\/package\/rtems\//\/usr\/local\/lcls\/rtems\/rtems-/g;
+         }
+
+      print OUT $line; 
          
       }
          
@@ -235,8 +252,8 @@ else
          }
       else
          { 
-         print ">>>setting prefix: $prefix\n";
-         print ">>>setting exec_prefix: $execprefix\n";
+#         print ">>>setting prefix: $prefix\n";
+#         print ">>>setting exec_prefix: $execprefix\n";
          modMakefileInc($makeFileInc, $prefix, $execprefix); 
          }
       }
