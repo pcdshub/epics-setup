@@ -11,6 +11,8 @@
 #
 #--------------------------------------------------------------
 #  Mod:
+#        13-May-2011, Judy Rock
+#        add 172.27.8.31:5070 to EPICS_CA_ADDR_LIST for accessing LCLS PVs 
 #        02-Nov-2010, J. Zhou
 #        cloned from LCLS envSet.bash
 #        09-Aug-2010, J. Zhou
@@ -91,7 +93,7 @@ if [ -d /afs/slac/g/facet ]; then
     fi
 elif [ -d /usr/local/facet ]; then
 	export EPICS_CA_AUTO_ADDR_LIST=NO
-	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="172.27.75.255:5068 mcc-dmz"
+	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="172.27.75.255:5068 mcc-dmz 172.27.8.31:5070"
 	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5069"
 	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5068"
 	export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.151.11"
