@@ -65,11 +65,16 @@ else
 fi
 
 if [ -z $EPICS_BASE_VER ]; then
-	export EPICS_BASE_VER=base-R3-14-8-2-lcls2
+	export EPICS_BASE_VER=base-R3-14-8-2-lcls6
 fi
 if [ -z $EPICS_EXTENSIONS_VER ]; then
 	export EPICS_EXTENSIONS_VER=R3-14-8-2
 fi
+
+if [ -z $EPICS_MODULES_VER ]; then
+        export EPICS_MODULES_VER=R3-14-8-2
+fi
+
 if [ -z $JAVAVER ]; then
         export JAVAVER=1.5.0_14
 fi
