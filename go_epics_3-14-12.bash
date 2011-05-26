@@ -13,6 +13,7 @@ fi
 export EPICS_BASE_VER=base-R3-14-12
 export EPICS_EXTENSIONS_VER=R3-14-12
 export EPICS_MODULES_VER=R3-14-12
+export EPICS_MODULES_TOP=$EPICS_TOP/modules/${EPICS_MODULES_VER}
 
 source ${LCLS_ROOT}/tools/script/ENVS.bash
 
