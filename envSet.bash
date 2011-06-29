@@ -11,6 +11,8 @@
 #
 #--------------------------------------------------------------
 #  Mod:
+#        28-Jun-2011, J. Rock
+#        Updated EPICS_CA_ADDR_LIST to include facet gateway host
 #        18-May-2011, J. Zhou
 #        Updated EPICS_CA_ADDR_LIST for prod on dev 
 #        07-Jan-2011, brobeck
@@ -93,7 +95,7 @@ if [ -d /afs/slac/g/lcls ]; then
     fi
 elif [ -d /usr/local/lcls ]; then
 	export EPICS_CA_AUTO_ADDR_LIST=NO
-	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="172.27.11.255:5068 mcc-dmz 172.21.40.63:5064 134.79.151.21:5061"
+	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="172.27.11.255:5068 mcc-dmz 172.21.40.63:5064 134.79.151.21:5061 172.27.72.24:5070"
 	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5069"
 	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5068"
 	export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.151.11"
