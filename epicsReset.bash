@@ -43,6 +43,7 @@ export EDMDATAFILES=""
 export EPICS_PR_LIST=""
 export EPICS_BASE_RELEASE=""
 export EPICS_EXTENSIONS=""
+export EPICS_MODULES_TOP=""
 #
 export MATLAB_ROOT=""
 export MATLAB_VER=""
