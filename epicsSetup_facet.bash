@@ -6,6 +6,8 @@
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
 #  History:                                                         # 
+#  19Jul2011 Jingchen Zhou changed setup.sh to setup_facet for edm  #
+#  01Feb2011 jrock         changed ALHCONFIGFILES to facet dir      #
 #  02Nov2010 Jingchen Zhou Cloned from LCLS epicsSetup.bash         #
 #  17Nov2009 Jingchen Zhou Moved CVS part from epicsSetup.bash to   #
 #                          commonSetup.bash                         #
@@ -294,8 +296,8 @@ export EPICS_PR_LIST=$EPICS_PR_LIST:hpcolorb280r202:hpb280r202:hpcolorb280r202t:
 # For edm 
 ########################################################################
 export EDMSETUP=$TOOLS/edm/config
-if [ -r $EDMSETUP/setup.sh ]; then
-  . $EDMSETUP/setup.sh > /dev/null
+if [ -r $EDMSETUP/setup_facet.sh ]; then
+  . $EDMSETUP/setup_facet.sh > /dev/null
 fi
 
 ###############################################
@@ -320,7 +322,7 @@ export ARCHDATAFILES=$TOOLS_DATA/ArchiveBrowser/data
 ###############################################
 # For Alarm Handler
 ###############################################
-export ALHCONFIGFILES=$TOOLS/alh/config
+export ALHCONFIGFILES=$TOOLS/alh/config-facet
 export ALARMHANDLER=$ALHCONFIGFILES
 export ALHLOGFILES=$TOOLS_DATA/alh/log
 export NETSCAPEPATH=firefox
