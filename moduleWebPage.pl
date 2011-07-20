@@ -284,11 +284,88 @@ push @{ $moduleHash{$version} }, $lineSplit[1];
    my $maintPerson = "<br>";
 
    if ($moduleName =~ /^autosave/)
-      { $maintPerson = "Mike Zelazny"; }
-   elsif ($moduleName =~ /^EDT_CL/)
-      { $maintPerson = "Sheng Peng"; }
+      { $maintPerson = "Zheqiao Geng"; }
+   elsif ($moduleName =~ /^epm2000/)
+      { $maintPerson = "Zheqiao Geng"; }
+   elsif ($moduleName =~ /^restore/)
+      { $maintPerson = "Zheqiao Geng"; }
+#
+   elsif ($moduleName =~ /^event/)
+      { $maintPerson = "Kukhee Kim"; }
+   elsif ($moduleName =~ /^genPoly/)
+      { $maintPerson = "Kukhee Kim"; }
    elsif ($moduleName =~ /^caenADC/)
-      { $maintPerson = "Arturo Alarcon"; }
+      { $maintPerson = "Kukhee Kim"; }
+   elsif ($moduleName =~ /^fcom/)
+      { $maintPerson = "Kukhee Kim"; }
+   elsif ($moduleName =~ /^VHSxOx/)
+      { $maintPerson = "Kukhee Kim"; }
+   elsif ($moduleName =~ /^gtr/)
+      { $maintPerson = "Kukhee Kim"; }
+#
+   elsif ($moduleName =~ /^miscUtils/)
+      { $maintPerson = "Till Straumann"; }
+   elsif ($moduleName =~ /^devBusMapped/)
+      { $maintPerson = "Till Straumann"; }
+   elsif ($moduleName =~ /^udpComm/)
+      { $maintPerson = "Till Straumann"; }
+   elsif ($moduleName =~ /^plcAdmin/)
+      { $maintPerson = "Till Straumann"; }
+#
+   elsif ($moduleName =~ /^caPutLog/)
+      { $maintPerson = "Ernest Williams"; }
+   elsif ($moduleName =~ /^calc/)
+      { $maintPerson = "Ernest Williams"; }
+   elsif ($moduleName =~ /^ics121/)
+      { $maintPerson = "Ernest Williams"; }
+   elsif ($moduleName =~ /^ics130/)
+      { $maintPerson = "Ernest Williams"; }
+   elsif ($moduleName =~ /^ipac/)
+      { $maintPerson = "Ernest Williams"; }
+   elsif ($moduleName =~ /^snmp/)
+      { $maintPerson = "Ernest Williams"; }
+   elsif ($moduleName =~ /^sscan/)
+      { $maintPerson = "Ernest Williams"; }
+   elsif ($moduleName =~ /^iocAdmin/)
+      { $maintPerson = "Ernest Williams"; }
+   elsif ($moduleName =~ /^asyn/)
+      { $maintPerson = "Ernest Williams"; }
+   elsif ($moduleName =~ /^ipUnidig/)
+      { $maintPerson = "Ernest Williams"; }
+   elsif ($moduleName =~ /^modbus/)
+      { $maintPerson = "Ernest Williams"; }
+   elsif ($moduleName =~ /^ssi/)
+      { $maintPerson = "Ernest Williams"; }
+   elsif ($moduleName =~ /^motor/)
+      { $maintPerson = "Ernest Williams"; }
+   elsif ($moduleName =~ /^rtemsutils/)
+      { $maintPerson = "Ernest Williams"; }
+   elsif ($moduleName =~ /^pvlistServer/)
+      { $maintPerson = "Ernest Williams"; }
+#
+   elsif ($moduleName =~ /^aSubRecord/)
+      { $maintPerson = "Sonya Hoobler"; }
+   elsif ($moduleName =~ /^Bx9000_MBT/)
+      { $maintPerson = "Sonya Hoobler"; }
+   elsif ($moduleName =~ /^ip470/)
+      { $maintPerson = "Sonya Hoobler"; }
+#
+   elsif ($moduleName =~ /^EDT_CL/)
+      { $maintPerson = "Qing Yang"; }
+   elsif ($moduleName =~ /^ip231/)
+      { $maintPerson = "Qing Yang"; }
+   elsif ($moduleName =~ /^ip330/)
+      { $maintPerson = "Qing Yang"; }
+   elsif ($moduleName =~ /^xy244/)
+      { $maintPerson = "Qing Yang"; }
+#
+   elsif ($moduleName =~ /^Hp5318/)
+      { $maintPerson = "Zen Szalata"; }
+   elsif ($moduleName =~ /^tds3000/)
+      { $maintPerson = "Zen Szalata"; }
+   elsif ($moduleName =~ /^LeCroy_ENET/)
+      { $maintPerson = "Zen Szalata"; }
+#
    elsif ($moduleName =~ /^vmeCardRecord/)
       { $maintPerson = "Kristi Luchini"; }
    elsif ($moduleName =~ /^ether_ip/)
@@ -297,52 +374,35 @@ push @{ $moduleHash{$version} }, $lineSplit[1];
       { $maintPerson = "Kristi Luchini"; }
    elsif ($moduleName =~ /^seq/)
       { $maintPerson = "Kristi Luchini"; }
-   elsif ($moduleName =~ /^VHSxOx/)
-      { $maintPerson = "Kristi Luchini"; }
-   elsif ($moduleName =~ /^generalTime/)
-      { $maintPerson = "Sheng Peng"; }
    elsif ($moduleName =~ /^genSub/)
       { $maintPerson = "Kristi Luchini"; }
-   elsif ($moduleName =~ /^ipac/)
-      { $maintPerson = "Sheng Peng"; }
    elsif ($moduleName =~ /^sSubRecord/)
-      { $maintPerson = "Stepanie Allison"; }
-   elsif ($moduleName =~ /^iocAdmin/)
-      { $maintPerson = "Stepanie Allison"; }
-   elsif ($moduleName =~ /^asyn/)
-      { $maintPerson = "Stephen Schuh"; }
-   elsif ($moduleName =~ /^ip231/)
-      { $maintPerson = "Sheng Peng"; }
-   elsif ($moduleName =~ /^ip330/)
-      { $maintPerson = "Sheng Peng"; }
-   elsif ($moduleName =~ /^xy244/)
-      { $maintPerson = "Sheng Peng"; }
-   elsif ($moduleName =~ /^streamdevice/)
-      { $maintPerson = "Stephen Schuh"; }
-   elsif ($moduleName =~ /^event/)
-      { $maintPerson = "Stepanie Allison"; }
-   elsif ($moduleName =~ /^hytecMotor/)
-      { $maintPerson = "Arturo Alarcon"; }
+      { $maintPerson = "Kristi Luchini"; }
    elsif ($moduleName =~ /^hytec/)
       { $maintPerson = "Kristi Luchini"; }
    elsif ($moduleName =~ /^vsam/)
       { $maintPerson = "Kristi Luchini"; }
    elsif ($moduleName =~ /^etherPSC/)
       { $maintPerson = "Kristi Luchini"; }
-   elsif ($moduleName =~ /^LeCroy_ENET/)
-      { $maintPerson = "Diane Fairley"; }
-   elsif ($moduleName =~ /^ip470/)
-      { $maintPerson = "Sonya Hoobler"; }
-   elsif ($moduleName =~ /^miscUtils/)
-      { $maintPerson = "Kristi Luchini"; }
+#
+   elsif ($moduleName =~ /^generalTime/)
+      { $maintPerson = "Shantha Condamoor"; }
+#
+   elsif ($moduleName =~ /^sqlite3/)
+      { $maintPerson = "Luciano Piccoli"; }
+   elsif ($moduleName =~ /^mps/)
+      { $maintPerson = "Luciano Piccoli"; }
+#
+   elsif ($moduleName =~ /^streamdevice/)
+      { $maintPerson = "Matt Boyes"; }
+   elsif ($moduleName =~ /^pau/)
+      { $maintPerson = "Matt Boyes"; }
+#
+   elsif ($moduleName =~ /^hytecMotor/)
+      { $maintPerson = "Arturo Alarcon"; }
    elsif ($moduleName =~ /^highlandLVDTV/)
       { $maintPerson = "Arturo Alarcon"; }
-   elsif ($moduleName =~ /^motor/)
-      { $maintPerson = "Arturo Alarcon"; }
-   elsif ($moduleName =~ /^restore/)
-      { $maintPerson = "Stephanie Allison"; }
-   elsif ($moduleName =~ /^devBusMapped/)
-      { $maintPerson = "Till Straumann"; }
+#
    elsif ($moduleName =~ /^micro/)
       { $maintPerson = "Diane Fairley"; }
    
