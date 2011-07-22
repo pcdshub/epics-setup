@@ -5,9 +5,9 @@
 #######################################################################
 # for now, moduleBuilder.pl is in the current working directory
 
-cd /usr/local/lcls/epics/setup
-
 source /usr/local/lcls/tools/script/ENVS.bash
+cp /usr/local/lcls/epics/setup/moduleWebPageTop.html /tmp/.
+
 export RTEMS_VER=
 
 # cd to tmp so that the build order link in the web page points to "./"

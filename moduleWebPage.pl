@@ -95,8 +95,8 @@ sub startHTMLFILE()
   if (!open(TOPFILE, "./moduleWebPageTop.html"))
      {
      print "WARNING: moduleWebPageTop.html file was not found\n";
-     print HTMLFILE "<title>LCLS EPICS Software Modules</title>\n";
-     print HTMLFILE "<h2><font color=blue>LCLS EPICS Software Modules</font></h2>\n";
+     print HTMLFILE "<title>EPICS Software Modules</title>\n";
+     print HTMLFILE "<h2><font color=blue>EPICS Software Modules</font></h2>\n";
      print HTMLFILE "</head>\n";
      print HTMLFILE "<body>\n";
      print HTMLFILE "<p>\n";
