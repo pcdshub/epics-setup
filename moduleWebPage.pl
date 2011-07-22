@@ -92,7 +92,7 @@ sub startHTMLFILE()
 #  print HTMLFILE "</head>\n";
 #  print HTMLFILE "<p>\n";
   
-  if (!open(TOPFILE, "/usr/local/lcls/epics/setup/NOmoduleWebPageTop.html"))
+  if (!open(TOPFILE, "/usr/local/lcls/epics/setup/moduleWebPageTop.html"))
      {
      print "WARNING: moduleWebPageTop.html file was not found\n";
      print HTMLFILE "<title>LCLS EPICS Software Modules</title>\n";
@@ -115,8 +115,7 @@ sub startHTMLFILE()
  
   
   print HTMLFILE "<p style=\"margin: 5pt 0.5in;\">\n";
-  print HTMLFILE "<b>EPICS Base:</b> $epicsBaseVer<br>\n";
-  print HTMLFILE "<b>Operating system:</b> RTEMS $rtemsVer<br>\n";
+  print HTMLFILE "<b>Operating system:</b> RTEMS <br>\n";
   print HTMLFILE "<b>CVS Root:</b> /afs/slac/g/lcls/cvs<br>\n";
   print HTMLFILE "<b>Build directory:</b> $epicsModulesTop<br>\n";
 #  print HTMLFILE "<b>Host:</b> $hostName<br>\n";
