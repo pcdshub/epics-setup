@@ -7,6 +7,7 @@
 
 source /afs/slac/g/lcls/tools/script/ENVS.bash
 source /afs/slac/g/lcls/epics/setup/go_epics_3-14-8-2-lcls6_p1.bash
+cp /afs/slac/g/lcls/epics/setup/moduleWebPageTop.html /tmp/.
 export RTEMS_VER=
 cd /tmp
 /afs/slac/g/lcls/epics/setup/moduleWebPage.pl ./dev_modules.html ./dev_modules_order.txt GO
