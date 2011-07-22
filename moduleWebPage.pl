@@ -92,7 +92,7 @@ sub startHTMLFILE()
 #  print HTMLFILE "</head>\n";
 #  print HTMLFILE "<p>\n";
   
-  if (!open(TOPFILE, "moduleWebPageTop.html"))
+  if (!open(TOPFILE, "/usr/local/lcls/epics/setup/moduleWebPageTop.html"))
      {
      print "WARNING: moduleWebPageTop.html file was not found\n";
      print HTMLFILE "<title>EPICS Software Modules</title>\n";
