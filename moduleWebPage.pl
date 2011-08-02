@@ -178,11 +178,43 @@ foreach my $mod (@moduleOrderList)
 return 0;
 }
 
-sub addModuleToHTML($$$)
+sub getBaseVer($)
+{
+   my $releaseSiteFile = shift;
+   my $epicsVer = "notFound";
+
+   if (!(open(RELSITEFILE, $releaseSiteFile)))
+     {
+     print "Error opening RELEASE_SITE file\n";
+     return $epicsVer;
+     }
+ 
+   my @lines = <RELSITEFILE>;
+   close(RELSITEFILE);
+   my $line;
+   foreach $line (@lines)
+      {
+      # remove leading whitespace and final cr
+      $line =~ s/^\s+//;
+      chop $line;
+      if ($line =~ /^EPICS_BASE_VER/)
+         {
+         my ($label, $ver) = split /=/, $line;
+         # do any ver string checking here if nec, for now
+         $epicsVer = $ver;
+         }
+      }
+
+   return $epicsVer;
+}
+
+
+sub addModuleToHTML($$$$)
 {
    my $moduleName = shift;
    my $version = shift;
    my $releaseConfigDir= shift;
+   my $baseVer= shift;
    
    my $ucVersion = uc $version;
 
@@ -270,6 +302,9 @@ closedir RELDIR;
             else
                { ++$firstDep; }
 
+            # translate $(EPICS_BASE_VER) to the real base ver
+            if ($baseVer ne "notFound")
+               { $lineSplit[1] =~ s/\$\(EPICS_BASE_VER\)/$baseVer/; }
             print HTMLFILE $modLabel . " = " . $lineSplit[1]; 
 #            push @deps, $lineSplit[1];
 push @{ $moduleHash{$version} }, $lineSplit[1];
@@ -501,11 +536,15 @@ opendir MODDIR, $moduleDir or die "couldnt open directory $moduleDir\n";
        if (!(-d $moduleBuildDir))
           { print ">>>$moduleBuildDir is not a directory\n"; next VERSION; }
 
+       # first get EPICS_BASE_VER from RELEASE_SITE, if it exists
+       my $thisBaseVer = getBaseVer($moduleBuildDir . "/RELEASE_SITE");
+       # print "BASE VER IS $thisBaseVer\n";
+
        # search for dependencies in configure/RELEASE
        my $releaseConfigDir = $moduleBuildDir . "/configure";
 
        print "$moduleName  $version  $releaseConfigDir\n";
-       addModuleToHTML($moduleName, $version, $releaseConfigDir);
+       addModuleToHTML($moduleName, $version, $releaseConfigDir, $thisBaseVer);
 
        # return to starting point, in case of relative directory specification
        #chdir $startDir;
