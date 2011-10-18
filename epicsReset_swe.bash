@@ -39,7 +39,7 @@ export CLUSTER_DIR=""
 #export LD_LIBRARY_PATH=""
 export CLASSPATH=""
 export JAVA_HOME=""
-export JAVA_VER=""
+#export JAVA_VER=""
 export NETBEANS_HOME=""
 export NETBEANS_VER=""
 #
@@ -83,10 +83,10 @@ if [ -z $EPICS_IOC_VER ]; then
 fi
 
 
-if [ -z $JAVA_VER ]; then
+#if [ -z $JAVA_VER ]; then
 #        export JAVA_VER=1.7.0
-        export JAVA_VER=1.6.0_27
-fi
+#        export JAVA_VER=1.6.0_27
+#fi
 
 if [ -z $NETBEANS_VER ]; then
         export NETBEANS_VER=7.0.1

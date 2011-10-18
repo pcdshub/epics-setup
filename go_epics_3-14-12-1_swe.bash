@@ -8,13 +8,9 @@ if [ -d /afs/slac/g/cd/swe/rhel6 ]; then
 fi
 
 
-export EPICS_BASE_VER=base-R3-14-12
-export EPICS_EXTENSIONS_VER=R3-14-12
-export EPICS_MODULES_VER=R3-14-12
-export EPICS_IOC_VER=R3-14-12
-
-# Use latest Java:
-export JAVA_VER=1.7.0
+export EPICS_BASE_VER=base-R3-14-12-1
+export EPICS_EXTENSIONS_VER=R3-14-12-1
+export EPICS_MODULES_VER=R3-14-12-1
 
 source ${SWE_ROOT}/tools/script/ENVS_swe.bash
 
