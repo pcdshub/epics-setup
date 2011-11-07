@@ -87,6 +87,7 @@ fi
 #
 export RTEMS_DEV=/afs/slac/package/rtems
 export VXWORKS_DEV=/afs/slac/package/vxworks
+export PACKAGE=$SWE_ROOT/package
 export TOOLS=$SWE_ROOT/tools
 export TOOLS_DATA=$SWE_DATA/tools
 export FACET_WWW=$WWW_ROOT/grp/cd

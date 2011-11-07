@@ -1,10 +1,10 @@
-# Reset for EPICS R3.14.12
+# Reset for EPICS R3.14.12.1
 # You just need to source this file and you
 # are ready :)
 
 # Define SWE_ROOT, based on AFS for development
-if [ -d /afs/slac/g/cd/swe/rhel6 ]; then
-        export SWE_ROOT=/afs/slac/g/cd/swe/rhel6
+if [ -d /afs/slac/g/cd/swe/rhel5 ]; then
+        export SWE_ROOT=/afs/slac/g/cd/swe/rhel5
 fi
 
 
