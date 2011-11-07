@@ -65,8 +65,8 @@ HOSTNAME=`hostname`
 #
 # Set up SWE_ROOT
 #
-if [ -d /afs/slac/g/cd/swe/rhel6 ]; then
-   export SWE_ROOT=/afs/slac/g/cd/swe/rhel6
+if [ -d /afs/slac/g/cd/swe/rhel5 ]; then
+   export SWE_ROOT=/afs/slac/g/cd/swe/rhel5
    export IOCCONSOLE_ENV=Dev
 fi
 #
@@ -191,7 +191,7 @@ fi
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/amd64/server
   fi
   if [ -z `echo $LD_LIBRARY_PATH | grep /usr/local/lib` ]; then
-    export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
   fi
 #
 # Add EPICS base and extensions to LD_LIBRARY_PATH
