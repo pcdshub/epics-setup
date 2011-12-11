@@ -184,12 +184,12 @@ fi
   export SCREENBIN=/home/screen/bin
   
   # to find libjava.so
-  if [ -z `echo $LD_LIBRARY_PATH | grep $JAVA_HOME/jre/lib/amd64` ]; then
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/amd64
+  if [ -z `echo $LD_LIBRARY_PATH | grep $JAVA_HOME/jre/lib/i386` ]; then
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/i386
   fi
   # to find libjvm.so
-  if [ -z `echo $LD_LIBRARY_PATH | grep $JAVA_HOME/jre/lib/amd64/server` ]; then
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/amd64/server
+  if [ -z `echo $LD_LIBRARY_PATH | grep $JAVA_HOME/jre/lib/i386/server` ]; then
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/i386/server
   fi
   if [ -z `echo $LD_LIBRARY_PATH | grep /usr/local/lib` ]; then
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
