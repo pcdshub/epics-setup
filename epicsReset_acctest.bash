@@ -15,6 +15,8 @@
 #                          SCCS                                     #
 #  14Dec2009 Jingchen Zhou removed reset LD_LIBRARY_PATH            #
 #  01Nov2011 Jingchen Zhou updated for ACCTEST
+#  05Nov2011 Jingchen Zhou added EPICS_VER to build up any EPICS 
+#                          version related environment variable
 #####################################################################
 #
 # Nullify old EPICS environment and export environment for LCLS EPICS.  
@@ -56,28 +58,18 @@ export CMLOG_PORT=""
 export CMLOG_CONFIG=""
 export CDEVTAGTABLE=""
 #
-# Set EPICS environment for AFS based development or NFS based 
-# standalone production   
+# Set EPICS environment for AFS based production environment for ACCTEST
 #
 if [ -d /afs/slac/g/acctest ]; then 
 	export ACCTEST_ROOT=/afs/slac/g/acctest
 fi
 
-if [ -z $EPICS_BASE_VER ]; then
-	export EPICS_BASE_VER=base-R3-14-12
-fi
+export EPICS_VER=R3-14-12
 
-if [ -z $EPICS_EXTENSIONS_VER ]; then
-	export EPICS_EXTENSIONS_VER=R3-14-12
-fi
-
-if [ -z $EPICS_MODULES_VER ]; then
-        export EPICS_MODULES_VER=R3-14-12
-fi
-
-if [ -z $EPICS_IOC_VER ]; then
-        export EPICS_IOC_VER=R3-14-12
-fi
+export EPICS_BASE_VER=base-${EPICS_VER}
+export EPICS_EXTENSIONS_VER=${EPICS_VER}
+export EPICS_MODULES_VER=${EPICS_VER}
+export EPICS_IOC_VER=${EPICS_VER}
 
 if [ -z $JAVAVER ]; then
         export JAVAVER=1.5.0_14
