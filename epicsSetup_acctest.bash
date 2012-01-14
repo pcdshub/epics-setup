@@ -1,12 +1,12 @@
 #####################################################################
 #                                                                   #
-#  Title: epicsSetup_facet.bash                                     #
+#  Title: epicsSetup_acctest.bash                                   #
 #                                                                   #
 #  Purpose: '.' this file to set your EPICS environment correctly   #
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
 #  History:                                                         # 
-#  01Nov2011 Jingchen Zhou cloned for Test Facility
+#  01Nov2011 Jingchen Zhou cloned for Test Facilities
 #  19Jul2011 Jingchen Zhou changed setup.sh to setup_facet for edm  #
 #  01Feb2011 jrock         changed ALHCONFIGFILES to facet dir      #
 #  02Nov2010 Jingchen Zhou Cloned from LCLS epicsSetup.bash         #
@@ -67,7 +67,7 @@ HOSTNAME=`hostname`
 #
 if [ -d /afs/slac/g/acctest ]; then
    export ACCTEST_ROOT=/afs/slac/g/acctest
-   export IOCCONSOLE_ENV=Dev
+   export IOCCONSOLE_ENV=Acctest
 else 
    export ACCTEST_ROOT=/usr/local/acctest 
    export IOCCONSOLE_ENV=Prod
@@ -90,7 +90,6 @@ if [ -d /afs/slac/www ]; then
 else 
    export WWW_ROOT=/usr/local/www 
 fi
-
 #
 # Set up the rest of environment variables based on above root variables 
 #
@@ -110,13 +109,8 @@ export EPICS_TOP=$ACCTEST_ROOT/epics
 export EPICS_BASE_TOP=$EPICS_TOP/base
 export EPICS_BASE_RELEASE=$EPICS_BASE_TOP/${EPICS_BASE_VER}
 export EPICS_EXTENSIONS=$EPICS_TOP/extensions/extensions-${EPICS_EXTENSIONS_VER}
-
-if [ -z $EPICS_MODULES_TOP ]; then
-   export EPICS_MODULES_TOP=$EPICS_TOP/modules/${EPICS_MODULES_VER}
-fi
-if [ -z $EPICS_IOC_TOP ]; then
-   export EPICS_IOC_TOP=$EPICS_TOP/iocTop/${EPICS_IOC_VER}
-fi
+export EPICS_MODULES_TOP=$EPICS_TOP/modules/${EPICS_MODULES_VER}
+export EPICS_IOC_TOP=$EPICS_TOP/iocTop/${EPICS_IOC_VER}
 
 export APP=$EPICS_IOC_TOP
 
@@ -135,7 +129,7 @@ else
   export IOC=$ACCTEST_TFTP/ioc/iocBoot
 fi
 export IOC_DATA=$EPICS_DATA/ioc/data
-export IOC_OWNER=flaci
+export IOC_OWNER=acctf
 export IOC_OWNER_OS=Linux
 export IOC_OWNER_SHELL=bash
 export IOC_SCREEN=$EPICS_TOP/iocCommon/All/$IOCCONSOLE_ENV
@@ -167,19 +161,19 @@ fi
 # Add xal and tool scripts to PATH
 #
 if [ -z `echo $PATH | grep $TOOLS/bin/$EPICS_HOST_ARCH` ]; then
-  export PATH=$PATH:$TOOLS/bin/$EPICS_HOST_ARCH
+  export PATH=$TOOLS/bin/$EPICS_HOST_ARCH:$PATH
 fi 
 if [ -z `echo $PATH | grep $TOOLS/script` ]; then
-  export PATH=$PATH:$TOOLS/script
+  export PATH=$TOOLS/script:$PATH
 fi 
 if [ -z `echo $PATH | grep $TOOLS/edm/script` ]; then
-  export PATH=$PATH:$TOOLS/edm/script
+  export PATH=$TOOLS/edm/script:$PATH
 fi
 #
 # Add $ACCTEST_ROOT/bin to PATH
 #
 if [ -z `echo $PATH | grep $ACCTEST_ROOT/bin` ]; then
-  export PATH=$PATH:$ACCTEST_ROOT/bin
+  export PATH=$ACCTEST_ROOT/bin:$PATH
 fi
 #
 # Add X to PATH
@@ -215,15 +209,15 @@ if [ $HOST_ARCH=="Linux" ]; then
   fi
   # to find libjava.so
   if [ -z `echo $LD_LIBRARY_PATH | grep $JAVA_HOME/jre/lib/i386` ]; then
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/i386
+    export LD_LIBRARY_PATH=$JAVA_HOME/jre/lib/i386:$LD_LIBRARY_PATH
   fi
   # to find libjvm.so
   if [ -z `echo $LD_LIBRARY_PATH | grep $JAVA_HOME/jre/lib/i386/server` ]; then
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/i386/server
+    export LD_LIBRARY_PATH=$JAVA_HOME/jre/lib/i386/server:$LD_LIBRARY_PATH
   fi
   # to find libtcl8.5.so and libtk8.5.so
   if [ -z `echo $LD_LIBRARY_PATH | grep $ACCTEST_ROOT/package/python/tcltk/lib` ]; then
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$ACCTEST_ROOT/package/python/tcltk/lib
+    export LD_LIBRARY_PATH=$ACCTEST_ROOT/package/python/tcltk/lib:$LD_LIBRARY_PATH
   fi
 else
   if [ $HOST_ARCH=="solaris" ]; then
@@ -255,16 +249,16 @@ fi
 # Add EPICS base and extensions to LD_LIBRARY_PATH
 #
 if [ -z `echo $LD_LIBRARY_PATH | grep $EPICS_BASE_RELEASE/lib/$EPICS_HOST_ARCH` ]; then
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$EPICS_BASE_RELEASE/lib/$EPICS_HOST_ARCH
+  export LD_LIBRARY_PATH=$EPICS_BASE_RELEASE/lib/$EPICS_HOST_ARCH:$LD_LIBRARY_PATH
 fi
 if [ -z `echo $LD_LIBRARY_PATH | grep $EPICS_EXTENSIONS/lib/$EPICS_HOST_ARCH` ]; then
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$EPICS_EXTENSIONS/lib/$EPICS_HOST_ARCH
+  export LD_LIBRARY_PATH=$EPICS_EXTENSIONS/lib/$EPICS_HOST_ARCH:$LD_LIBRARY_PATH
 fi
 #
 # Add xal libraries to LD_LIBRARY_PATH
 #
 if [ -z `echo $LD_LIBRARY_PATH | grep $TOOLS/lib/$EPICS_HOST_ARCH` ]; then
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$TOOLS/lib/$EPICS_HOST_ARCH
+  export LD_LIBRARY_PATH=$TOOLS/lib/$EPICS_HOST_ARCH:$LD_LIBRARY_PATH
 fi
 
 if [ ! -z $DEBUG ]; then
@@ -329,7 +323,7 @@ export NETSCAPEPATH=firefox
 ########################################################################
 # For cmlog
 ########################################################################
-export CMLOGSETUP=$ACCTEST_ROOT/package/cmlog/config
+export CMLOGSETUP=$ACCTEST_ROOT/tools/cmlog/config
 if [ -r $CMLOGSETUP/cmlogSetup.bash ]; then
   . $CMLOGSETUP/cmlogSetup.bash > /dev/null
 fi
