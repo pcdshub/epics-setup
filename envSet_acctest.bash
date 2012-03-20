@@ -11,16 +11,18 @@
 #  Mod:
 #        01-Nov-2011, J. Zhou
 #        Updated for Test Facilities
+#        19-Mar-2012, J. Zhou
+#        Commented out host check
 #==============================================================
 ACCTEST_ROOT=/afs/slac/g/acctest
 if [ ! -d $ACCTEST_ROOT ]; then
 	echo "ERROR: $ACCTEST_ROOT not available"
 	exit 1	
 fi
-if [ -z `echo $HOSTNAME | grep testfac-` ]; then
-        echo "ERROR: $HOSTNAME is not supported for Test Facilities" 
-        exit 1	 
-fi
+#if [ -z `echo $HOSTNAME | grep testfac-` ]; then
+#        echo "ERROR: $HOSTNAME is not supported for Test Facilities" 
+#        exit 1	 
+#fi
 # set up Channel Access
 export EPICS_CA_AUTO_ADDR_LIST=NO
 export EPICS_CA_ADDR_LIST="172.27.99.255"
