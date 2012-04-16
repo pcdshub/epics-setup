@@ -2,7 +2,7 @@
 # Define the version of modules needed by
 # IOC apps or other Support apps
 # =============================================================
-SEQ_MODULE_VERSION=seq-snapshot-2012-04-10
+SEQ_MODULE_VERSION=seq-R2-1-6_1-0
 RTEMSUTILS_MODULE_VERSION=rtemsutils-R1-0-0-lcls5
 AUTOSAVE_MODULE_VERSION=autosave-R4-8-lcls3
 CAPUTLOG_MODULE_VERSION=caPutLog-R3-3-0
