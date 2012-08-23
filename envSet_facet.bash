@@ -11,6 +11,15 @@
 #
 #--------------------------------------------------------------
 #  Mod:
+#      23-Aug-2012, Jingchen Zhou (Jingchen)
+#         Changed EPICS_IOC_LOG_INET to 172.27.72.24
+#      19-Jul-2011, Bob Hall (RDH)
+#         Changed the setting of environment variable EPICS_IOC_LOG_INET
+#         from the facet-daemon1 IP address (172.27.72.24) to the
+#         lcls-daemon2 IP address (172.27.8.31).  This will direct IOC
+#         log messages to the iocLogAndFwdServer on lcls-daemon2 now
+#         that there is only one combined LCLS/FACET message logging
+#         system instead of a separate FACET one.
 #        13-May-2011, Judy Rock
 #        add 172.27.8.31:5070 to EPICS_CA_ADDR_LIST for accessing LCLS PVs 
 #        02-Nov-2010, J. Zhou
