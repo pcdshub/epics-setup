@@ -76,7 +76,7 @@ if [ -z $EPICS_MODULES_VER ]; then
 fi
 
 if [ -z $JAVAVER ]; then
-        export JAVAVER=1.5.0_14
+        export JAVAVER=1.7.0_05
 fi
 
 . ${LCLS_ROOT}/epics/setup/epicsSetup.bash
