@@ -35,7 +35,7 @@ export ETC=""
 export CLUSTER_DIR=""
 # Now the rest.
 #export LD_LIBRARY_PATH=""
-export CLASSPATH=""
+#export CLASSPATH=""
 export JAVA_HOME=""
 #
 export EPICS_DISPLAY_PATH=""
