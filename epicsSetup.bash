@@ -104,11 +104,15 @@ export PHYSDATA=$LCLS_DATA/physics
 export EPICS_SETUP=$LCLS_ROOT/epics/setup
 export HOST_ARCH=`$EPICS_SETUP/HostArch`
 
-export EPICS_TOP=$LCLS_ROOT/epics
+if [ -z $EPICS_TOP ]; then
+   export EPICS_TOP=$LCLS_ROOT/epics
+fi
+
 export EPICS_BASE_TOP=$EPICS_TOP/base
 export EPICS_BASE_RELEASE=$EPICS_BASE_TOP/${EPICS_BASE_VER}
-export EPICS_EXTENSIONS=$EPICS_TOP/extensions/extensions-${EPICS_EXTENSIONS_VER}
-
+if [ -z $EPICS_EXTENSIONS ]; then
+   export EPICS_EXTENSIONS=$EPICS_TOP/extensions/extensions-${EPICS_EXTENSIONS_VER}
+fi
 if [ -z $EPICS_MODULES_TOP ]; then
    export EPICS_MODULES_TOP=$EPICS_TOP/modules
 fi
@@ -267,6 +271,8 @@ fi
 
 if [ ! -z $DEBUG ]; then
   echo Check epicsSetup.bash: LD_LIBRARY_PATH is $LD_LIBRARY_PATH
+  echo "Checking Java version in epicsSetup"
+  java -version
 fi
 
 ########################################################################
