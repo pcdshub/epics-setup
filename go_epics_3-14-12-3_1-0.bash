@@ -30,6 +30,5 @@ export EPICS_MODULES_TOP=${EPICS_TOP}/modules
 export EPICS_IOC_TOP=${EPICS_TOP}/iocTop
 
 source ${LCLS_ROOT}/tools/script/ENVS.bash
+export EPICS_MBA_TEMPLATE_TOP=${EPICS_MODULES_TOP}/icdTemplates/MAIN_TRUNK
 
-
-export TEST_STAND=/afs/slac/g/lcls/epics/TestStand
