@@ -15,6 +15,7 @@
 #                          SCCS                                     #
 #  14Dec2009 Jingchen Zhou removed reset LD_LIBRARY_PATH            #
 #  27Feb2013 Murali Shankar changed Java version                    #
+#  04Apr2013 Reset EPICS_TOP to cater to new folder structure       #
 #####################################################################
 #
 # Nullify old EPICS environment and export environment for LCLS EPICS.  
@@ -45,6 +46,8 @@ export EPICS_PR_LIST=""
 export EPICS_BASE_RELEASE=""
 #export EPICS_EXTENSIONS=""
 #
+export EPICS_TOP=""
+
 export MATLAB_ROOT=""
 export MATLAB_VER=""
 export LM_LICENSE_FILE=""
