@@ -14,8 +14,7 @@
 #  17Nov2009 Jingchen Zhou removed /usr/local/bin/environ provided  #
 #                          SCCS                                     #
 #  14Dec2009 Jingchen Zhou removed reset LD_LIBRARY_PATH            #
-#  27Feb2013 Murali Shankar changed Java version                    #
-#  04Apr2013 Reset EPICS_TOP to cater to new folder structure       #
+#  08Apr2013 Jingchen Zhou kept PROD and DEV in sync
 #####################################################################
 #
 # Nullify old EPICS environment and export environment for LCLS EPICS.  
@@ -36,7 +35,7 @@ export ETC=""
 export CLUSTER_DIR=""
 # Now the rest.
 #export LD_LIBRARY_PATH=""
-export CLASSPATH=""
+#export CLASSPATH=""
 export JAVA_HOME=""
 #
 export EPICS_DISPLAY_PATH=""
@@ -44,10 +43,8 @@ export EPICS_HOST_ARCH=""
 export EDMDATAFILES=""
 export EPICS_PR_LIST=""
 export EPICS_BASE_RELEASE=""
-#export EPICS_EXTENSIONS=""
+export EPICS_EXTENSIONS=""
 #
-export EPICS_TOP=""
-
 export MATLAB_ROOT=""
 export MATLAB_VER=""
 export LM_LICENSE_FILE=""
@@ -81,10 +78,6 @@ fi
 
 if [ -z $JAVAVER ]; then
         export JAVAVER=1.7.0_05
-fi
-
-if [ ! -z $DEBUG ]; then
-        echo "In EpicsReset, Java version set to ${JAVAVER}"
 fi
 
 . ${LCLS_ROOT}/epics/setup/epicsSetup.bash
