@@ -6,6 +6,7 @@
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
 #  History:                                                         # 
+#  08Apr2013 Jingchen Zhou Keep prod and dev in sycn                # 
 #  17Nov2009 Jingchen Zhou Moved CVS part from epicsSetup.bash to   #
 #                          commonSetup.bash                         #
 #  05Nov2009 Jingchen Zhou Added to LD_LIBRARY_PATH for python to   #
@@ -104,15 +105,11 @@ export PHYSDATA=$LCLS_DATA/physics
 export EPICS_SETUP=$LCLS_ROOT/epics/setup
 export HOST_ARCH=`$EPICS_SETUP/HostArch`
 
-if [ -z $EPICS_TOP ]; then
-   export EPICS_TOP=$LCLS_ROOT/epics
-fi
-
+export EPICS_TOP=$LCLS_ROOT/epics
 export EPICS_BASE_TOP=$EPICS_TOP/base
 export EPICS_BASE_RELEASE=$EPICS_BASE_TOP/${EPICS_BASE_VER}
-if [ -z $EPICS_EXTENSIONS ]; then
-   export EPICS_EXTENSIONS=$EPICS_TOP/extensions/extensions-${EPICS_EXTENSIONS_VER}
-fi
+export EPICS_EXTENSIONS=$EPICS_TOP/extensions/extensions-${EPICS_EXTENSIONS_VER}
+
 if [ -z $EPICS_MODULES_TOP ]; then
    export EPICS_MODULES_TOP=$EPICS_TOP/modules
 fi
