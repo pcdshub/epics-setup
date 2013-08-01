@@ -11,6 +11,8 @@
 #
 #--------------------------------------------------------------
 #  Mod:
+#        01-Aug-2013, J. Zhou
+#        Added EPICS_CA_AUTO_ADDR_LIST=NO on DMZ
 #        28-Jun-2011, J. Rock
 #        Updated EPICS_CA_ADDR_LIST to include facet gateway host
 #        18-May-2011, J. Zhou
@@ -87,6 +89,7 @@ if [ -d /afs/slac/g/lcls ]; then
 	export EPICS_IOC_LOG_INET; EPICS_IOC_LOG_INET="134.79.219.12"
     # setup for prod on dev
     else
+	export EPICS_CA_AUTO_ADDR_LIST=NO
 	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="lcls-prod01:5068 lcls-prod01:5063 mcc-dmz"
 	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5069"
 	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5068"
