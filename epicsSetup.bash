@@ -6,6 +6,7 @@
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
 #  History:                                                         # 
+#  06Nov2013 Jingchen Zhou remove CMLOG                             # 
 #  08Apr2013 Jingchen Zhou Keep prod and dev in sycn                # 
 #  17Nov2009 Jingchen Zhou Moved CVS part from epicsSetup.bash to   #
 #                          commonSetup.bash                         #
@@ -330,7 +331,7 @@ export NETSCAPEPATH=firefox
 ########################################################################
 # For cmlog
 ########################################################################
-export CMLOGSETUP=$LCLS_ROOT/package/cmlog/config
-if [ -r $CMLOGSETUP/cmlogSetup.bash ]; then
-  . $CMLOGSETUP/cmlogSetup.bash > /dev/null
-fi
+#export CMLOGSETUP=$LCLS_ROOT/package/cmlog/config
+#if [ -r $CMLOGSETUP/cmlogSetup.bash ]; then
+#  . $CMLOGSETUP/cmlogSetup.bash > /dev/null
+#fi
