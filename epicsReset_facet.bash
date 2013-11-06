@@ -15,6 +15,7 @@
 #                          SCCS                                     #
 #  14Dec2009 Jingchen Zhou removed reset LD_LIBRARY_PATH            #
 #  02Nov2010 Jingchen Zhou cloned from LCLS epicsReset.bash 
+#  06Nov2013 Jingchen Zhou remove CMLOG
 #####################################################################
 #
 # Nullify old EPICS environment and export environment for FACET EPICS.  
@@ -52,10 +53,10 @@ export LM_LICENSE_FILE=""
 export MATLABPATH=""
 export MATLABDATAFILES=""
 #
-export CMLOG_HOST=""
-export CMLOG_PORT=""
-export CMLOG_CONFIG=""
-export CDEVTAGTABLE=""
+#export CMLOG_HOST=""
+#export CMLOG_PORT=""
+#export CMLOG_CONFIG=""
+#export CDEVTAGTABLE=""
 #
 # Set EPICS environment for AFS based development or NFS based 
 # standalone production   

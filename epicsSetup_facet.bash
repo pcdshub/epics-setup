@@ -6,6 +6,7 @@
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
 #  History:                                                         # 
+#  06Nov2013 Jingchen Zhou remove CMLOG
 #  19Jul2011 Jingchen Zhou changed setup.sh to setup_facet for edm  #
 #  01Feb2011 jrock         changed ALHCONFIGFILES to facet dir      #
 #  02Nov2010 Jingchen Zhou Cloned from LCLS epicsSetup.bash         #
@@ -330,7 +331,7 @@ export NETSCAPEPATH=firefox
 ########################################################################
 # For cmlog
 ########################################################################
-export CMLOGSETUP=$FACET_ROOT/package/cmlog/config
-if [ -r $CMLOGSETUP/cmlogSetup.bash ]; then
-  . $CMLOGSETUP/cmlogSetup.bash > /dev/null
-fi
+#export CMLOGSETUP=$FACET_ROOT/package/cmlog/config
+#if [ -r $CMLOGSETUP/cmlogSetup.bash ]; then
+#  . $CMLOGSETUP/cmlogSetup.bash > /dev/null
+#fi
