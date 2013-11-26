@@ -15,6 +15,8 @@
 #        Commented out host check
 #        12-Apr-2012, J. Zhou
 #        Added NLCTA PV gateway to EPICS_CA_ADDR_LIST
+#	 26-Nov-2013, Brobeck
+#	 Added ar-grover:5063 (172.27.244.15:5063) to ca_addr
 #==============================================================
 ACCTEST_ROOT=/afs/slac/g/acctest
 if [ ! -d $ACCTEST_ROOT ]; then
@@ -27,7 +29,7 @@ fi
 #fi
 # set up Channel Access
 export EPICS_CA_AUTO_ADDR_LIST=NO
-export EPICS_CA_ADDR_LIST="172.27.99.255 134.79.51.43:5068"
+export EPICS_CA_ADDR_LIST="172.27.99.255 134.79.51.43:5068 172.27.244.15:5063"
 export EPICS_CA_REPEATER_PORT="5059"
 export EPICS_CA_SERVER_PORT="5058"
 export EPICS_CA_MAX_ARRAY_BYTES="80000000"
