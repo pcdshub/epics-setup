@@ -16,6 +16,7 @@
 #  14Dec2009 Jingchen Zhou removed reset LD_LIBRARY_PATH            #
 #  08Apr2013 Jingchen Zhou kept PROD and DEV in sync
 #  06Nov2013 Jingchen Zhou remove CMLOG
+#  11Feb2014 Jingchen Zhou switch EPICS from R3-14-8-2 to R3-14-12
 #####################################################################
 #
 # Nullify old EPICS environment and export environment for LCLS EPICS.  
@@ -67,14 +68,13 @@ else
 fi
 
 if [ -z $EPICS_BASE_VER ]; then
-	export EPICS_BASE_VER=base-R3-14-8-2-lcls6
+	export EPICS_BASE_VER=base-R3-14-12
 fi
 if [ -z $EPICS_EXTENSIONS_VER ]; then
-	export EPICS_EXTENSIONS_VER=R3-14-8-2
+	export EPICS_EXTENSIONS_VER=R3-14-12
 fi
-
 if [ -z $EPICS_MODULES_VER ]; then
-        export EPICS_MODULES_VER=R3-14-8-2
+        export EPICS_MODULES_VER=R3-14-12
 fi
 
 if [ -z $JAVAVER ]; then

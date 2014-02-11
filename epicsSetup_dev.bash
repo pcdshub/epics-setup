@@ -6,7 +6,8 @@
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
 #  History:                                                         # 
-#  06Nov2013 Jingchen Zhou remove CMLOG
+#  11Feb2014 Jingchen Zhou switch EPICS from R3-14-8-2 to R3-14-12  #
+#  06Nov2013 Jingchen Zhou remove CMLOG                             #
 #  17Nov2009 Jingchen Zhou Moved CVS part from epicsSetup.bash to   #
 #                          commonSetup.bash                         #
 #  05Nov2009 Jingchen Zhou Added to LD_LIBRARY_PATH for python to   #
@@ -115,7 +116,7 @@ export EPICS_BASE_RELEASE=$EPICS_BASE_TOP/${EPICS_BASE_VER}
 export EPICS_EXTENSIONS=$EPICS_TOP/extensions/extensions-${EPICS_EXTENSIONS_VER}
 
 if [ -z $EPICS_MODULES_TOP ]; then
-   export EPICS_MODULES_TOP=$EPICS_TOP/modules
+   export EPICS_MODULES_TOP=$EPICS_TOP/modules/$EPICS_MODULES_VER
 fi
 if [ -z $EPICS_IOC_TOP ]; then
    export EPICS_IOC_TOP=$EPICS_TOP/iocTop
