@@ -119,7 +119,9 @@ export EPICS_IOCS=$EPICS_TOP/iocCommon
 
 export EPICS_DATA=$ACCTEST_DATA/epics
 export EPICS_WWW=$WWW_ROOT/comp/unix/package/epics
-export EPICS_HOST_ARCH=`$EPICS_BASE_RELEASE/startup/EpicsHostArch`
+# temporary set EPICS_HOST_ARCH=linux-x86 during the transition to 64 bit
+#export EPICS_HOST_ARCH=`$EPICS_BASE_RELEASE/startup/EpicsHostArch`
+export EPICS_HOST_ARCH=linux-x86
 #
 # For running IOCs and iocConsole
 #
