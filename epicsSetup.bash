@@ -6,6 +6,8 @@
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
 #  History:                                                         # 
+#  14Jul2014 Jingchen Zhou set EPICS_HOST_ARCH = linux-x86 during   #
+#                          the transition to 64 bit.                #
 #  06Nov2013 Jingchen Zhou remove CMLOG                             # 
 #  08Apr2013 Jingchen Zhou Keep prod and dev in sycn                # 
 #  17Nov2009 Jingchen Zhou Moved CVS part from epicsSetup.bash to   #
@@ -124,7 +126,9 @@ export EPICS_IOCS=$EPICS_TOP/iocCommon
 
 export EPICS_DATA=$LCLS_DATA/epics
 export EPICS_WWW=$WWW_ROOT/comp/unix/package/epics
-export EPICS_HOST_ARCH=`$EPICS_BASE_RELEASE/startup/EpicsHostArch`
+# temporary set EPICS_HOST_ARCH=linux-x86 during the transition to 64 bit
+#export EPICS_HOST_ARCH=`$EPICS_BASE_RELEASE/startup/EpicsHostArch`
+export EPICS_HOST_ARCH=linux-x86
 #
 # For running IOCs and iocConsole
 #
