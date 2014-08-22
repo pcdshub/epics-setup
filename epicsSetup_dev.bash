@@ -6,6 +6,7 @@
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
 #  History:                                                         # 
+#  22Aug2014 Jingchen Zhou Add $TOOLS/AlarmConfigTop/SCRIPT         #	 
 #  11Feb2014 Jingchen Zhou switch EPICS from R3-14-8-2 to R3-14-12  #
 #  06Nov2013 Jingchen Zhou remove CMLOG                             #
 #  17Nov2009 Jingchen Zhou Moved CVS part from epicsSetup.bash to   #
@@ -182,6 +183,11 @@ if [ -z `echo $PATH | grep $TOOLS/edm/script` ]; then
   export PATH=$PATH:$TOOLS/edm/script
 fi
 #
+# Add $TOOLS/AlarmConfigTop/SCRIPT  
+#
+if [ -z `echo $PATH | grep $TOOLS/AlarmConfigsTop/SCRIPT` ]; then
+  export PATH=$PATH:$TOOLS/AlarmConfigsTop/SCRIPT 
+fi 
 # Add $LCLS_ROOT/bin to PATH
 #
 if [ -z `echo $PATH | grep $LCLS_ROOT/bin` ]; then
