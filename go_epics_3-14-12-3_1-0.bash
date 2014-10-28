@@ -27,8 +27,9 @@ export EPICS_MODULES_VER=
 export EPICS_BASE_TOP=$EPICS_TOP/base
 export EPICS_EXTENSIONS=$EPICS_TOP/extensions
 export EPICS_MODULES_TOP=${EPICS_TOP}/modules
+export MOD=$EPICS_MODULES_TOP
 export EPICS_IOC_TOP=${EPICS_TOP}/iocTop
 
 source ${LCLS_ROOT}/tools/script/ENVS_dev3.bash
-export EPICS_MBA_TEMPLATE_TOP=${EPICS_MODULES_TOP}/icdTemplates/MAIN_TRUNK
+export EPICS_MBA_TEMPLATE_TOP=${EPICS_MODULES_TOP}/icdTemplates/icdTemplates-R1-0-1
 
