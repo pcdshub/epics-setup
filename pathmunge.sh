@@ -7,7 +7,7 @@
 #
 # First, determine the release family
 # Use the -i option to get the distributor id
-LSB_DIST_ID=`lsb_release -i | /bin/cut -f2`
+LSB_DIST_ID=`LD_LIBRARY_PATH= lsb_release -i | /bin/cut -f2`
 
 # Check for rhel family: RedHatEnterpriseClient and RedHatEnterpriseServer
 LSB_FAMILY=`/bin/echo $LSB_DIST_ID | /bin/sed -e "s/RedHatEnterprise.*/rhel/"`
@@ -19,7 +19,7 @@ LSB_FAMILY=`/bin/echo $LSB_DIST_ID | /bin/sed -e "s/RedHatEnterprise.*/rhel/"`
 
 # Get the primary release number
 # For example, if "lsb_release -r" reports 5.8, our primary release is 5
-LSB_REL=`lsb_release -r | /bin/cut -f2 | /bin/cut -d. -f1`
+LSB_REL=`LD_LIBRARY_PATH= lsb_release -r | /bin/cut -f2 | /bin/cut -d. -f1`
 # Append the release number
 # For example, rhel5
 LSB_FAMILY=`/bin/echo ${LSB_FAMILY}${LSB_REL}`
