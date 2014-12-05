@@ -3,7 +3,7 @@ source /reg/g/pcds/setup/pathmunge.sh
 # Setup EDMDATAFILES path for fee
 export EDM=/reg/g/pcds/package/epics/lcls/tools/edm/display
 export TOOLS=/reg/g/pcds/package/epics/3.14-fee/tools
-export XTOD=$TOOLS/edm/display
+#export XTOD=$TOOLS/edm/display
 export EDMFILES=$TOOLS/edm/config
 export EDMDATAFILES=
 
@@ -13,7 +13,8 @@ edmpathmunge $EDM/alh
 edmpathmunge $EDM/lcls
 edmpathmunge $EDM/vac
 edmpathmunge $EDM/event
-edmpathmunge $XTOD/xtod
+#edmpathmunge $XTOD/xtod
+edmpathmunge $EDM/xray
 edmpathmunge $EDM
 edmpathmunge ..
 edmpathmunge .
