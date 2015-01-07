@@ -4,9 +4,9 @@ source /reg/g/pcds/setup/pathmunge.sh
 export EDM=/reg/g/pcds/package/epics/lcls/tools/edm/display
 export TOOLS=/reg/g/pcds/package/epics/3.14-fee/tools
 #export XTOD=$TOOLS/edm/display
-export EDMFILES=$TOOLS/edm/config
-export EDMDATAFILES=
+#export EDMFILES=$TOOLS/edm/config
 
+export EDMDATAFILES=
 edmpathmunge $EDM/mps
 edmpathmunge $EDM/misc
 edmpathmunge $EDM/alh
