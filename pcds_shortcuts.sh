@@ -487,3 +487,46 @@ function updateScreenLinks
 	popd 2>&1 > /dev/null
 }
 export updateScreenLinks
+
+function gsed
+{
+	if [ $# -lt 2 ]
+	then
+		echo Format: gsed sedExpr file....
+		return
+	fi
+	tmp=/tmp/gsed.$$
+	op=$1
+	shift
+	sed_files=$*
+	echo "sed $op in specified files"
+	for f in $sed_files ;
+	do
+		if [ ! -w $f ];
+		then
+			echo ============ $f: Read-Only, N/C ;
+			continue ;
+		fi
+		sed -e "$op" $f > $tmp || break ;
+		if cmp -s $tmp $f ;
+		then
+			echo ============ $f: Same, N/C ;
+			continue ;
+		fi
+		# Fix execute permission if needed
+		f_is_exec=N
+		if [ -x $f ];
+		then
+			f_is_exec=Y;
+		fi
+		mv $tmp $f ;
+		if [ "$f_is_exec" == "Y" ];
+		then
+			chmod a+x $f;
+		fi
+		echo ============ $f: UPDATED ;
+	done
+	/bin/rm -f $tmp 2>&1 > /dev/null
+}
+export gsed
+
