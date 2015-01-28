@@ -492,8 +492,8 @@ function gsed
 {
 	if [ $# -lt 2 ]
 	then
-		echo Format: gsed sedExpr file ....
-		echo Example: gsed s/R0.1.0/R0.2.0/g ioc-tst-cam1.cfg ioc-tst-cam2.cfg
+		echo Usage: gsed sedExpr file ....
+		echo Example: gsed s/R0.1.0/R0.2.0/g ioc-tst-cam1.cfg ioc-*2.cfg
 		return
 	fi
 	tmp=/tmp/gsed.$$
