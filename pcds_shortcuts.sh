@@ -241,7 +241,8 @@ function amo()
 	else
 		echo "Launching read-only AMO screen ..."
 	fi
-	pushd $PKGS/epics/3.14-dev/screens/edm/amo/current
+#	pushd $PKGS/epics/3.14-dev/screens/edm/amo/current
+	pushd /reg/g/pcds/package/screens/edm/amo
 	./amohome
 }
 export amo
@@ -253,7 +254,8 @@ function sxr()
 	else
 		echo "Launching read-only SXR screen ..."
 	fi
-	pushd $PKGS/epics/3.14-dev/screens/edm/sxr/current
+#	pushd $PKGS/epics/3.14-dev/screens/edm/sxr/current
+	pushd /reg/g/pcds/package/screens/edm/sxr
 	./sxrhome
 }
 export sxr
