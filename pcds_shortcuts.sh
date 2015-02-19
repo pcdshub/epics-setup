@@ -21,7 +21,7 @@
 #		directory and launch the home screen
 #
 
-export PKGS=/reg/g/pcds/package
+export PKGS=$PACKAGE_SITE_TOP
 
 function show_epics_sioc_filter( )
 {
@@ -36,7 +36,7 @@ function show_epics_sioc_filter( )
                          -e "s/--noautorestart//"        \
                          -e "s/--logstamp//"             \
                          -e "s/--name\s*\(\S\+\)\s*\([0-9]\+\)/\2 \1/"  \
-                         -e "s^/reg/g/pcds\S*caRepeater^caRepeater^"    \
+                         -e "s^/\S*/g/\S*\/caRepeater^caRepeater^"    \
                          -e "s/^/$HOSTNAME\t/"                          \
                          -e "s/  */\t/g"                                \
                          -e "/PID\tUSER\tCOMMAND/d"                    |\
@@ -60,7 +60,7 @@ function show_epics_sioc( )
 			then
 				ssh $a show_epics_sioc_filter
 			else
-				for h in /reg/d/iocCommon/hosts/*;
+				for h in /$CONFIG_SITE_TOP/hosts/*;
 				do
 					if [ ! -f $h/startup.cmd ]; then continue; fi
 					ssh $(basename $h) show_epics_sioc_filter
@@ -127,30 +127,30 @@ function find_pv( )
 	then
 		echo Usage: find_pv pv_name [pv_name2 ...]
 		echo This script will search for each specified EPICS PV in:
-		echo "  /reg/d/iocData/ioc*/iocInfo/IOC.pvlist"
+		echo "  ${DATA_SITE_TOP}/ioc*/iocInfo/IOC.pvlist"
 		echo ""
 		echo Then it looks for the linux host or hard IOC hostname in:
-		echo "  /reg/d/iocCommon/hosts/ioc*/startup.cmd"
-		echo "  /reg/d/iocCommon/hioc/ioc*/startup.cmd"
+		echo "  ${IOC_COMMON}/hosts/ioc*/startup.cmd"
+		echo "  ${IOC_COMMON}/hioc/ioc*/startup.cmd"
 		echo "If no host is found, the IOC will not autoboot after a power cycle!"
 		echo ""
 		echo Finally it looks for the boot directory in:
-		echo "  /reg/d/iocCommon/{hioc,sioc}/<ioc-name>/startup.cmd"
+		echo "  ${IOC_COMMON}/{hioc,sioc}/<ioc-name>/startup.cmd"
 		echo ""
 		echo "Hard IOC boot directories are shown with the nfs mount name."
-		echo "Typically this is /iocs mounting /reg/g/pcds/package/epics/ioc"
+		echo "Typically this is /iocs mounting ${PACKAGE_SITE_TOP}/package/epics/ioc"
 		return 1;
 	fi 
 	for pv in $*;
 	do
 		echo PV: $pv
-		ioc_list=`/bin/egrep -l -e "$pv" /reg/d/iocData/ioc*/iocInfo/IOC.pvlist | /bin/cut -d / -f5`
+		ioc_list=`/bin/egrep -l -e "$pv" ${DATA_SITE_TOP}/ioc*/iocInfo/IOC.pvlist | /bin/cut -d / -f5`
 		for ioc in $ioc_list;
 		do
 			echo "  IOC: $ioc"
 
 			# Look for IOC PV root
-			ioc_pv=`/bin/egrep UPTIME /reg/d/iocData/$ioc/iocInfo/IOC.pvlist | /bin/sed -e "s/:UPTIME.*//"`
+			ioc_pv=`/bin/egrep UPTIME ${DATA_SITE_TOP}/$ioc/iocInfo/IOC.pvlist | /bin/sed -e "s/:UPTIME.*//"`
 			if (( ${#ioc_pv} == 0 ));
 			then
 				echo "  IOC_PV: Not found!"
@@ -159,19 +159,19 @@ function find_pv( )
 			fi
 
 			# Look for linux hosts
-			host_list=`/bin/egrep -l -e "$ioc" /reg/d/iocCommon/hosts/ioc*/startup.cmd | /bin/cut -d / -f6`
+			host_list=`/bin/egrep -l -e "$ioc" ${IOC_COMMON}/hosts/ioc*/startup.cmd | /bin/cut -d / -f6`
 			for h in $host_list;
 			do
 				echo "  HOST: $h"
 			done
 
-			if [ -f /reg/d/iocCommon/sioc/$ioc/startup.cmd ];
+			if [ -f ${IOC_COMMON}/sioc/$ioc/startup.cmd ];
 			then
 				# Look for soft IOC boot directories
-				boot_list=`/bin/egrep -w -e "^cd" /reg/d/iocCommon/sioc/$ioc/startup.cmd | /bin/awk '{ print $2}'`
+				boot_list=`/bin/egrep -w -e "^cd" ${IOC_COMMON}/sioc/$ioc/startup.cmd | /bin/awk '{ print $2}'`
 				if (( ${#boot_list} ));
 				then
-					echo "  STARTUP: /reg/d/iocCommon/sioc/$ioc/startup.cmd"
+					echo "  STARTUP: ${IOC_COMMON}/sioc/$ioc/startup.cmd"
 					for d in $boot_list;
 					do
 						echo "  BOOT_DIR: $d"
@@ -180,14 +180,14 @@ function find_pv( )
 			fi
 
 			# Look for hard ioc
-			hioc_list=`/bin/egrep -l -e "$ioc" /reg/d/iocCommon/hioc/ioc*/startup.cmd | /bin/cut -d / -f6`
+			hioc_list=`/bin/egrep -l -e "$ioc" ${IOC_COMMON}/hioc/ioc*/startup.cmd | /bin/cut -d / -f6`
 			if (( ${#hioc_list} ));
 			then
 				for hioc in $hioc_list;
 				do
 					echo "  HIOC: $hioc"
-					echo "  STARTUP: /reg/d/iocCommon/hioc/$hioc/startup.cmd"
-					boot_list=`/bin/egrep -w -e "^chdir" /reg/d/iocCommon/hioc/$hioc/startup.cmd | /bin/cut -d \" -f2`
+					echo "  STARTUP: ${IOC_COMMON}/hioc/$hioc/startup.cmd"
+					boot_list=`/bin/egrep -w -e "^chdir" ${IOC_COMMON}/hioc/$hioc/startup.cmd | /bin/cut -d \" -f2`
 					for d in $boot_list;
 					do
 						echo "  BOOT_DIR: $d"
@@ -209,7 +209,7 @@ function find_pv( )
 
                         # Look for IocManager Configs
 			echo "  IocManager Configs:"
-			/reg/g/pcds/pyps/apps/ioc/latest/find_ioc --name $ioc
+			${PYPS_SITE_TOP}/apps/ioc/latest/find_ioc --name $ioc
 		done
 	done
 }
@@ -242,7 +242,7 @@ function amo()
 		echo "Launching read-only AMO screen ..."
 	fi
 #	pushd $PKGS/epics/3.14-dev/screens/edm/amo/current
-	pushd /reg/g/pcds/package/screens/edm/amo
+	pushd ${PACKAGE_SITE_TOP}/package/screens/edm/amo
 	./amohome
 }
 export amo
@@ -255,7 +255,7 @@ function sxr()
 		echo "Launching read-only SXR screen ..."
 	fi
 #	pushd $PKGS/epics/3.14-dev/screens/edm/sxr/current
-	pushd /reg/g/pcds/package/screens/edm/sxr
+	pushd ${PACKAGE_SITE_TOP}/package/screens/edm/sxr
 	./sxrhome
 }
 export sxr
@@ -279,7 +279,7 @@ function xtod()
 	if [ $HOSTNAME != $XTOD_HOST ]; then
 		echo "Warning: You may need ssh to $XTOD_HOST to access EPICS PV's"
 	fi
-	export LCLS_ROOT=/reg/g/pcds/package/xtod-lcls-old
+	export LCLS_ROOT=${PACKAGE_SITE_TOP}/package/xtod-lcls-old
 	export EPICS_TOP=$LCLS_ROOT/epics
 	export EPICS_HOST_ARCH=linux-x86
 	source $EPICS_TOP/setup/3.14.9/epicsSetup.bash
@@ -435,8 +435,8 @@ export setEPICS_CA_ADDR_LIST
 
 function updateScreenLinks
 {
-	EPICS_SITE_TOP=/reg/g/pcds/package/epics/3.14
-	EPICS_DEV_AREA=/reg/g/pcds/package/epics/3.14-dev
+	EPICS_SITE_TOP=${PACKAGE_SITE_TOP}/package/epics/3.14
+	EPICS_DEV_AREA=${PACKAGE_SITE_TOP}/package/epics/3.14-dev
 	areas="amo sxr xpp xcs cxi mec fee las thz";
 	relpath="$1";
 	if [ "$relpath" != "" -a ! -e "$relpath" ]; then
