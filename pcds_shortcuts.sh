@@ -21,6 +21,22 @@
 #		directory and launch the home screen
 #
 
+if [ -z "$CONFIG_SITE_TOP" ]; then
+export CONFIG_SITE_TOP=/reg/g/pcds/pyps/config
+fi
+if [ -z "$PACKAGE_SITE_TOP" ]; then
+export PACKAGE_SITE_TOP=/reg/g/pcds/package
+fi
+if [ -z "$EPICS_SITE_TOP" ]; then
+export EPICS_SITE_TOP=/reg/g/pcds/package/epics/3.14
+fi
+if [ -z "$IOC_COMMON" ]; then
+export IOC_COMMON=/reg/d/iocCommon
+fi
+if [ -z "$IOC_DATA" ]; then
+export IOC_DATA=/reg/d/iocData
+fi
+
 export PKGS=$PACKAGE_SITE_TOP
 
 function show_epics_sioc_filter( )
@@ -127,7 +143,7 @@ function find_pv( )
 	then
 		echo Usage: find_pv pv_name [pv_name2 ...]
 		echo This script will search for each specified EPICS PV in:
-		echo "  ${DATA_SITE_TOP}/ioc*/iocInfo/IOC.pvlist"
+		echo "  ${IOC_DATA}/ioc*/iocInfo/IOC.pvlist"
 		echo ""
 		echo Then it looks for the linux host or hard IOC hostname in:
 		echo "  ${IOC_COMMON}/hosts/ioc*/startup.cmd"
@@ -138,19 +154,19 @@ function find_pv( )
 		echo "  ${IOC_COMMON}/{hioc,sioc}/<ioc-name>/startup.cmd"
 		echo ""
 		echo "Hard IOC boot directories are shown with the nfs mount name."
-		echo "Typically this is /iocs mounting ${PACKAGE_SITE_TOP}/package/epics/ioc"
+		echo "Typically this is /iocs mounting ${PACKAGE_SITE_TOP}/epics/ioc"
 		return 1;
 	fi 
 	for pv in $*;
 	do
 		echo PV: $pv
-		ioc_list=`/bin/egrep -l -e "$pv" ${DATA_SITE_TOP}/ioc*/iocInfo/IOC.pvlist | /bin/cut -d / -f5`
+		ioc_list=`/bin/egrep -l -e "$pv" ${IOC_DATA}/ioc*/iocInfo/IOC.pvlist | /bin/cut -d / -f5`
 		for ioc in $ioc_list;
 		do
 			echo "  IOC: $ioc"
 
 			# Look for IOC PV root
-			ioc_pv=`/bin/egrep UPTIME ${DATA_SITE_TOP}/$ioc/iocInfo/IOC.pvlist | /bin/sed -e "s/:UPTIME.*//"`
+			ioc_pv=`/bin/egrep UPTIME ${IOC_DATA}/$ioc/iocInfo/IOC.pvlist | /bin/sed -e "s/:UPTIME.*//"`
 			if (( ${#ioc_pv} == 0 ));
 			then
 				echo "  IOC_PV: Not found!"
@@ -242,7 +258,7 @@ function amo()
 		echo "Launching read-only AMO screen ..."
 	fi
 #	pushd $PKGS/epics/3.14-dev/screens/edm/amo/current
-	pushd ${PACKAGE_SITE_TOP}/package/screens/edm/amo
+	pushd ${PACKAGE_SITE_TOP}/screens/edm/amo
 	./amohome
 }
 export amo
@@ -255,7 +271,7 @@ function sxr()
 		echo "Launching read-only SXR screen ..."
 	fi
 #	pushd $PKGS/epics/3.14-dev/screens/edm/sxr/current
-	pushd ${PACKAGE_SITE_TOP}/package/screens/edm/sxr
+	pushd ${PACKAGE_SITE_TOP}/screens/edm/sxr
 	./sxrhome
 }
 export sxr
@@ -279,7 +295,7 @@ function xtod()
 	if [ $HOSTNAME != $XTOD_HOST ]; then
 		echo "Warning: You may need ssh to $XTOD_HOST to access EPICS PV's"
 	fi
-	export LCLS_ROOT=${PACKAGE_SITE_TOP}/package/xtod-lcls-old
+	export LCLS_ROOT=${PACKAGE_SITE_TOP}/xtod-lcls-old
 	export EPICS_TOP=$LCLS_ROOT/epics
 	export EPICS_HOST_ARCH=linux-x86
 	source $EPICS_TOP/setup/3.14.9/epicsSetup.bash
@@ -435,8 +451,8 @@ export setEPICS_CA_ADDR_LIST
 
 function updateScreenLinks
 {
-	EPICS_SITE_TOP=${PACKAGE_SITE_TOP}/package/epics/3.14
-	EPICS_DEV_AREA=${PACKAGE_SITE_TOP}/package/epics/3.14-dev
+	EPICS_SITE_TOP=${PACKAGE_SITE_TOP}/epics/3.14
+	EPICS_DEV_AREA=${PACKAGE_SITE_TOP}/epics/3.14-dev
 	areas="amo sxr xpp xcs cxi mec fee las thz";
 	relpath="$1";
 	if [ "$relpath" != "" -a ! -e "$relpath" ]; then
