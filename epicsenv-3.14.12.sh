@@ -51,6 +51,14 @@ if [ ! -d ${EPICS_BASE}/bin/${EPICS_HOST_ARCH} ]; then
 	echo "ERROR: No binaries in ${EPICS_BASE}/bin/${EPICS_HOST_ARCH}."
 fi
 
+# These are the default CA settings for these env vars
+export EPICS_CA_REPEATER_PORT=5065
+export EPICS_CA_SERVER_PORT=5064
+export EPICS_CA_AUTO_ADDR_LIST=YES
+export EPICS_CA_CONN_TMO=30.0
+export EPICS_CA_BEACON_PERIOD=15.0
+export EPICS_CA_MAX_SEARCH_PERIOD=300
+
 # Provide a large default for EPICS_CA_MAX_ARRAY_BYTES
 if [ "$EPICS_CA_MAX_ARRAY_BYTES" == "" ]; then
 export EPICS_CA_MAX_ARRAY_BYTES=40000000
