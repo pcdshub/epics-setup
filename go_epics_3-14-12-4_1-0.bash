@@ -76,5 +76,14 @@ export QWTINCLUDE=$QWT_INCLUDE_PATH
 
 export QE_FFMPEG=YES
 export QE_CAQTDM="${EPICS_EXTENSIONS}/src/caQtDM/caQtDM-R3-8-10"
+export QE_CAQTDM_LIB=${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}
 export LD_LIBRARY_PATH=$QWT_ROOT/lib:$LD_LIBRARY_PATH
 # ================================================================
+
+#=====================================================================
+# Setup Python Version 2.7.9: Overide the default
+# ======================================================================================
+#export PATH=$PACKAGE_TOP/python/python2.7.9/bin:$PATH
+#export LD_LIBRARY_PATH=$PACKAGE_TOP/python/python2.7.9/lib/python2.7/lib-dynload:$LD_LIBRARY_PATH
+
+# ======================================================================================
