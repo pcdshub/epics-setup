@@ -70,10 +70,7 @@ export CAQTDM_DISPLAY_PATH=$CAQTDM_DISPLAY/Tests:$CAQTDM_DISPLAY/iocAdmin
 # Setup for EPICS QT (QE Framework) from Austraila:
 # Using QT5
 # ===============================================================
-# epicsqt needs to use consistent variable names :(
 export QWT_INCLUDE_PATH=$QWT_ROOT/include
-export QWTINCLUDE=$QWT_INCLUDE_PATH
-
 export QE_FFMPEG=YES
 export QE_CAQTDM="${EPICS_EXTENSIONS}/src/caQtDM/caQtDM-R3-8-10"
 export QE_CAQTDM_LIB=${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}
