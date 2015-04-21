@@ -81,7 +81,7 @@
 #
 if [ -d /afs/slac/g/lcls ]; then
     # setup for dev
-    if [ -z `echo $HOSTNAME | grep lcls-prod` ] && [ -z `echo $HOSTNAME | grep mcclogin` ] ; then
+    if [ -z `echo $HOSTNAME | grep lcls-prod` ] && [ -z `echo $HOSTNAME | grep mcclogin` ] && [ -z `echo $HOSTNAME | grep mccas0` ]; then
 	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="134.79.219.255"
 	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5067"
 	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5066"
