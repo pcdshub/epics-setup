@@ -1,4 +1,4 @@
-#!/bin/bash
+#!env bash
 #
 # This script creates several shell functions that can be
 # usefull shortcuts in the PCDS EPICS environment.
@@ -41,9 +41,18 @@ export PKGS=$PACKAGE_SITE_TOP
 
 function show_epics_sioc_filter( )
 {
-	EXPAND_TABS='/usr/bin/expand --tabs=6,16,42,52,72'
+	if [ -e /usr/bin/expand ]; then
+		EXPAND_TABS='/usr/bin/expand --tabs=6,16,42,52,72'
+	else
+		EXPAND_TABS='cat'
+	fi
+	if [ -e /bin/gawk ]; then
+		REORDER='gawk {OFS="\t";print$2,$3,$6,$4,$1,$5}'
+	else
+		REORDER='cat'
+	fi
 	ps -C procServ -o pid,user,command		|\
-                /bin/sed -e "s/\S*procServ /procServ /"  \
+                env sed -e "s/\S*procServ /procServ /"  \
                          -e "s/--savelog//"              \
                          -e "s/--allow//"                \
                          -e "s/--ignore\s*\S*//"         \
@@ -56,7 +65,7 @@ function show_epics_sioc_filter( )
                          -e "s/^/$HOSTNAME\t/"                          \
                          -e "s/  */\t/g"                                \
                          -e "/PID\tUSER\tCOMMAND/d"                    |\
-                gawk '{ OFS="\t"; print $2,$3,$6,$4,$1,$5}'            |\
+				$REORDER                                               |\
                 $EXPAND_TABS
 	return
 }
@@ -64,8 +73,16 @@ export show_epics_sioc_filter
 
 function show_epics_sioc( )
 {
-	EXPAND_TABS='/usr/bin/expand --tabs=6,16,42,52,72'
-	echo "PID	USER-ID	SIOC	COMMAND	HOSTNAME	PORT" | $EXPAND_TABS
+	if [ -e /usr/bin/expand ]; then
+		EXPAND_TABS='/usr/bin/expand --tabs=6,16,42,52,72'
+	else
+		EXPAND_TABS='cat'
+	fi
+	if [ -e /bin/gawk ]; then
+		echo "PID	USER	SIOC	COMMAND	HOSTNAME	PORT" | $EXPAND_TABS
+	else
+		echo "HOSTNAME		PID	USER	COMMAND		PORT	SIOC" | $EXPAND_TABS
+	fi
 	if [ ! $1 ];
 	then
 		show_epics_sioc_filter
