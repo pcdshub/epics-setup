@@ -66,7 +66,6 @@ export QT_PLUGIN_PATH="${QWT_ROOT}/plugins:$QT_PLUGIN_PATH"
 # ==========================================================================================
 # Plugin location for caQtDM and epicsQT
 # ==========================================================================================
-export QT_PLUGIN_PATH="${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}/designer:$QT_PLUGIN_PATH"
 export QT_PLUGIN_PATH="${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}:$QT_PLUGIN_PATH"
 # ==========================================================================================
 
