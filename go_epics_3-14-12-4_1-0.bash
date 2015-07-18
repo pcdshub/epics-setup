@@ -53,7 +53,7 @@ export LINUX_RT=/afs/slac/g/lcls/package/linuxRT
 QTDIR=$PACKAGE_TOP/Qt-5.4.1
 QTINC=$PACKAGE_TOP/Qt-5.4.1/include
 QTLIB=$PACKAGE_TOP/Qt-5.4.1/lib
-export QT_PLUGIN_PATH="${QTDIR}/plugins"
+#export QT_PLUGIN_PATH="${QTDIR}/plugins"
 export PATH=$QTDIR/bin:$PATH
 # ==================================================
 
@@ -61,12 +61,13 @@ export PATH=$QTDIR/bin:$PATH
 # QWT Setup
 # ============================================
 export QWT_ROOT=$PACKAGE_TOP/qwt-6.1.2
-export QT_PLUGIN_PATH="${QWT_ROOT}/plugins:$QT_PLUGIN_PATH"
+#export QT_PLUGIN_PATH="${QWT_ROOT}/plugins:$QT_PLUGIN_PATH"
 
 # ==========================================================================================
 # Plugin location for caQtDM and epicsQT
 # ==========================================================================================
-export QT_PLUGIN_PATH="${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}/designer:$QT_PLUGIN_PATH"
+export QT_PLUGIN_PATH="${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}"
+#export QT_PLUGIN_PATH="${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}/designer:$QT_PLUGIN_PATH"
 # ==========================================================================================
 
 
