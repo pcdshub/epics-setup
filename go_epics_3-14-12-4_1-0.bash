@@ -53,7 +53,7 @@ export LINUX_RT=/afs/slac/g/lcls/package/linuxRT
 QTDIR=$PACKAGE_TOP/Qt-5.4.1
 QTINC=$PACKAGE_TOP/Qt-5.4.1/include
 QTLIB=$PACKAGE_TOP/Qt-5.4.1/lib
-export QT_PLUGIN_PATH="${QTDIR}/Qt-5.4.1/plugins"
+export QT_PLUGIN_PATH="${QTDIR}/plugins"
 export PATH=$QTDIR/bin:$PATH
 # ==================================================
 
