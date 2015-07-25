@@ -11,34 +11,23 @@
 # when running on a RHEL5 64 bit system, in order to run
 # the RHEL5 32 bit version of the EPICS applications
 #
+
+# Setup the EPICS Channel Access environment
+source ${SETUP_SITE_TOP}/epics-ca-env.sh
+
+# get some functions for manipulating assorted env path variables
 source /reg/g/pcds/setup/pathmunge.sh
-
-bPrint=""
-if [ "$1" == "--print" ] ; then
-	bPrint="--print"
-fi
-
-function debug()
-{
-	if [ "$bPrint" == "--print" ]; then
-		echo "$1="${!1}
-	fi
-}
 
 export EPICS_SITE_TOP=/reg/g/pcds/package/epics/3.14
 export EPICS_TOOLS_SITE_TOP=${EPICS_SITE_TOP}
-debug EPICS_SITE_TOP
 
 export EPICS_BASE=${EPICS_SITE_TOP}/base/R3.14.9-0.3.0
-debug EPICS_BASE
 
 export EPICS_EXTENSIONS=${EPICS_SITE_TOP}/extensions/R3.14.9-0.3.0
-debug EPICS_EXTENSIONS
 
 if [ "$EPICS_HOST_ARCH" == "" ]; then
 	export EPICS_HOST_ARCH=$(${EPICS_BASE}/startup/EpicsHostArch.pl)
 fi
-debug EPICS_HOST_ARCH
 
 if [ ! -d ${EPICS_BASE}/bin/${EPICS_HOST_ARCH} ]; then
 	if [ "${EPICS_HOST_ARCH}" == "linux-x86_64" ]; then
@@ -55,13 +44,11 @@ fi
 pathmunge ${EPICS_BASE}/bin/${EPICS_HOST_ARCH}
 pathmunge ${EPICS_EXTENSIONS}/bin/${EPICS_HOST_ARCH}
 export PATH
-debug PATH
 
 # Set path to libraries provided by EPICS and its extensions (required by EPICS tools)
 ldpathmunge ${EPICS_BASE}/lib/${EPICS_HOST_ARCH}
 ldpathmunge ${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}
 export LD_LIBRARY_PATH
-debug LD_LIBRARY_PATH
 
 # The following setup is for EDM
 export EDMWEBBROWSER=mozilla
@@ -84,7 +71,4 @@ fi
 # Run PCDS bash shortcuts
 
 source /reg/g/pcds/setup/pcds_shortcuts.sh
-
-# Do host based setup of EPICS_CA_ADDR_LIST
-setEPICS_CA_ADDR_LIST
 

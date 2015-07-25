@@ -302,7 +302,7 @@ function tst()
 	else
 		echo "Launching read-only TST screen ..."
 	fi
-	pushd $PKGS/epics/3.14-dev/screens/edm/sxr/current
+	pushd $PKGS/epics/3.14-dev/screens/edm/tst/current
 	./tsthome
 }
 export tst
@@ -428,45 +428,6 @@ function mec()
 }
 export mec
 
-
-# This funcion is used to prevent EPICS channel access network
-# traffic from being seen by the data acquisition FEZ networks.
-# It is run by our standard epics setup scripts, but only affects
-# the hutch console machines listed below because they have
-# network adapters on the FEZ network.
-function setEPICS_CA_ADDR_LIST()
-{
-	HOSTNAME=`hostname`
-	case $HOSTNAME in
-		amo-console | amo-daq | amo-monitor | amo-control )
-			EPICS_CA_AUTO_ADDR_LIST=NO
-			EPICS_CA_ADDR_LIST=172.21.37.255
-			;;
-		sxr-console | sxr-daq | sxr-monitor | sxr-control | sxr-elog )
-			EPICS_CA_AUTO_ADDR_LIST=NO
-			EPICS_CA_ADDR_LIST=172.21.39.255
-			;;
-		xpp-daq | xpp-daq2 | xpp-control )
-			EPICS_CA_AUTO_ADDR_LIST=NO
-			EPICS_CA_ADDR_LIST=172.21.38.255
-			;;
-		xcs-console | xcs-daq | xcs-control )
-			EPICS_CA_AUTO_ADDR_LIST=NO
-			EPICS_CA_ADDR_LIST=172.21.43.255
-			;;
-		cxi-console | cxi-daq | cxi-monitor | cxi-control )
-			EPICS_CA_AUTO_ADDR_LIST=NO
-			EPICS_CA_ADDR_LIST=172.21.44.255
-			;;
-		mec-console | mec-daq | mec-monitor | mec-control )
-			EPICS_CA_AUTO_ADDR_LIST=NO
-			EPICS_CA_ADDR_LIST=172.21.45.255
-			;;
-	esac
-	export EPICS_CA_AUTO_ADDR_LIST
-	export EPICS_CA_ADDR_LIST
-}
-export setEPICS_CA_ADDR_LIST
 
 function updateScreenLinks
 {
