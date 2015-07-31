@@ -13,5 +13,5 @@ setenv EPICS_CA_CONN_TMO			30.0
 setenv EPICS_CA_MAX_SEARCH_PERIOD	300
 
 # Setup LCLS Channel Access environment
-if ( -f /afs/slac/g/pcds/setup/lcls-ca-env.csh ) source /afs/slac/g/pcds/setup/lcls-ca-env.csh
+if ( ! -d /reg/neh ) source /afs/slac/g/pcds/setup/lcls-ca-env.csh
 

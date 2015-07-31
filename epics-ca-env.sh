@@ -12,7 +12,7 @@ export EPICS_CA_BEACON_PERIOD=15.0
 export EPICS_CA_CONN_TMO=30.0
 export EPICS_CA_MAX_SEARCH_PERIOD=300
 
-if [ -f /afs/slac/g/pcds/setup/lcls-ca-env.sh ];
+if [ ! -d /reg/neh ];
 then
 	# Setup LCLS Channel Access environment
 	source /afs/slac/g/pcds/setup/lcls-ca-env.sh
@@ -50,5 +50,7 @@ case $HOSTNAME in
 		EPICS_CA_ADDR_LIST=172.21.45.255
 		;;
 esac
+export EPICS_CA_AUTO_ADDR_LIST
+export EPICS_CA_ADDR_LIST
 
 
