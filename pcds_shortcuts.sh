@@ -249,9 +249,9 @@ function find_pv( )
 export find_pv
 
 # Handy way to get host IP addr into a shell variable
-if [ -e /bin/cut -a -e /bin/awk ]; then
-export IP=`/sbin/ifconfig eth0 | /bin/grep 'inet addr:' | /bin/cut -d: -f2 | /bin/awk '{ print $1 }'`
-export SUBNET=`echo $IP | /bin/cut -d. -f3`
+if [ -e /sbin/ifconfig -a -e /bin/awk ]; then
+export IP=`/sbin/ifconfig | grep 'inet addr:' | head -1 | cut -d: -f2 | /bin/awk '{ print $1 }'`
+export SUBNET=`echo $IP | cut -d. -f3`
 fi
 export MGT_SUBNET=24
 export CDS_SUBNET=35
