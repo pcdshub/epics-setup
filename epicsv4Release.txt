@@ -89,6 +89,14 @@ export EPICS_HOST_ARCH
 export EPICS_PVCPP EPICS_PVJAVA
 export LD_LIBRARY_PATH PATH
 
+* Runtime PVA config
+  See http://epics-pvdata.sourceforge.net/pvAccessConfig.xlsx
+  Add the following to envSet.bash
+  export EPICS_PVA_ADDR_LIST=mccas0.slac.stanford.edu
+  # SLAC overrides default PVA port
+  export EPICS_PVA_BROADCAST_PORT=5056
+  export EPICS_PVA_AUTO_ADDR_LIST=FALSE
+
 Prod Matlab
 -----------
 * On prod, the Java EPICS V4 installation MUST have symlinks from the generic jar file
@@ -157,6 +165,24 @@ export EPICS_HOST_ARCH
 export EPICS_PVCPP EPICS_PVJAVA
 export LD_LIBRARY_PATH PATH
 
+* Runtime PVA config
+  Add the following to envSet_dev.bash
+  For dev on dev
+  # Set the production PVA address list; so far just services hosted on lcls-prod01.
+  export EPICS_PVA_ADDR_LIST=lcls-dev1.slac.stanford.edu
+  # Set SLAC config for port.
+  export EPICS_PVA_BROADCAST_PORT=5056
+  # Stop answers from other PVA servers on the same network (eg those on dev host lcls-dev1)
+  export EPICS_PVA_AUTO_ADDR_LIST=FALSE
+
+  For prod on dev
+  # Set the production PVA address list; so far just services hosted on lcls-prod01.
+  export EPICS_PVA_ADDR_LIST=mccas0.slac.stanford.edu
+  # Set SLAC config for port.
+  export EPICS_PVA_BROADCAST_PORT=5056
+  # Stop answers from other PVA servers on the same network (eg those on dev host lcls-dev1)
+  export EPICS_PVA_AUTO_ADDR_LIST=FALSE
+
 
 Dev Matlab
 ----------
@@ -203,3 +229,36 @@ fi
 
 # Let's get the Boost library also referenced for python at run time
 export LD_LIBRARY_PATH=$PVAPY_PACKAGE_TOP/boost/1.58.0/linux-x86/lib:$LD_LIBRARY_PATH
+
+Addendum - testing
+===================
+To test setup scripts prior to release, in your own directory:
+make you rown ENVS.bash taht points to your version of epics/setup:
+then:
+[lcls-dev2]:u/cd/greg> bash -norc
+bash-3.2$ pwd
+/u/cd/greg
+bash-3.2$ cd Development/meme/tmp
+bash-3.2$ source ENVS.bash
+
+Check paths
+-----------
+pipe paths throgh xargs and stat. 
+The following basic form splits up a path into elements and checks existence of each component:
+bash-3.2$ echo -n ${PATH} | xargs -r -d: stat -c %n
+
+Diverting all stdout to dev/null leaves only errors
+bash-3.2$ echo -n ${LD_LIBRARY_PATH} | xargs -r -d: stat -c %n >1 /dev/null
+stat: cannot stat `/usr/X11R6/lib': No such file or directory
+stat: cannot stat `/afs/slac/g/lcls/package/python/tcltk/lib': No such file or directory
+
+To release:
+----------
+For dev you have changed:
+envSet_dev.bash   Status: Locally Modified
+epicsSetup_dev.bash       Status: Locally Modified
+
+Prior to release,
+1. make sure not to release epicsReset.bash
+2, set line in epicsSetup_dev.bash back to ". $EPICS_SETUP/envSet.bash"
+
