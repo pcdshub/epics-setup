@@ -312,7 +312,7 @@ fi
 if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/normativeTypesCPP/lib/${EPICS_HOST_ARCH}` ]; then
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${EPICS_PVCPP}/normativeTypesCPP/lib/${EPICS_HOST_ARCH}
 fi
-if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/pvaDatabaseCPP/lib/${EPICS_HOST_ARCH}` ]; then
+if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/pvDatabaseCPP/lib/${EPICS_HOST_ARCH}` ]; then
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${EPICS_PVCPP}/pvDatabaseCPP/lib/${EPICS_HOST_ARCH}
 fi
 if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/pvaPy/lib/${EPICS_HOST_ARCH}` ]; then
@@ -322,28 +322,6 @@ fi
 #   LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(echo ${EPICS_PVCPP}/*/lib/${EPICS_HOST_ARCH}|tr " " ":")
 
  
-# EPICS V4 pvaPy requires the dynamcally loaded lib
-#
-if [ -z ${PACKAGE_TOP} ]; then
-  if [ -z `echo $LD_LIBRARY_PATH | grep ${PACKAGE_TOP}/python/current/lib:${PACKAGE_TOP}/python/current/lib/python2.7/lib-dynload` ]; then
-      export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:\
-       ${PACKAGE_TOP}/python/current/lib:${PACKAGE_TOP}/python/current/lib/python2.7/lib-dynload
-  fi
-  # pvaPy requires Boost
-  if [ -z `echo $LD_LIBRARY_PATH | grep $PACKAGE_TOP/boost/1.58.0/linux-x86/lib` ]; then
-      export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$PACKAGE_TOP/boost/1.58.0/linux-x86/lib
-  fi
-fi
-
-
-# Add EPICS V4 pvaPy to PYTHONPATH
-#
-if test -z "$PYTHONPATH" ; then
-    export PYTHONPATH=${EPICS_PVCPP}/pvaPy/lib/linux-x86
-else
-    export PYTHONPATH=${EPICS_PVCPP}/pvaPy/lib/linux-x86:$PYTHONPATH
-fi
-
 #
 # Add xal libraries to LD_LIBRARY_PATH
 #
