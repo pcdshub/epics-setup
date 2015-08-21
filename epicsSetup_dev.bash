@@ -1,11 +1,13 @@
 #####################################################################
 #                                                                   #
-#  Title: epicsSetup.bash                                           #
+#  Title: epicsSetup_dev.bash                                           #
 #                                                                   #
-#  Purpose: '.' this file to set your EPICS environment correctly   #
-#           This file sets up edm, vdct and cmlog as part of the deal
+#  Purpose: source this file to set your EPICS environment.         #
+#           This file sets up edm, vdct and cmlog                   #
 #                                                                   #
-#  History:                                                         # 
+#  History:                                                         #
+#  18Aug2015 Greg White    Added EPICS Version 4 (specifically      #
+#                          4.4.0).                                  #
 #  22Aug2014 Jingchen Zhou Add $TOOLS/AlarmConfigTop/SCRIPT         #	 
 #  11Feb2014 Jingchen Zhou switch EPICS from R3-14-8-2 to R3-14-12  #
 #  06Nov2013 Jingchen Zhou remove CMLOG                             #
@@ -111,24 +113,33 @@ if [ -z $EPICS_TOP ]; then
    export EPICS_TOP=$LCLS_ROOT/epics
 fi
 
+# Base
 export EPICS_BASE_TOP=$EPICS_TOP/base
 export EPICS_BASE_RELEASE=$EPICS_BASE_TOP/${EPICS_BASE_VER}
 
+# V4
+EPICS_PVCPP=${EPICS_BASE_TOP}/base-cpp-R4-4-0
+EPICS_PVJAVA=${EPICS_BASE_TOP}/base-java-R4-4-0-pre1
+
+# Extensions
 export EPICS_EXTENSIONS=$EPICS_TOP/extensions/extensions-${EPICS_EXTENSIONS_VER}
 
+# Modules
 if [ -z $EPICS_MODULES_TOP ]; then
    export EPICS_MODULES_TOP=$EPICS_TOP/modules/$EPICS_MODULES_VER
 fi
+
+# IOC
 if [ -z $EPICS_IOC_TOP ]; then
    export EPICS_IOC_TOP=$EPICS_TOP/iocTop
 fi
 
+# Data
 export APP=$EPICS_IOC_TOP
-
 export EPICS_IOCS=$EPICS_TOP/iocCommon
-
 export EPICS_DATA=$LCLS_DATA/epics
 export EPICS_WWW=$WWW_ROOT/comp/unix/package/epics
+
 # temporary set EPICS_HOST_ARCH=linux-x86 during the transition to 64 bit
 #export EPICS_HOST_ARCH=`$EPICS_BASE_RELEASE/startup/EpicsHostArch`
 export EPICS_HOST_ARCH=linux-x86
@@ -148,6 +159,7 @@ export IOC_OWNER_OS=Linux
 export IOC_OWNER_SHELL=bash
 export IOC_SCREEN=$EPICS_TOP/iocCommon/All/$IOCCONSOLE_ENV
 export IOC_PRIM_MAP=slc/primary.map
+
 #
 # Setup remaining EPICS CA environment variables
 #
@@ -156,24 +168,33 @@ if [ -e $EPICS_SETUP/envSet.bash ]; then
 else
   echo $EPICS_SETUP/envSet.bash does not exist
 fi
-#
-# Add EPICS base and extensions to PATH
+
+
+# Add EPICS base, V4, and extensions to PATH
 #
 # Append to existing paths. Desired order is to search system, then base/bin, 
 # then extensions/bin, then tools/script, then xal/script
 #
+
+# Base
 if [ -z `echo $PATH | grep $EPICS_BASE_RELEASE/bin/$EPICS_HOST_ARCH` ]; then
   if [ ! -z $DEBUG ]; then
-    echo Unable to find $EPICS_BASE_RELEASE/bin/$EPICS_HOST_ARCH in PATH so adding
+    echo Unable to find $EPICS_BASE_RELEASE/bin/$EPICS_HOST_ARCH in PATH so adding it
   fi
   export PATH=$EPICS_BASE_RELEASE/bin/$EPICS_HOST_ARCH:$PATH
 fi
+
+# EPICS V4
+if [ -z `echo $PATH | grep ${EPICS_PVCPP}/pvAccessCPP/bin/${EPICS_HOST_ARCH}` ]; then
+    export PATH=${EPICS_PVCPP}/pvAccessCPP/bin/${EPICS_HOST_ARCH}:$PATH
+fi
+
+# Extentions    
 if [ -z `echo $PATH | grep $EPICS_EXTENSIONS/bin/$EPICS_HOST_ARCH` ]; then
    export PATH=$EPICS_EXTENSIONS/bin/$EPICS_HOST_ARCH:$PATH   
 fi
-#
-# Add xal and tool scripts to PATH
-#
+
+# xal and tool scripts to PATH
 if [ -z `echo $PATH | grep $TOOLS/bin/$EPICS_HOST_ARCH` ]; then
   export PATH=$PATH:$TOOLS/bin/$EPICS_HOST_ARCH
 fi 
@@ -183,26 +204,22 @@ fi
 if [ -z `echo $PATH | grep $TOOLS/edm/script` ]; then
   export PATH=$PATH:$TOOLS/edm/script
 fi
-#
+
 # Add $TOOLS/AlarmConfigTop/SCRIPT  
-#
 if [ -z `echo $PATH | grep $TOOLS/AlarmConfigsTop/SCRIPT` ]; then
   export PATH=$PATH:$TOOLS/AlarmConfigsTop/SCRIPT 
 fi 
+
 # Add $LCLS_ROOT/bin to PATH
-#
 if [ -z `echo $PATH | grep $LCLS_ROOT/bin` ]; then
   export PATH=$PATH:$LCLS_ROOT/bin
 fi
-#
+
 # Add X to PATH
-#
 if [ -z `echo $PATH | grep /usr/X11R6/bin` ]; then
   export PATH=$PATH:/usr/X11R6/bin
 fi
-if [ ! -z $DEBUG ]; then
-  echo PATH is $PATH
-fi
+
 # Add procServ
 export PATH=$TOOLS/procServ:$PATH
 
@@ -210,6 +227,12 @@ export PATH=$TOOLS/procServ:$PATH
 # Do not use the java provided by SCCS!!
 if [ -z `echo $PATH | grep $JAVA_HOME/bin` ]; then
   export PATH=$JAVA_HOME/bin:$PATH
+fi
+
+# Print PATH if DEBUG is defined.
+if [ ! -z $DEBUG ]; then
+    echo epicsSetup_dev.bash: PATH check:
+    echo -n ${PATH} | xargs -r -d: stat -c %n
 fi
 
 #
@@ -240,28 +263,28 @@ if [ $HOST_ARCH=="Linux" ]; then
   fi
 else
   if [ $HOST_ARCH=="solaris" ]; then
-  export JAVA_HOME=$JAVA_HOME/sun4x_55/jdk$JAVAVER
-  export SCREENBIN=/opt/screen/bin
-  if [ -z $LD_LIBRARY_PATH ]; then #give it the basics
-    export LD_LIBRARY_PATH=/usr/openwin/lib:/usr/dt/lib:/usr/local/lib
-  fi
-  if [ -z `echo $LD_LIBRARY_PATH | grep /usr/local/lib` ]; then
-    export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
-  fi
-  if [ -z `echo $LD_LIBRARY_PATH | grep /usr/dt/lib` ]; then
-    export LD_LIBRARY_PATH=/usr/dt/lib:$LD_LIBRARY_PATH
-  fi
-  if [ -z `echo $LD_LIBRARY_PATH | grep /usr/openwin/lib` ]; then
-    export LD_LIBRARY_PATH=/usr/openwin/lib:$LD_LIBRARY_PATH
-  fi
-  # to find libjava.so
-  if [ -z `echo $LD_LIBRARY_PATH | grep $JAVA_HOME/jre/lib/sparc` ]; then
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/sparc
-  fi
-  # to find libjvm.so
-  if [ -z `echo $LD_LIBRARY_PATH | grep $JAVA_HOME/jre/lib/sparc/server` ]; then
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/sparc/server
-  fi
+    export JAVA_HOME=$JAVA_HOME/sun4x_55/jdk$JAVAVER
+    export SCREENBIN=/opt/screen/bin
+    if [ -z $LD_LIBRARY_PATH ]; then #give it the basics
+      export LD_LIBRARY_PATH=/usr/openwin/lib:/usr/dt/lib:/usr/local/lib
+    fi
+    if [ -z `echo $LD_LIBRARY_PATH | grep /usr/local/lib` ]; then
+      export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+    fi
+    if [ -z `echo $LD_LIBRARY_PATH | grep /usr/dt/lib` ]; then
+      export LD_LIBRARY_PATH=/usr/dt/lib:$LD_LIBRARY_PATH
+    fi
+    if [ -z `echo $LD_LIBRARY_PATH | grep /usr/openwin/lib` ]; then
+      export LD_LIBRARY_PATH=/usr/openwin/lib:$LD_LIBRARY_PATH
+    fi
+    # to find libjava.so
+    if [ -z `echo $LD_LIBRARY_PATH | grep $JAVA_HOME/jre/lib/sparc` ]; then
+      export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/sparc
+    fi
+    # to find libjvm.so
+    if [ -z `echo $LD_LIBRARY_PATH | grep $JAVA_HOME/jre/lib/sparc/server` ]; then
+      export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/sparc/server
+    fi
   fi
 fi
 #
@@ -273,6 +296,54 @@ fi
 if [ -z `echo $LD_LIBRARY_PATH | grep $EPICS_EXTENSIONS/lib/$EPICS_HOST_ARCH` ]; then
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$EPICS_EXTENSIONS/lib/$EPICS_HOST_ARCH
 fi
+
+#
+# Add EPICS V4 core to LD_LIBRARY_PATH
+#
+if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/pvAccessCPP/lib/${EPICS_HOST_ARCH}` ]; then
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${EPICS_PVCPP}/pvAccessCPP/lib/${EPICS_HOST_ARCH}
+fi
+if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/pvDataCPP/lib/${EPICS_HOST_ARCH}` ]; then
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${EPICS_PVCPP}/pvDataCPP/lib/${EPICS_HOST_ARCH}
+fi
+if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/pvCommonCPP/lib/${EPICS_HOST_ARCH}` ]; then
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${EPICS_PVCPP}/pvCommonCPP/lib/${EPICS_HOST_ARCH}
+fi
+if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/normativeTypesCPP/lib/${EPICS_HOST_ARCH}` ]; then
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${EPICS_PVCPP}/normativeTypesCPP/lib/${EPICS_HOST_ARCH}
+fi
+if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/pvaDatabaseCPP/lib/${EPICS_HOST_ARCH}` ]; then
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${EPICS_PVCPP}/pvDatabaseCPP/lib/${EPICS_HOST_ARCH}
+fi
+if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/pvaPy/lib/${EPICS_HOST_ARCH}` ]; then
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${EPICS_PVCPP}/pvaPy/lib/${EPICS_HOST_ARCH}
+fi
+# All the above might be better done in one line:
+#   LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(echo ${EPICS_PVCPP}/*/lib/${EPICS_HOST_ARCH}|tr " " ":")
+
+ 
+# EPICS V4 pvaPy requires the dynamcally loaded lib
+#
+if [ -z ${PACKAGE_TOP} ]; then
+  if [ -z `echo $LD_LIBRARY_PATH | grep ${PACKAGE_TOP}/python/current/lib:${PACKAGE_TOP}/python/current/lib/python2.7/lib-dynload` ]; then
+      export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:\
+       ${PACKAGE_TOP}/python/current/lib:${PACKAGE_TOP}/python/current/lib/python2.7/lib-dynload
+  fi
+  # pvaPy requires Boost
+  if [ -z `echo $LD_LIBRARY_PATH | grep $PACKAGE_TOP/boost/1.58.0/linux-x86/lib` ]; then
+      export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$PACKAGE_TOP/boost/1.58.0/linux-x86/lib
+  fi
+fi
+
+
+# Add EPICS V4 pvaPy to PYTHONPATH
+#
+if test -z "$PYTHONPATH" ; then
+    export PYTHONPATH=${EPICS_PVCPP}/pvaPy/lib/linux-x86
+else
+    export PYTHONPATH=${EPICS_PVCPP}/pvaPy/lib/linux-x86:$PYTHONPATH
+fi
+
 #
 # Add xal libraries to LD_LIBRARY_PATH
 #
@@ -280,8 +351,12 @@ if [ -z `echo $LD_LIBRARY_PATH | grep $TOOLS/lib/$EPICS_HOST_ARCH` ]; then
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$TOOLS/lib/$EPICS_HOST_ARCH
 fi
 
+#
+# Debug log LD_LIBRARY_PATH and Java version
+#
 if [ ! -z $DEBUG ]; then
-  echo Check epicsSetup.bash: LD_LIBRARY_PATH is $LD_LIBRARY_PATH
+    echo epicsSetup.bash LD_LIBRARY_PATH check:
+    echo -n ${LD_LIBRARY_PATH} | xargs -r -d: stat -c %n
   echo "Checking Java version in epicsSetup"
   java -version
 fi
