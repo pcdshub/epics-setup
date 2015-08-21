@@ -1,3 +1,4 @@
+#-*-sh-*-
 #==============================================================
 #
 #  Abs:  Setup EPICS build environment variables
@@ -11,6 +12,8 @@
 #
 #--------------------------------------------------------------
 #  Mod:
+#        21-Aug-0215, Greg White 
+#        Added EPICS V4 MEME Servers (mccas0) talking pvAccess (EPICS_PVA).
 #        07-Aug-2013, J. Zhou
 #        Added 172.27.3.255:5068 to EPICS_CA_ADDR_LIST
 #        Will remove 172.27.11.255:5068 after the network splitting
@@ -86,6 +89,9 @@
 if [ -d /afs/slac/g/lcls ]; then
     # setup for dev
     if [ -z `echo $HOSTNAME | grep lcls-prod` ] && [ -z `echo $HOSTNAME | grep mcclogin` ] ; then
+	export EPICS_PVA_ADDR_LIST="lcls-dev1.slac.stanford.edu"
+	export EPICS_PVA_BROADCAST_PORT=5056
+	export EPICS_PVA_AUTO_ADDR_LIST=FALSE
 	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="134.79.219.255"
 	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5067"
 	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5066"
@@ -93,6 +99,9 @@ if [ -d /afs/slac/g/lcls ]; then
 	export EPICS_IOC_LOG_INET; EPICS_IOC_LOG_INET="134.79.219.12"
     # setup for prod on dev
     else
+	export EPICS_PVA_ADDR_LIST="mccas0.slac.stanford.edu"
+	export EPICS_PVA_BROADCAST_PORT=5056
+	export EPICS_PVA_AUTO_ADDR_LIST=FALSE
 	export EPICS_CA_AUTO_ADDR_LIST=NO
 	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="lcls-prod01:5068 lcls-prod01:5063 mcc-dmz"
 	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5069"
@@ -101,6 +110,9 @@ if [ -d /afs/slac/g/lcls ]; then
 	export EPICS_IOC_LOG_INET; EPICS_IOC_LOG_INET="134.79.151.21"
     fi
 elif [ -d /usr/local/lcls ]; then
+	export EPICS_PVA_ADDR_LIST="mccas0.slac.stanford.edu"
+	export EPICS_PVA_BROADCAST_PORT=5056
+	export EPICS_PVA_AUTO_ADDR_LIST=FALSE
 	export EPICS_CA_AUTO_ADDR_LIST=NO
 	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="172.27.3.255:5068 mcc-dmz 172.21.40.63:5064 134.79.151.21:5061 172.27.72.24:5070"
 	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5069"

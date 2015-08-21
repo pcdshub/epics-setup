@@ -1,11 +1,15 @@
+#-*-sh-*-
 #####################################################################
 #                                                                   #
 #  Title: epicsSetup.bash                                           #
 #                                                                   #
-#  Purpose: '.' this file to set your EPICS environment correctly   #
-#           This file sets up edm, vdct and cmlog as part of the deal
+#  Purpose: Source this file to set your EPICS environment.         #
+#           This file sets up all EPICS clients side paths etc.     #
+#           See also envSet*.bash for the runtime connection conf.  #
 #                                                                   #
 #  History:                                                         # 
+#  18Aug2015 Greg White    Added EPICS Version 4 (specifically      #
+#                          4.4.0). And add path stat checks.        #
 #  14Jul2014 Jingchen Zhou set EPICS_HOST_ARCH = linux-x86 during   #
 #                          the transition to 64 bit.                #
 #  06Nov2013 Jingchen Zhou remove CMLOG                             # 
@@ -109,21 +113,30 @@ export EPICS_SETUP=$LCLS_ROOT/epics/setup
 export HOST_ARCH=`$EPICS_SETUP/HostArch`
 
 export EPICS_TOP=$LCLS_ROOT/epics
+
+# Base
 export EPICS_BASE_TOP=$EPICS_TOP/base
 export EPICS_BASE_RELEASE=$EPICS_BASE_TOP/${EPICS_BASE_VER}
-export EPICS_EXTENSIONS=$EPICS_TOP/extensions/extensions-${EPICS_EXTENSIONS_VER}
 
+# V4
+EPICS_PVCPP=${EPICS_BASE_TOP}/base-cpp-R4-4-0
+EPICS_PVJAVA=${EPICS_BASE_TOP}/base-java-R4-4-0
+
+# Extensions
+export EPICS_EXTENSIONS=$EPICS_TOP/extensions/extensions-${EPICS_EXTENSIONS_VER}
+# Modules
 if [ -z $EPICS_MODULES_TOP ]; then
    export EPICS_MODULES_TOP=$EPICS_TOP/modules/${EPICS_MODULES_VER}
 fi
+
+# IOC
 if [ -z $EPICS_IOC_TOP ]; then
    export EPICS_IOC_TOP=$EPICS_TOP/iocTop
 fi
 
+# Data
 export APP=$EPICS_IOC_TOP
-
 export EPICS_IOCS=$EPICS_TOP/iocCommon
-
 export EPICS_DATA=$LCLS_DATA/epics
 export EPICS_WWW=$WWW_ROOT/comp/unix/package/epics
 # temporary set EPICS_HOST_ARCH=linux-x86 during the transition to 64 bit
@@ -152,24 +165,33 @@ if [ -e $EPICS_SETUP/envSet.bash ]; then
 else
   echo $EPICS_SETUP/envSet.bash does not exist
 fi
-#
-# Add EPICS base and extensions to PATH
+
+
+# Add EPICS base, V4, and extensions to PATH
 #
 # Append to existing paths. Desired order is to search system, then base/bin, 
 # then extensions/bin, then tools/script, then xal/script
 #
+
+# Base
 if [ -z `echo $PATH | grep $EPICS_BASE_RELEASE/bin/$EPICS_HOST_ARCH` ]; then
   if [ ! -z $DEBUG ]; then
     echo Unable to find $EPICS_BASE_RELEASE/bin/$EPICS_HOST_ARCH in PATH so adding
   fi
   export PATH=$EPICS_BASE_RELEASE/bin/$EPICS_HOST_ARCH:$PATH
 fi
+
+# EPICS V4
+if [ -z `echo $PATH | grep ${EPICS_PVCPP}/pvAccessCPP/bin/${EPICS_HOST_ARCH}` ]; then
+    export PATH=${EPICS_PVCPP}/pvAccessCPP/bin/${EPICS_HOST_ARCH}:$PATH
+fi
+
+# Extensions
 if [ -z `echo $PATH | grep $EPICS_EXTENSIONS/bin/$EPICS_HOST_ARCH` ]; then
    export PATH=$EPICS_EXTENSIONS/bin/$EPICS_HOST_ARCH:$PATH   
 fi
-#
+
 # Add xal and tool scripts to PATH
-#
 if [ -z `echo $PATH | grep $TOOLS/bin/$EPICS_HOST_ARCH` ]; then
   export PATH=$PATH:$TOOLS/bin/$EPICS_HOST_ARCH
 fi 
@@ -191,9 +213,13 @@ fi
 if [ -z `echo $PATH | grep /usr/X11R6/bin` ]; then
   export PATH=$PATH:/usr/X11R6/bin
 fi
+
+# Print and stat check PATH if DEBUG is defined.
 if [ ! -z $DEBUG ]; then
-  echo PATH is $PATH
+  echo epicsSetup_dev.bash: PATH check:
+  echo -n ${PATH} | xargs -r -d: stat -c %n
 fi
+
 # Add procServ
 export PATH=$TOOLS/procServ:$PATH
 
@@ -255,6 +281,7 @@ else
   fi
   fi
 fi
+
 #
 # Add EPICS base and extensions to LD_LIBRARY_PATH
 #
@@ -264,6 +291,32 @@ fi
 if [ -z `echo $LD_LIBRARY_PATH | grep $EPICS_EXTENSIONS/lib/$EPICS_HOST_ARCH` ]; then
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$EPICS_EXTENSIONS/lib/$EPICS_HOST_ARCH
 fi
+
+#
+# Add EPICS V4 core to LD_LIBRARY_PATH
+#
+if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/pvAccessCPP/lib/${EPICS_HOST_ARCH}` ]; then
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${EPICS_PVCPP}/pvAccessCPP/lib/${EPICS_HOST_ARCH}
+fi
+if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/pvDataCPP/lib/${EPICS_HOST_ARCH}` ]; then
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${EPICS_PVCPP}/pvDataCPP/lib/${EPICS_HOST_ARCH}
+fi
+if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/pvCommonCPP/lib/${EPICS_HOST_ARCH}` ]; then
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${EPICS_PVCPP}/pvCommonCPP/lib/${EPICS_HOST_ARCH}
+fi
+if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/normativeTypesCPP/lib/${EPICS_HOST_ARCH}` ]; then
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${EPICS_PVCPP}/normativeTypesCPP/lib/${EPICS_HOST_ARCH}
+fi
+if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/pvDatabaseCPP/lib/${EPICS_HOST_ARCH}` ]; then
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${EPICS_PVCPP}/pvDatabaseCPP/lib/${EPICS_HOST_ARCH}
+fi
+if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/pvaPy/lib/${EPICS_HOST_ARCH}` ]; then
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${EPICS_PVCPP}/pvaPy/lib/${EPICS_HOST_ARCH}
+fi
+# All the above might be better done in one line:
+#   LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(echo ${EPICS_PVCPP}/*/lib/${EPICS_HOST_ARCH}|tr " " ":")
+
+
 #
 # Add xal libraries to LD_LIBRARY_PATH
 #
@@ -272,7 +325,8 @@ if [ -z `echo $LD_LIBRARY_PATH | grep $TOOLS/lib/$EPICS_HOST_ARCH` ]; then
 fi
 
 if [ ! -z $DEBUG ]; then
-  echo Check epicsSetup.bash: LD_LIBRARY_PATH is $LD_LIBRARY_PATH
+  echo epicsSetup.bash LD_LIBRARY_PATH check:
+  echo -n ${LD_LIBRARY_PATH} | xargs -r -d: stat -c %n
   echo "Checking Java version in epicsSetup"
   java -version
 fi
