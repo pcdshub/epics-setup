@@ -25,10 +25,16 @@ X * EPICS V4.4.0 on dev and prod
   Java  X     X
   pvaPy X     X
 X * Develop release tests.
-* Deploy: Add client config to production bash environment for appropriate users.
-* Deploy: Add Matlab startup modifications dev and prod
-* Deploy: Python pvaPy support on dev and prod
-* Make post-release Tests. 
+X * Deploy: Add command line and libs login config
+  x dev
+  x prod
+* Deploy: Add Matlab startup modifications
+  ? dev
+  prod
+* Deploy: Python pvaPy support
+  dev
+  prod
+X * Make post-release Tests. 
 * Applications Programmers Guide
 * Develop Matlab client example
 * Develop python client example
@@ -101,6 +107,11 @@ Prod Matlab
 -----------
 * On prod, the Java EPICS V4 installation MUST have symlinks from the generic jar file
 name to the specific version file name, eg  pvAccessJava.jar -> pvAccessJava-4.0.3.jar.
+
+NOTE: The following mechanism of adding to the jar files to the MATLAB JAVA classpath
+by adding dynaimially to the startup.m file, may be problematic (Mike reports).
+May have instead to add to the static path - and maybe we should anyway (hm,
+no, that means editting the static file on every release).
 
 * ... then, Add the following to /usr/local/lcls/tools/matlab/toolbox/startup.m
 %% EPICS (V4) 
@@ -213,22 +224,32 @@ javaaddpath(fullfile(EPICSJAVAPATHROOT,'caj.jar'));
 
 Dev Python
 -----------
-Add the following to epics/setup/epicsSetup_dev.bash
-#=================================================================================================
-# Setup Python Version 2.7.4: The default on RHEL5 32-bit OS
-# ================================================================================================
-PVAPY_PACKAGE_TOP=${EPICS_PVCPP}/pvaPy
-export PATH=$PVAPY_PACKAGE_TOP/python/current/bin:$PATH
-export LD_LIBRARY_PATH=${PVAPY_PACKAGE_TOP}/python/current/lib:${PVAPY_PACKAGE_TOP}/python/current/lib/python2.7/lib-dynload:$LD_LIBRARY_PATH
+Add the following to ${LCLS_ROOT}/tools/python/setupPython.bash
 
-if test -z "$PYTHONPATH" ; then
-    export PYTHONPATH=${PVAPY_PACKAGE_TOP}/lib/linux-x86
-else
-    export PYTHONPATH=${PVAPY_PACKAGE_TOP}/lib/linux-x86:$PYTHONPATH
+# EPICS V4 pvaPy requires the dynamically loaded lib
+#
+# Note that PACKAGE_TOP is a prerequistite.
+#
+if [ -z ${PACKAGE_TOP} ]; then
+  if [ -z `echo $LD_LIBRARY_PATH | grep ${PACKAGE_TOP}/python/current/lib:${PACKAGE_TOP}/python/current/lib/python2.7/lib-dynload` ]; then
+      export LD_LIBRARY_PATH=\
+${LD_LIBRARY_PATH}:${PACKAGE_TOP}/python/current/lib:${PACKAGE_TOP}/python/current/lib/python2.7/lib-dynload
+  fi
+  # pvaPy requires Boost
+  if [ -z `echo $LD_LIBRARY_PATH | grep $PACKAGE_TOP/boost/1.58.0/linux-x86/lib` ]; then
+      export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$PACKAGE_TOP/boost/1.58.0/linux-x86/lib
+  fi
 fi
 
-# Let's get the Boost library also referenced for python at run time
-export LD_LIBRARY_PATH=$PVAPY_PACKAGE_TOP/boost/1.58.0/linux-x86/lib:$LD_LIBRARY_PATH
+
+# Add EPICS V4 pvaPy to PYTHONPATH
+#
+if test -z "$PYTHONPATH" ; then
+    export PYTHONPATH=${EPICS_PVCPP}/pvaPy/lib/linux-x86
+else
+    export PYTHONPATH=${EPICS_PVCPP}/pvaPy/lib/linux-x86:$PYTHONPATH
+fi
+
 
 Addendum - testing
 ===================
