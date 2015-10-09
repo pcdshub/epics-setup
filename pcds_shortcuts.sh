@@ -36,6 +36,9 @@ fi
 if [ -z "$IOC_DATA" ]; then
 export IOC_DATA=/reg/d/iocData
 fi
+if [ -z "$PYPS_SITE_TOP" ]; then
+export PYPS_SITE_TOP=/reg/g/pcds/pyps
+fi
 
 export PKGS=$PACKAGE_SITE_TOP
 
@@ -249,8 +252,8 @@ function find_pv( )
 export find_pv
 
 # Handy way to get host IP addr into a shell variable
-if [ -e /sbin/ifconfig -a -e /bin/awk ]; then
-export IP=`/sbin/ifconfig | grep 'inet addr:' | head -1 | cut -d: -f2 | /bin/awk '{ print $1 }'`
+if [ -e /sbin/ifconfig -a -e /bin/awk -a -e /bin/grep ]; then
+export IP=`/sbin/ifconfig | /bin/grep 'inet addr:' | head -1 | cut -d: -f2 | /bin/awk '{ print $1 }'`
 export SUBNET=`echo $IP | cut -d. -f3`
 fi
 export MGT_SUBNET=24
