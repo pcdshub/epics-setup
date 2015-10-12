@@ -171,7 +171,7 @@ function find_pv( )
 		echo "If no host is found, the IOC will not autoboot after a power cycle!"
 		echo ""
 		echo Finally it looks for the boot directory in:
-		echo "  ${IOC_COMMON}/{hioc,sioc}/<ioc-name>/startup.cmd"
+		echo "  ${IOC_COMMON}/hioc/<ioc-name>/startup.cmd"
 		echo ""
 		echo "Hard IOC boot directories are shown with the nfs mount name."
 		echo "Typically this is /iocs mounting ${PACKAGE_SITE_TOP}/epics/ioc"
@@ -200,20 +200,6 @@ function find_pv( )
 			do
 				echo "  HOST: $h"
 			done
-
-			if [ -f ${IOC_COMMON}/sioc/$ioc/startup.cmd ];
-			then
-				# Look for soft IOC boot directories
-				boot_list=`/bin/egrep -w -e "^cd" ${IOC_COMMON}/sioc/$ioc/startup.cmd | /bin/awk '{ print $2}'`
-				if (( ${#boot_list} ));
-				then
-					echo "  STARTUP: ${IOC_COMMON}/sioc/$ioc/startup.cmd"
-					for d in $boot_list;
-					do
-						echo "  BOOT_DIR: $d"
-					done
-				fi
-			fi
 
 			# Look for hard ioc
 			hioc_list=`/bin/egrep -l -e "$ioc" ${IOC_COMMON}/hioc/ioc*/startup.cmd | /bin/cut -d / -f6`
