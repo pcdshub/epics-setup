@@ -83,7 +83,7 @@ export CAQTDM_DISPLAY_PATH=$CAQTDM_DISPLAY/Tests:$CAQTDM_DISPLAY/iocAdmin
 # ===============================================================
 export QWT_INCLUDE_PATH=$QWT_ROOT/include
 export QE_FFMPEG=YES
-export QE_CAQTDM="${EPICS_EXTENSIONS}/src/caQtDM/caqtdm-devl_git"
+export QE_CAQTDM="${EPICS_EXTENSIONS}/src/caQtDM/caQtDM-R3-9-3"
 export QE_CAQTDM_LIB=${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}
 export LD_LIBRARY_PATH=$QWT_ROOT/lib:$LD_LIBRARY_PATH
 # ================================================================
