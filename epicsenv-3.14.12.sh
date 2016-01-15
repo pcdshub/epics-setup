@@ -10,12 +10,12 @@
 # For PCDS, we support setting EPICS_HOST_ARCH to linux-x86
 # when running on a RHEL5 64 bit system, in order to run
 # the RHEL5 32 bit version of the EPICS applications
-#
-if [ "$EPICS_SITE_TOP" == "" ]; then
-	export EPICS_SITE_TOP=/reg/g/pcds/package/epics/3.14
-fi
-if [ "$SETUP_SITE_TOP" == "" ]; then
-	export SETUP_SITE_TOP=/reg/g/pcds/setup
+
+# Setup the common directory env variables
+if [ -e /reg/g/pcds/config/common_dirs.sh ]; then
+	source /reg/g/pcds/config/common_dirs.sh
+else
+	source /afs/slac/g/pcds/config/common_dirs.sh
 fi
 
 # Setup the EPICS Channel Access environment
@@ -31,14 +31,22 @@ export EPICS_BASE=${EPICS_SITE_TOP}/base/R3.14.12-0.4.0
 export EPICS_EXTENSIONS=${EPICS_SITE_TOP}/extensions/R3.14.12
 
 if [ "$EPICS_HOST_ARCH" == "" ]; then
-	export EPICS_HOST_ARCH=$(${EPICS_BASE}/startup/EpicsHostArch.pl)
+	if [ "$(which perl)" != "" ]; then
+		export EPICS_HOST_ARCH=$(${EPICS_BASE}/startup/EpicsHostArch.pl)
+	fi
 fi
 
+# Default to linuxRT if perl isn't installed or EpicsHostArch.pl fails
+if [ "$EPICS_HOST_ARCH" == "" ]; then
+	export EPICS_HOST_ARCH=linuxRT_glibc-x86_64
+fi
+
+# If EPICS_HOST_ARCH is linux-x86_64 but not available, fall back to 32bit
 if [ ! -d ${EPICS_BASE}/bin/${EPICS_HOST_ARCH} ]; then
 	if [ "${EPICS_HOST_ARCH}" == "linux-x86_64" ]; then
 		# Try behaving as a 32bits system
 		echo "WARNING: No linux-x86_64 binaries.  Falling back to linux-x86"
-		EPICS_HOST_ARCH="linux-x86"
+		EPICS_HOST_ARCH=linux-x86
 	fi
 fi
 if [ ! -d ${EPICS_BASE}/bin/${EPICS_HOST_ARCH} ]; then
@@ -73,7 +81,8 @@ if [ -e ${EPICS_EXTENSIONS}/javalib/VisualDCT.jar ]; then
 	export VDCT_CLASSPATH="${EPICS_EXTENSIONS}/javalib/VisualDCT.jar"
 fi
 
-# Run PCDS bash shortcuts
-
-source ${SETUP_SITE_TOP}/pcds_shortcuts.sh
+if [ "${SHELL}" == "$(which bash)" ]; then
+	# Run PCDS bash shortcuts
+	source ${SETUP_SITE_TOP}/pcds_shortcuts.sh
+fi
 

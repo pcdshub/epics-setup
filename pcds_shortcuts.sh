@@ -518,3 +518,7 @@ function gsed
 }
 export gsed
 
+# URL and firefox launcher for the PCDS Archiver Appliance web U/I
+export ARCHIVER_URL=http://pscaa01.slac.stanford.edu:17665/mgmt/ui/index.html
+alias Archiver="firefox --no-remote $ARCHIVER_URL 2>1 > /dev/null&"
+
