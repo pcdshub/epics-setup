@@ -42,6 +42,39 @@ fi
 
 export PKGS=$PACKAGE_SITE_TOP
 
+function ssh_show_procServ( )
+{
+	PROCSERV_HOST=`hostname`
+	EXPAND_TABS='/usr/bin/expand --tabs=6,16,42,52,72'
+	REORDER='gawk {OFS="\t";print$2,$3,$6,$4,$1,$5}'
+	if [ -z "$1" ]; then
+		SSH_CMD=""
+	elif [ -z "$2" ]; then
+		SSH_CMD="ssh $1"
+		PROCSERV_HOST=$1
+	else
+		SSH_CMD="ssh $2@$1"
+		PROCSERV_HOST=$1
+	fi
+	$SSH_CMD ps -C procServ -o pid,user,command 2> /dev/null	|\
+				sed	 -e "s/\S*procServ /procServ /"  \
+					 -e "s/--savelog//"              \
+					 -e "s/--allow//"                \
+					 -e "s/--ignore\s*\S*//"         \
+					 -e "s/--coresize\s*\S*//"       \
+					 -e "s/--logfile\s*\S*//"        \
+					 -e "s/--noautorestart//"        \
+					 -e "s/--logstamp//"             \
+					 -e "s/--name\s*\(\S\+\)\s*\([0-9]\+\)/\2 \1/"  \
+					 -e "s^/\S*/g/\S*\/caRepeater^caRepeater^"      \
+					 -e "s/^/$PROCSERV_HOST\t/"                     \
+					 -e "s/  */\t/g"                                \
+					 -e "/PID\tUSER\tCOMMAND/d"                    |\
+				$REORDER                                           |\
+                $EXPAND_TABS
+	return
+}
+
 function show_epics_sioc_filter( )
 {
 	if [ -e /usr/bin/expand ]; then
@@ -88,18 +121,21 @@ function show_epics_sioc( )
 	fi
 	if [ ! $1 ];
 	then
-		show_epics_sioc_filter
+		#show_epics_sioc_filter
+		ssh_show_procServ
 	else
 		for a in $*;
 		do
 			if [ $a != "all" ];
 			then
-				ssh $a show_epics_sioc_filter
+				#ssh $a show_epics_sioc_filter
+				ssh_show_procServ $a
 			else
-				for h in /$CONFIG_SITE_TOP/hosts/*;
+				for h in $IOC_COMMON/hosts/*;
 				do
 					if [ ! -f $h/startup.cmd ]; then continue; fi
-					ssh $(basename $h) show_epics_sioc_filter
+					# ssh $(basename $h) show_epics_sioc_filter
+					ssh_show_procServ $(basename $h)
 				done
 			fi
 		done

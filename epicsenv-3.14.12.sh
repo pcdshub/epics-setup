@@ -81,7 +81,7 @@ if [ -e ${EPICS_EXTENSIONS}/javalib/VisualDCT.jar ]; then
 	export VDCT_CLASSPATH="${EPICS_EXTENSIONS}/javalib/VisualDCT.jar"
 fi
 
-if [ "${SHELL}" == "$(which bash)" ]; then
+if [ -n "${BASH_VERSION}" ]; then
 	# Run PCDS bash shortcuts
 	source ${SETUP_SITE_TOP}/pcds_shortcuts.sh
 fi
