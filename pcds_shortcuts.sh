@@ -56,7 +56,7 @@ function ssh_show_procServ( )
 		SSH_CMD="ssh $2@$1"
 		PROCSERV_HOST=$1
 	fi
-	$SSH_CMD ps -C procServ -o pid,user,command 2> /dev/null	|\
+	$SSH_CMD ps -C procServ -o pid,user,command     |\
 				sed	 -e "s/\S*procServ /procServ /"  \
 					 -e "s/--savelog//"              \
 					 -e "s/--allow//"                \
@@ -114,7 +114,7 @@ function show_epics_sioc( )
 	else
 		EXPAND_TABS='cat'
 	fi
-	if [ -e /bin/gawk ]; then
+	if [ -n "`which gawk`" ]; then
 		echo "PID	USER	SIOC	COMMAND	HOSTNAME	PORT" | $EXPAND_TABS
 	else
 		echo "HOSTNAME		PID	USER	COMMAND		PORT	SIOC" | $EXPAND_TABS
