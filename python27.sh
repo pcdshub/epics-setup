@@ -3,9 +3,9 @@
 if [ -z "$SETUP_SITE_TOP" ]; then
 	export SETUP_SITE_TOP=/reg/g/pcds/setup
 fi
-if [ -z "$PSPKG_ROOT" ]; then
-	export PSPKG_ROOT=/reg/common/package
-fi
+#if [ -z "$PSPKG_ROOT" ]; then
+export PSPKG_ROOT=/reg/common/package
+#fi
 source $SETUP_SITE_TOP/pathmunge.sh
 source $SETUP_SITE_TOP/lsb_family.sh
 
