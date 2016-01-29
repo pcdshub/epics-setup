@@ -275,20 +275,24 @@ export find_pv
 
 # Handy way to get host IP addr into a shell variable
 if [ -e /sbin/ifconfig -a -e /bin/awk -a -e /bin/grep ]; then
-export IP=`/sbin/ifconfig | /bin/grep 'inet addr:' | head -1 | cut -d: -f2 | /bin/awk '{ print $1 }'`
+#export IP=`/sbin/ifconfig | /bin/grep 'inet addr:' | head -1 | cut -d: -f2 | /bin/awk '{ print $1 }'`
+export IP=`/sbin/ifconfig | /bin/grep -w inet | head -1 | sed -e 's/ *inet[^0-9]*\([0-9.]*\) .*/\1/'`
 export SUBNET=`echo $IP | cut -d. -f3`
 fi
 export MGT_SUBNET=24
+export SRV_SUBNET=32
+export DMZ_SUBNET=33
 export CDS_SUBNET=35
 export FEE_SUBNET=36
 export AMO_SUBNET=37
 export XPP_SUBNET=38
 export SXR_SUBNET=39
 export TST_SUBNET=42
-export XCS_SUBNET=43
 export CXI_SUBNET=44
 export MEC_SUBNET=45
 export THZ_SUBNET=57
+export MFX_SUBNET=62
+export DEV_SUBNET=165
 
 #
 # Functions for launching various control room home screens
@@ -332,22 +336,6 @@ function tst()
 }
 export tst
 
-function xtod()
-{
-	XTOD_HOST=xtod-console
-	HOSTNAME=`hostname`
-	if [ $HOSTNAME != $XTOD_HOST ]; then
-		echo "Warning: You may need ssh to $XTOD_HOST to access EPICS PV's"
-	fi
-	export LCLS_ROOT=${PACKAGE_SITE_TOP}/xtod-lcls-old
-	export EPICS_TOP=$LCLS_ROOT/epics
-	export EPICS_HOST_ARCH=linux-x86
-	source $EPICS_TOP/setup/3.14.9/epicsSetup.bash
-	pushd $LCLS_ROOT/tools/edm/display
-	edm -eolc -x xtod_main.edl&
-}
-export xtod
-
 function fee()
 {
 	if [ $SUBNET == $FEE_SUBNET ]; then
@@ -360,6 +348,7 @@ function fee()
 }
 export fee
 alias xrt=fee
+alias xtod=fee
 
 function pcds()
 {
@@ -554,7 +543,13 @@ function gsed
 }
 export gsed
 
-# URL and firefox launcher for the PCDS Archiver Appliance web U/I
+# URL and firefox launcher for the PCDS Archiver Appliance Management web U/I
+# Recommend firefox version 43 or newer or google-chrome version 44 or newer
 export ARCHIVER_URL=http://pscaa01.slac.stanford.edu:17665/mgmt/ui/index.html
 alias Archiver="firefox --no-remote $ARCHIVER_URL 2>1 > /dev/null&"
+alias ArchiveManager="google-chrome --no-remote $ARCHIVER_URL 2>1 > /dev/null&"
 
+# Archiver Appliance Viewer URL:
+# Recommend firefox version 43 or newer or google-chrome version 44 or newer
+export ARCHIVE_VIEWER_URL=https://pswww-dev.slac.stanford.edu/apps-dev/EpicsViewer
+alias ArchiveViewer="google-chrome --no-remote $ARCHIVER_URL 2>1 > /dev/null&"
