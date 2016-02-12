@@ -288,10 +288,12 @@ export AMO_SUBNET=37
 export XPP_SUBNET=38
 export SXR_SUBNET=39
 export TST_SUBNET=42
+export XCS_SUBNET=43
 export CXI_SUBNET=44
 export MEC_SUBNET=45
 export THZ_SUBNET=57
 export MFX_SUBNET=62
+export HPL_SUBNET=64
 export DEV_SUBNET=165
 
 #
@@ -335,6 +337,12 @@ function tst()
 	./tsthome
 }
 export tst
+
+function afs()
+{
+	pushd $PKGS/epics/3.14-dev/screens/edm/afs/current
+	./afshome
+}
 
 function fee()
 {
@@ -441,6 +449,30 @@ function mec()
 	./mechome
 }
 export mec
+
+function mfx()
+{
+	if [ $SUBNET == $MFX_SUBNET ]; then
+		echo "Warning: Launching live MFX screen ..."
+	else
+		echo "Launching read-only MFX screen ..."
+	fi
+	pushd $PKGS/epics/3.14-dev/screens/edm/mfx/current
+	./mfxhome
+}
+export mfx
+
+function hpl()
+{
+	if [ $SUBNET == $HPL_SUBNET ]; then
+		echo "Warning: Launching live HPL screen ..."
+	else
+		echo "Launching read-only HPL screen ..."
+	fi
+	pushd $PKGS/epics/3.14-dev/screens/edm/hpl/current
+	./hplhome
+}
+export mfx
 
 
 function updateScreenLinks

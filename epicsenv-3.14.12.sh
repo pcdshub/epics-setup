@@ -12,8 +12,8 @@
 # the RHEL5 32 bit version of the EPICS applications
 
 # Setup the common directory env variables
-if [ -e /reg/g/pcds/config/common_dirs.sh ]; then
-	source /reg/g/pcds/config/common_dirs.sh
+if [ -e /reg/g/pcds/pyps/config/common_dirs.sh ]; then
+	source /reg/g/pcds/pyps/config/common_dirs.sh
 else
 	source /afs/slac/g/pcds/config/common_dirs.sh
 fi
