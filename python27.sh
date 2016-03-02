@@ -9,7 +9,6 @@ export PSPKG_ROOT=/reg/common/package
 source $SETUP_SITE_TOP/pathmunge.sh
 source $SETUP_SITE_TOP/lsb_family.sh
 
-#if [ "$kernel_family" == "RHEL6" ]; then
 if [ "$LSB_FAMILY" == "rhel6" ]; then
 	pythondir=$PSPKG_ROOT/python/2.7.2-rhel6
 else

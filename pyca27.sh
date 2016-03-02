@@ -3,7 +3,7 @@
 source /reg/g/pcds/setup/pathmunge.sh
 source /reg/g/pcds/setup/python27.sh
 
-if [ "$kernel_family" == "RHEL6" ]; then
+if [ "$LSB_FAMILY" == "rhel6" ]; then
 	ldpathmunge /reg/common/package/epicsca/3.14.12/lib/x86_64-linux-rhel6
 else
 	ldpathmunge /reg/common/package/epicsca/3.14.12/lib/x86_64-linux

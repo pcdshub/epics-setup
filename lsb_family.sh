@@ -7,8 +7,8 @@ then
 	return
 fi
 
-HAS_LSB=`which lsb_release`
-if [ ! -z "$HAS_LSB" ];
+HAS_LSB=`which lsb_release 2> /dev/null`
+if [ ! $? ];
 then
 	# 
 	# Use lsb_release to determine which linux distribution we're using
@@ -41,14 +41,18 @@ else
 	if [ ! -z "$RT9_KERNEL" ]; then
 		LSB_FAMILY=rt9
 	else
-		RH5_KERNEL=`echo $KERNEL | fgrep -e ".el5."`
-		if [ ! -z "$RH5_KERNEL" ]; then
+		if [   ! -z "`echo $KERNEL | fgrep -e ".el5."`" ]; then
 			LSB_FAMILY=rhel5
-		else
-			RH6_KERNEL=`echo $KERNEL | fgrep -e ".el6."`
-			if [ ! -z "$RH6_KERNEL" ]; then
-				LSB_FAMILY=rhel6
-			fi
+		elif [ ! -z "`echo $KERNEL | fgrep -e ".el6."`" ]; then
+			LSB_FAMILY=rhel6
+		elif [ ! -z "`echo $KERNEL | fgrep -e ".el7."`" ]; then
+			LSB_FAMILY=rhel7
 		fi
 	fi
+fi
+
+kernel_family=$LSB_FAMILY
+# Hack to make RHEL7 look like RHEL6 till we need to change
+if [ "$LSB_FAMILY" == "rhel7" ]; then
+	LSB_FAMILY=rhel6
 fi

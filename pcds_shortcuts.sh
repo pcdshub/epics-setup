@@ -295,6 +295,7 @@ export THZ_SUBNET=57
 export MFX_SUBNET=62
 export HPL_SUBNET=64
 export DEV_SUBNET=165
+export DEV_BC=134.79.${DEV_SUBNET}.255
 
 #
 # Functions for launching various control room home screens
