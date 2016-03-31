@@ -1,10 +1,12 @@
 # =========================================
-# Reset for EPICS R3-14-12-4_1-0
+# Reset for EPICS R3-14-12-4_1-1
 # You just need to source this file and you
 # are ready :)
 #
 # -----------------------------------------
 # Changelog
+# 31-Mar-2016 Alisha Babbitt
+#             Updated version of icdTemplates for EPICS_IOC_TOP
 # 24-Nov-2014 Murali Shankar
 #             Used go_epics_3-14-12-3_1-0.bash as the basis for go_epics_3-14-12-4_1-0.bash
 # 10-Dec-2011 Ernest Williams
@@ -33,7 +35,7 @@ export MOD=$EPICS_MODULES_TOP
 export EPICS_IOC_TOP=${EPICS_TOP}/iocTop
 
 source ${LCLS_ROOT}/tools/script/ENVS_dev3.bash
-export EPICS_MBA_TEMPLATE_TOP=${EPICS_MODULES_TOP}/icdTemplates/icdTemplates-R1-2-0
+export EPICS_MBA_TEMPLATE_TOP=${EPICS_MODULES_TOP}/icdTemplates/icdTemplates-R1-2-1
 
 # Alias to switch over to the new EPICS
 alias newepics='source /afs/slac/g/lcls/epics/setup/go_epics_3-16-0.bash'
@@ -87,4 +89,7 @@ export QE_CAQTDM="${EPICS_EXTENSIONS}/src/caQtDM/caQtDM-R3-9-3"
 export QE_CAQTDM_LIB=${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}
 export LD_LIBRARY_PATH=$QWT_ROOT/lib:$LD_LIBRARY_PATH
 # ================================================================
+
+export PATH=$PACKAGE_TOP/python/python2.7.9/linux-x86_64/bin:$PATH
+export LD_LIBRARY_PATH=$PACKAGE_TOP/python/python2.7.9/linux-x86_64/lib:$PACKAGE_TOP/python/python2.7.9/linux-x86_64/lib/python2.7/lib-dynload:$LD_LIBRARY_PATH
 
