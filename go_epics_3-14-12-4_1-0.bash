@@ -5,6 +5,7 @@
 #
 # -----------------------------------------
 # Changelog
+# 31-Mar-2016 ababbitt - updated EPICS_MBA_TEMPLATE_TOP
 # 24-Nov-2014 Murali Shankar
 #             Used go_epics_3-14-12-3_1-0.bash as the basis for go_epics_3-14-12-4_1-0.bash
 # 10-Dec-2011 Ernest Williams
@@ -33,7 +34,7 @@ export MOD=$EPICS_MODULES_TOP
 export EPICS_IOC_TOP=${EPICS_TOP}/iocTop
 
 source ${LCLS_ROOT}/tools/script/ENVS_dev3.bash
-export EPICS_MBA_TEMPLATE_TOP=${EPICS_MODULES_TOP}/icdTemplates/icdTemplates-R1-2-0
+export EPICS_MBA_TEMPLATE_TOP=${EPICS_MODULES_TOP}/icdTemplates/icdTemplates-R1-2-1
 
 # Alias to switch over to the new EPICS
 alias newepics='source /afs/slac/g/lcls/epics/setup/go_epics_3-16-0.bash'
