@@ -8,6 +8,9 @@
 #           See also envSet*.bash for the runtime connection conf.  #
 #                                                                   #
 #  History:                                                         # 
+#  26Apr2016 M Shankar     Version in ${TOOLS}/script has extra     #
+#                          PATH of $TOOLS/AlarmConfigsTop/SCRIPT    #
+#                          Added these lines into CVS               #
 #  26Apr2016 M Shankar     Change V4 to 4.5                         #
 #  18Aug2015 Greg White    Added EPICS Version 4 (specifically      #
 #                          4.4.0). And add path stat checks.        #
@@ -202,6 +205,12 @@ fi
 if [ -z `echo $PATH | grep $TOOLS/edm/script` ]; then
   export PATH=$PATH:$TOOLS/edm/script
 fi
+
+# Add $TOOLS/AlarmConfigTop/SCRIPT  
+if [ -z `echo $PATH | grep $TOOLS/AlarmConfigsTop/SCRIPT` ]; then
+  export PATH=$PATH:$TOOLS/AlarmConfigsTop/SCRIPT
+fi
+
 #
 # Add $LCLS_ROOT/bin to PATH
 #
