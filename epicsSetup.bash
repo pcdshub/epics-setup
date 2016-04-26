@@ -8,6 +8,7 @@
 #           See also envSet*.bash for the runtime connection conf.  #
 #                                                                   #
 #  History:                                                         # 
+#  26Apr2016 M Shankar     Change V4 to 4.5                         #
 #  18Aug2015 Greg White    Added EPICS Version 4 (specifically      #
 #                          4.4.0). And add path stat checks.        #
 #  14Jul2014 Jingchen Zhou set EPICS_HOST_ARCH = linux-x86 during   #
@@ -119,8 +120,8 @@ export EPICS_BASE_TOP=$EPICS_TOP/base
 export EPICS_BASE_RELEASE=$EPICS_BASE_TOP/${EPICS_BASE_VER}
 
 # V4
-EPICS_PVCPP=${EPICS_BASE_TOP}/base-cpp-R4-4-0
-EPICS_PVJAVA=${EPICS_BASE_TOP}/base-java-R4-4-0
+EPICS_PVCPP=${EPICS_BASE_TOP}/base-cpp-R4-5-0
+EPICS_PVJAVA=${EPICS_BASE_TOP}/base-java-R4-5-0
 
 # Extensions
 export EPICS_EXTENSIONS=$EPICS_TOP/extensions/extensions-${EPICS_EXTENSIONS_VER}
