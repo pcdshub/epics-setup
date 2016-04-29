@@ -8,6 +8,10 @@
 #           See also envSet*.bash for the runtime connection conf.  #
 #                                                                   #
 #  History:                                                         # 
+#  29Apr2016 M Shankar     Per Jingchen, created softlinks to all   #
+#                          the .so files in V4 in a lib/linux-x86   #
+#                          and add that single directory to         # 
+#                          LD_LIBRARY_PATH                          #
 #  26Apr2016 M Shankar     Version in ${TOOLS}/script has extra     #
 #                          PATH of $TOOLS/AlarmConfigsTop/SCRIPT    #
 #                          Added these lines into CVS               #
@@ -304,28 +308,12 @@ fi
 
 #
 # Add EPICS V4 core to LD_LIBRARY_PATH
+# Instead of adding all the paths to the LD_LIBRARY_PATH, per Jingchen, create softlinks in a lib/linux-x86 folder to all the .so files in ../..
+# And then add that single path (lib/linux-x86) instead.
 #
-if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/pvAccessCPP/lib/${EPICS_HOST_ARCH}` ]; then
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${EPICS_PVCPP}/pvAccessCPP/lib/${EPICS_HOST_ARCH}
+if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/lib/${EPICS_HOST_ARCH}` ]; then
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${EPICS_PVCPP}/lib/${EPICS_HOST_ARCH}
 fi
-if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/pvDataCPP/lib/${EPICS_HOST_ARCH}` ]; then
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${EPICS_PVCPP}/pvDataCPP/lib/${EPICS_HOST_ARCH}
-fi
-if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/pvCommonCPP/lib/${EPICS_HOST_ARCH}` ]; then
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${EPICS_PVCPP}/pvCommonCPP/lib/${EPICS_HOST_ARCH}
-fi
-if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/normativeTypesCPP/lib/${EPICS_HOST_ARCH}` ]; then
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${EPICS_PVCPP}/normativeTypesCPP/lib/${EPICS_HOST_ARCH}
-fi
-if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/pvDatabaseCPP/lib/${EPICS_HOST_ARCH}` ]; then
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${EPICS_PVCPP}/pvDatabaseCPP/lib/${EPICS_HOST_ARCH}
-fi
-if [ -z `echo $LD_LIBRARY_PATH | grep ${EPICS_PVCPP}/pvaPy/lib/${EPICS_HOST_ARCH}` ]; then
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${EPICS_PVCPP}/pvaPy/lib/${EPICS_HOST_ARCH}
-fi
-# All the above might be better done in one line:
-#   LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(echo ${EPICS_PVCPP}/*/lib/${EPICS_HOST_ARCH}|tr " " ":")
-
 
 #
 # Add xal libraries to LD_LIBRARY_PATH
