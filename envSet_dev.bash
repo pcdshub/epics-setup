@@ -11,6 +11,8 @@
 #
 #--------------------------------------------------------------
 #  Mod:
+#        10-May-2016, K. Luchini (luchini)
+#        chg EPICS_TS_NTP_INET, curren one set does not exist
 #        01-Aug-2013, J. Zhou
 #        Added EPICS_CA_AUTO_ADDR_LIST=NO on DMZ
 #        28-Jun-2011, J. Rock
@@ -88,7 +90,7 @@ if [ -d /afs/slac/g/lcls ]; then
 	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="134.79.219.255"
 	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5067"
 	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5066"
-	export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.16.9"
+	export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.18.40"
 	export EPICS_IOC_LOG_INET; EPICS_IOC_LOG_INET="134.79.219.136"
 
     # setup for prod on dev
