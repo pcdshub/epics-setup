@@ -1,95 +1,83 @@
-# =========================================
-# Reset for EPICS R3-14-12-4_1-1
-# You just need to source this file and you
-# are ready :)
+# ==================================================
+# 
+# Name:  go_epics_3-14-12-4_1-1.bash
 #
-# -----------------------------------------
-# Changelog
-# 31-Mar-2016 Alisha Babbitt
-#             Updated version of icdTemplates for EPICS_IOC_TOP
-# 24-Nov-2014 Murali Shankar
-#             Used go_epics_3-14-12-3_1-0.bash as the basis for go_epics_3-14-12-4_1-0.bash
-# 10-Dec-2011 Ernest Williams
-#             export EPICS_MODULES_TOP after sourcing ENVS.bash to define EPICS_TOP
-# =========================================
-
-
-# Define LCLS_ROOT, based on AFS for development or NFS for production
+# Rem   Reset the epics environment to use
+#       EPICS R3-14-12-4_1-1
+#
+# Usage: source <path>/go_eics-3-14-12-4_1-1.bash
+# -------------------------------------------------
+# Mod: 
+#     13-May-2016,  K. Luchini   (luchini)
+#        Used go_epics_3-14-12-4_1-0.bash as
+#        the basis for go_epics_3-14-12-4_1-1.bash
+# ==================================================
+#
+# Determine which facility based on the host name 
+# and the path. Only testfac and dev use afs, all
+# other facilities use nfs. All production host have
+# the facility in the host name. For instance, the
+# hosts used by facet will have names such as facet-builder
+# and facet-serv01, or facet-daemon01,etc.  
+HOSTNAME=`hostname`
 if [ -d /afs/slac/g/lcls ]; then
-        export LCLS_ROOT=/afs/slac/g/lcls
+     if [[ $hostname == *"testfac-"* ]]; then
+        export FACILITY=acctest
+        export FACILITY_ROOT=/afs/slac/g/acctest
+     else
+        export FACILITY=dev
+        export FACILITY_ROOT=/afs/slac/g/lcls
+        export TFTP_TOP=${FACILITY_ROOT}/tftpboot
+        export LINUXRT=$FACILITY_ROOT/package/linuxRT
+     fi
+elif [[ $hostname == *"facet-"* ]]; then
+     if [ -d /usr/local/facet]; then
+        export FACILITY=facet
+        export FACILITY_ROOT=/usr/local/facet
+        export TFTP_TOP=/usr/local/common/tftpboot
+     else
+        echo "Facility not supported on " $hostname
+        exit 1
+     fi
+elif [[ $hostname == *"lcls-"* ]]; then
+     if [ -d /usr/local/lcls]; then
+        export FACILITY=lcls
+        export FACILITY_ROOT=/usr/local/lcls
+        export TFTP_TOP=/usr/local/common/tftpboot
+     else
+       echo "Facility not supported on " $hostname
+        exit 1
+     fi
 else
-        export LCLS_ROOT=/usr/local/lcls
+   echo "Facility not supported on " $hostname
+   exit 1
 fi
 
 # Override EPICS_TOP location
-export EPICS_TOP=$LCLS_ROOT/epics/R3-14-12-4_1-1
-
-export EPICS_BASE_VER=base-R3-14-12-4_1-1
+export EPICS_VER=R3-14-12-4_1-1
 export EPICS_EXTENSIONS_VER=R3-14-12
 export EPICS_MODULES_VER=
-
+export EPICS_TOP=$FACILITY_ROOT/epics/$EPICS_VER
+export EPICS_BASE_VER=base-$EPICS_VER 
 export EPICS_BASE_TOP=$EPICS_TOP/base
 export EPICS_EXTENSIONS=$EPICS_TOP/extensions-$EPICS_EXTENSIONS_VER
-export EPICS_MODULES_TOP=${EPICS_TOP}/modules
+export EPICS_MODULES_TOP=$EPICS_TOP/modules
 export MOD=$EPICS_MODULES_TOP
 export EPICS_IOC_TOP=${EPICS_TOP}/iocTop
+export LCLS_ROOT=$FACILITY_ROOT
 
-source ${LCLS_ROOT}/tools/script/ENVS_dev3.bash
-export EPICS_MBA_TEMPLATE_TOP=${EPICS_MODULES_TOP}/icdTemplates/icdTemplates-R1-2-1
+source ${FACILITY_ROOT}/tools/script/ENVS_dev3.bash
+ 
+# Setup caQtDM display manager and runtime editor
+# but only for development
+if [ "$FACILITY" = "dev" ];then
+  source ${FACILITY_ROOT}/tools/caQtDM/script/caQtDMsetup.bash
+  echo "caQtDM setup done"
+fi
 
-# Alias to switch over to the new EPICS
-alias newepics='source /afs/slac/g/lcls/epics/setup/go_epics_3-16-0.bash'
-
-# ENV Variable for TFTP Server:
-export TFTP_TOP=/afs/slac/g/lcls/tftpboot
-
-# TOP for BuildRoot = linuxRT
-export LINUX_RT=/afs/slac/g/lcls/package/linuxRT
-
-# ===============================================================
-# Let's setup for caQtDM: From PSI
-# Display Editor and Manager for Control System GUI Development
-# Both Editor/Runtime
-# Using QT5 and QWT
-# ==================================================
-QTDIR=$PACKAGE_TOP/Qt-5.4.1
-QTINC=$PACKAGE_TOP/Qt-5.4.1/include
-QTLIB=$PACKAGE_TOP/Qt-5.4.1/lib
-export QT_PLUGIN_PATH="${QTDIR}/plugins"
-export PATH=$QTDIR/bin:$PATH
-# ==================================================
-
-# ============================================
-# QWT Setup
-# ============================================
-export QWT_ROOT=$PACKAGE_TOP/qwt-6.1.2
-export QT_PLUGIN_PATH="${QWT_ROOT}/plugins:$QT_PLUGIN_PATH"
-
-# ==========================================================================================
-# Plugin location for caQtDM and epicsQT
-# ==========================================================================================
-export QT_PLUGIN_PATH="${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}:$QT_PLUGIN_PATH"
-# ==========================================================================================
-
-
-# ==========================================================================
-# Where to search for caQtDM display files
-# ==========================================================================
-export CAQTDM_DISPLAY=$TOOLS/caQtDM/display
-export CAQTDM_DISPLAY_PATH=$CAQTDM_DISPLAY/Tests:$CAQTDM_DISPLAY/iocAdmin
-# ==========================================================================
-
-# ================================================================
-# Setup for EPICS QT (QE Framework) from Austraila:
-# Using QT5
-# ===============================================================
-export QWT_INCLUDE_PATH=$QWT_ROOT/include
-export QE_FFMPEG=YES
-export QE_CAQTDM="${EPICS_EXTENSIONS}/src/caQtDM/caQtDM-R3-9-3"
-export QE_CAQTDM_LIB=${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}
-export LD_LIBRARY_PATH=$QWT_ROOT/lib:$LD_LIBRARY_PATH
-# ================================================================
-
+# Override the standard python version
 export PATH=$PACKAGE_TOP/python/python2.7.9/linux-x86_64/bin:$PATH
 export LD_LIBRARY_PATH=$PACKAGE_TOP/python/python2.7.9/linux-x86_64/lib:$PACKAGE_TOP/python/python2.7.9/linux-x86_64/lib/python2.7/lib-dynload:$LD_LIBRARY_PATH
+
+# End of script
 
