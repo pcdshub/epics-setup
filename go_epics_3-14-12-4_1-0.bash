@@ -11,8 +11,7 @@
 # 10-Dec-2011 Ernest Williams
 #             export EPICS_MODULES_TOP after sourcing ENVS.bash to define EPICS_TOP
 # =========================================
-
-
+#
 # Define LCLS_ROOT, based on AFS for development or NFS for production
 if [ -d /afs/slac/g/lcls ]; then
         export LCLS_ROOT=/afs/slac/g/lcls
@@ -45,47 +44,9 @@ export TFTP_TOP=/afs/slac/g/lcls/tftpboot
 # TOP for BuildRoot = linuxRT
 export LINUX_RT=/afs/slac/g/lcls/package/linuxRT
 
-# ===============================================================
-# Let's setup for caQtDM: From PSI
-# Display Editor and Manager for Control System GUI Development
-# Both Editor/Runtime
-# Using QT5 and QWT
-# ==================================================
-QTDIR=$PACKAGE_TOP/Qt-5.4.1
-QTINC=$PACKAGE_TOP/Qt-5.4.1/include
-QTLIB=$PACKAGE_TOP/Qt-5.4.1/lib
-export QT_PLUGIN_PATH="${QTDIR}/plugins"
-export PATH=$QTDIR/bin:$PATH
-# ==================================================
+# setup for caQtDM: From PSI
+source ${FACILITY_ROOT}/tools/caQtDM/script/caQtDMsetup.bash
 
-# ============================================
-# QWT Setup
-# ============================================
-export QWT_ROOT=$PACKAGE_TOP/qwt-6.1.2
-export QT_PLUGIN_PATH="${QWT_ROOT}/plugins:$QT_PLUGIN_PATH"
+# End of script
 
-# ==========================================================================================
-# Plugin location for caQtDM and epicsQT
-# ==========================================================================================
-export QT_PLUGIN_PATH="${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}:$QT_PLUGIN_PATH"
-# ==========================================================================================
-
-
-# ==========================================================================
-# Where to search for caQtDM display files
-# ==========================================================================
-export CAQTDM_DISPLAY=$TOOLS/caQtDM/display
-export CAQTDM_DISPLAY_PATH=$CAQTDM_DISPLAY/Tests:$CAQTDM_DISPLAY/iocAdmin
-# ==========================================================================
-
-# ================================================================
-# Setup for EPICS QT (QE Framework) from Austraila:
-# Using QT5
-# ===============================================================
-export QWT_INCLUDE_PATH=$QWT_ROOT/include
-export QE_FFMPEG=YES
-export QE_CAQTDM="${EPICS_EXTENSIONS}/src/caQtDM/caQtDM-R3-9-3"
-export QE_CAQTDM_LIB=${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}
-export LD_LIBRARY_PATH=$QWT_ROOT/lib:$LD_LIBRARY_PATH
-# ================================================================
 
