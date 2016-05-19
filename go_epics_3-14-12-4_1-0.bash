@@ -39,13 +39,19 @@ export EPICS_MBA_TEMPLATE_TOP=${EPICS_MODULES_TOP}/icdTemplates/icdTemplates-R1-
 alias newepics='source /afs/slac/g/lcls/epics/setup/go_epics_3-16-0.bash'
 
 # ENV Variable for TFTP Server:
-export TFTP_TOP=/afs/slac/g/lcls/tftpboot
+if [ -d $FACILITY_ROOT/tftpboot ]; then
+ export TFTP_TOP=$FACILITY_ROOT/tftpboot
+fi
 
 # TOP for BuildRoot = linuxRT
-export LINUX_RT=/afs/slac/g/lcls/package/linuxRT
+if [ -d $FACILITY_ROOT/package/linux ]; then
+ export LINUX_RT=$FACILITY_ROOT/package/linuxRT
+fi
 
 # setup for caQtDM: From PSI
-source ${FACILITY_ROOT}/tools/caQtDM/script/caQtDMsetup.bash
+if [ -f ${FACILITY_ROOT}/tools/caQtDM/script/caQtDMsetup.bash ]; then
+ source ${FACILITY_ROOT}/tools/caQtDM/script/caQtDMsetup.bash
+fi
 
 # End of script
 
