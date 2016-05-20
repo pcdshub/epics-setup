@@ -73,7 +73,7 @@ source ${FACILITY_ROOT}/tools/script/ENVS_dev3.bash
 # but only for development
 if [ "$FACILITY" = "dev" ];then
   source ${FACILITY_ROOT}/tools/caQtDM/script/caQtDMsetup.bash
-  echo "caQtDM setup done"
+  # echo "caQtDM setup done"
 fi
 
 # Override the standard python version
