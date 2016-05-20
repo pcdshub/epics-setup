@@ -53,6 +53,10 @@ if [ -f ${FACILITY_ROOT}/tools/caQtDM/script/caQtDMsetup.bash ]; then
  source ${FACILITY_ROOT}/tools/caQtDM/script/caQtDMsetup.bash
 fi
 
+# Override the standard python version
+export PATH=$PACKAGE_TOP/python/python2.7.9/linux-x86_64/bin:$PATH
+export LD_LIBRARY_PATH=$PACKAGE_TOP/python/python2.7.9/linux-x86_64/lib:$PACKAGE_TOP/python/python2.7.9/linux-x86_64/lib/python2.7/lib-dynload:$LD_LIBRARY_PATH
+
 # End of script
 
 
