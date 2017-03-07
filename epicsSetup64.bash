@@ -8,6 +8,7 @@
 #           See also envSet*.bash for the runtime connection conf.  #
 #                                                                   #
 #  History:                                                         # 
+#  06Mar2017 B. Hill       Add jca.jar to CLASSPATH                 #
 #  17Feb2017 B. Hill       Per Jingchen, created 64 bit variant     #
 #  29Apr2016 M Shankar     Per Jingchen, created softlinks to all   #
 #                          the .so files in V4 in a lib/linux-x86   #
@@ -326,6 +327,16 @@ if [ ! -z $DEBUG ]; then
   java -version
 fi
 
+# Add jca.jar to CLASSPATH
+JCA_JAR=$EPICS_EXTENSIONS/javalib/$EPICS_HOST_ARCH/jca.jar
+if [ -f $JCA_JAR ]; then
+	if [ -z "$CLASSPATH" ]; then
+		CLASSPATH=.:$JCA_JAR
+	elif [ -z `echo $CLASSPATH | grep ${JCA_JAR}` ]; then
+		CLASSPATH=$JCA_JAR:$CLASSPATH
+	fi
+fi
+
 ########################################################################
 # Printer related environment variables
 ########################################################################
@@ -388,3 +399,11 @@ export NETSCAPEPATH=firefox
 #if [ -r $CMLOGSETUP/cmlogSetup.bash ]; then
 #  . $CMLOGSETUP/cmlogSetup.bash > /dev/null
 #fi
+
+###############################################
+# Add EPICS V4 pvaPy to PYTHONPATH
+###############################################
+PVAPY_DIR="${EPICS_PVCPP}/pvaPy/lib/python/2.7/${EPICS_HOST_ARCH}"
+if [ -z `echo $PYTHONPATH | grep ${PVAPY_DIR}` ]; then
+    export PYTHONPATH=${PVAPY_DIR}:${PYTHONPATH}
+fi
