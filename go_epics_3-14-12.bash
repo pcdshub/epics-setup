@@ -25,4 +25,4 @@ export EPICS_MODULES_VER=R3-14-12
 source ${LCLS_ROOT}/tools/script/ENVS.bash
 
 export EPICS_MODULES_TOP=${EPICS_TOP}/modules/${EPICS_MODULES_VER}
-export TEST_STAND=/afs/slac/g/lcls/epics/TestStand
+
