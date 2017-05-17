@@ -43,7 +43,7 @@ case $HOSTNAME in
 		;;
 	cxi-console | cxi-daq | cxi-monitor | cxi-control )
 		EPICS_CA_AUTO_ADDR_LIST=NO
-		EPICS_CA_ADDR_LIST=172.21.44.255
+		EPICS_CA_ADDR_LIST=172.21.71.255
 		;;
 	mec-console | mec-daq | mec-monitor | mec-control )
 		EPICS_CA_AUTO_ADDR_LIST=NO
