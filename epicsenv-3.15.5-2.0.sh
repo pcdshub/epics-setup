@@ -18,7 +18,7 @@ if [ -e /reg/g/pcds/pyps/config/common_dirs.sh ]; then
 else
 	source /afs/slac/g/pcds/config/common_dirs.sh
 fi
-# We're changing EPICS_SITE_TOP as of 3.15.5
+# We're changing EPICS_SITE_TOP as of 3.14.12.5
 if [ -d /reg/g/pcds/epics ]; then
 	export EPICS_SITE_TOP=/reg/g/pcds/epics
 else

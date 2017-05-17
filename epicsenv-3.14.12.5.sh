@@ -18,9 +18,8 @@ else
 	source /afs/slac/g/pcds/config/common_dirs.sh
 fi
 # We're changing EPICS_SITE_TOP as of 3.14.12.5
-# R3.14.12-0.4.0 will continue to use these
-if [ -d /reg/g/pcds/package/epics/3.14 ]; then
-	export EPICS_SITE_TOP=/reg/g/pcds/package/epics/3.14
+if [ -d /reg/g/pcds/epics ]; then
+	export EPICS_SITE_TOP=/reg/g/pcds/epics
 else
 	export EPICS_SITE_TOP=/afs/slac/g/pcds/epics
 fi
@@ -31,7 +30,7 @@ source ${SETUP_SITE_TOP}/epics-ca-env.sh
 # get some functions for manipulating assorted env path variables
 source ${SETUP_SITE_TOP}/pathmunge.sh
 
-export BASE_MODULE_VERSION=R3.14.12-0.4.0
+export BASE_MODULE_VERSION=R3.14.12.5-2.1
 
 export EPICS_TOOLS_SITE_TOP=${EPICS_SITE_TOP}
 
