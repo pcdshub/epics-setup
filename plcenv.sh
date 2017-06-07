@@ -5,19 +5,18 @@ PLC_DIR='/reg/g/pcds/plc-common'
 MECD='MEC=/reg/g/pcds/package/epics/3.14-dev/tools/current/scripts/iss/mec_plc_dump'
 CXID='CXI=/reg/g/pcds/package/epics/3.14-dev/tools/current/scripts/iss/cxi_plc_dump'
 XCSD='XCS=/reg/g/pcds/package/epics/3.14-dev/tools/current/scripts/iss/xcs_plc_dump'
+DRIVES=" -r disk:Package=/reg/common/package -r disk:${MECD} -r disk:${CXID} -r disk:PLC=${PLC_DIR} -r disk:${XCSD}"
 
 # command templates
 #regular size
-reg_plc_com="rdesktop -g 1200x800 -a 32 -x 0x80 -r disk:GEN=${PLC_DIR} -r disk:Package=/reg/common/package -r disk:$MECD -r disk:$CXID -r disk:PLC=$PLC_DIR"
+reg_plc_com="rdesktop -g 1200x800 -a 32 -x 0x80 ${DRIVES}"
 # big size
-#big_plc_com="rdesktop -g 1700x900 -a 32 -x 0x80 -r disk:Package=/reg/common/package -r disk:${MECD} -r disk:${!CXID} -r disk:PLC=${PLC_DIR} -r disk:${XCSD}"
-big_plc_com="rdesktop -g 1900x1028 -a 32 -x 0x80 -r disk:Package=/reg/common/package -r disk:${MECD} -r disk:${!CXID} -r disk:PLC=${PLC_DIR} -r disk:${XCSD}"
-# big size
-mega_plc_com="rdesktop -g 2100x1181 -a 32 -x 0x80 -r disk:Package=/reg/common/package -r disk:${MECD} -r disk:${!CXID} -r disk:PLC=${PLC_DIR} -r disk:${XCSD}"
+big_plc_com="rdesktop -g 1900x1028 -a 32 -x 0x80 ${DRIVES}"
+mega_plc_com="rdesktop -g 2100x1181 -a 32 -x 0x80 ${DRIVES}"
 # small size
-small_plc_com="rdesktop -g 960x640 -a 32 -x 0x80 -r disk:GEN=$PLC_DIR -r disk:Package=/reg/common/package -r disk:$MECD -r disk:$CXID -r disk:PLC=$PLC_DIR"
+small_plc_com="rdesktop -g 960x640 -a 32 -x 0x80 ${DRIVES} "
 #tablet size
-tablet_plc_com="rdesktop -g 1200x600 -a 32 -x 0x80 -r disk:GEN=$PLC_DIR -r disk:Package=/reg/common/package -r disk:$MECD -r disk:$CXID -r disk:PLC=$PLC_DIR"
+tablet_plc_com="rdesktop -g 1200x600 -a 32 -x 0x80 ${DRIVES} "
 
 alias plcpc1='$reg_plc_com plc-prg-01 &' 
 alias smallplcpc1='$small_plc_com plc-prg-01 &' 

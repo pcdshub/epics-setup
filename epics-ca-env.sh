@@ -57,4 +57,14 @@ esac
 export EPICS_CA_AUTO_ADDR_LIST
 export EPICS_CA_ADDR_LIST
 
+# URL and firefox launcher for the PCDS Archiver Appliance Management web U/I
+# Recommend firefox version 43 or newer or google-chrome version 44 or newer
+export ARCHIVER_URL=http://pscaa02.slac.stanford.edu:17665/mgmt/ui/index.html
+alias Archiver="firefox --no-remote $ARCHIVER_URL 2>1 > /dev/null&"
+alias ArchiveManager="google-chrome --no-remote $ARCHIVER_URL 2>1 > /dev/null&"
+
+# Archiver Appliance Viewer URL:
+# Recommend firefox version 43 or newer or google-chrome version 44 or newer
+export ARCHIVE_VIEWER_URL=https://pswww.slac.stanford.edu/apps/EpicsViewer
+alias ArchiveViewer="google-chrome --no-remote $ARCHIVE_VIEWER_URL 2>1 > /dev/null&"
 

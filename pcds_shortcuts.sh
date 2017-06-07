@@ -147,49 +147,7 @@ alias psproc=show_epics_sioc
 
 function show_epics_versions( )
 {
-	if [ $1 ];
-	then
-		for m in $*;
-		do
-			if [ $m == "base" ];
-			then
-				/bin/ls -F -td $EPICS_SITE_TOP/base/*	|\
-				/bin/sed -e "s^$EPICS_SITE_TOP/\([a-zA-Z0-9_-]*\)/\([a-zA-Z0-9.-]*\)/^\1\t\2^" |\
-				/usr/bin/expand --tabs=1,25 | egrep "R[0-9]";
-				continue;
-			fi
-			if [ -d $EPICS_SITE_TOP/modules/$m	];
-			then
-				/bin/ls -F -td $EPICS_SITE_TOP/modules/$m/*	|\
-				/bin/sed -e "s^$EPICS_SITE_TOP/\(modules/\)\?\([a-zA-Z0-9_/-]*\)/\(R[a-zA-Z0-9.-]*\)/^\2\t\3^" |\
-				/usr/bin/expand --tabs=1,25 | egrep "R[0-9]";
-				continue;
-			fi
-			if [ -d $EPICS_SITE_TOP/ioc/$m	];
-			then
-				/bin/ls -F -td $EPICS_SITE_TOP/ioc/$m/*	|\
-				/bin/sed -e "s^$EPICS_SITE_TOP/\(ioc/\)\?\([a-zA-Z0-9_/-]*\)/\(R[a-zA-Z0-9.-]*\)/^\2\t\3^" |\
-				/usr/bin/expand --tabs=1,25 | egrep "R[0-9]";
-				continue;
-			fi
-			if [ -d $EPICS_SITE_TOP/$m	];
-			then
-				/bin/ls -F -td $EPICS_SITE_TOP/$m/*	|\
-				/bin/sed -e "s^$EPICS_SITE_TOP/\([a-zA-Z0-9_/-]*\)/\(R[a-zA-Z0-9.-]*\)/^\1\t\2^" |\
-				/usr/bin/expand --tabs=1,25 | egrep "R[0-9]";
-				continue;
-			fi
-			echo Unknown module: $m;
-		done;
-		return 0;
-	fi
-	for d in $EPICS_SITE_TOP/base $EPICS_SITE_TOP/modules/*;
-	do	
-		if [ ! -d $d ]; then continue; fi;
-		/bin/ls -F -td $d/*	| head -1	|\
-		/bin/sed -e "s^$EPICS_SITE_TOP/\(modules/\)\?\([a-zA-Z0-9_/-]*\)/\(R[a-zA-Z0-9.-]*\)/^\2\t\3^" |\
-		/usr/bin/expand --tabs=1,25 | egrep "R[0-9]";
-	done
+	epics-versions $*
 }
 export show_epics_versions
 
@@ -576,13 +534,9 @@ function gsed
 }
 export gsed
 
-# URL and firefox launcher for the PCDS Archiver Appliance Management web U/I
-# Recommend firefox version 43 or newer or google-chrome version 44 or newer
-export ARCHIVER_URL=http://pscaa02.slac.stanford.edu:17665/mgmt/ui/index.html
-alias Archiver="firefox --no-remote $ARCHIVER_URL 2>1 > /dev/null&"
-alias ArchiveManager="google-chrome --no-remote $ARCHIVER_URL 2>1 > /dev/null&"
+# Moved archiver macros and aliases to epics-ca-env.*
 
-# Archiver Appliance Viewer URL:
-# Recommend firefox version 43 or newer or google-chrome version 44 or newer
-export ARCHIVE_VIEWER_URL=https://pswww-dev.slac.stanford.edu/apps-dev/EpicsViewer
-alias ArchiveViewer="google-chrome --no-remote $ARCHIVER_URL 2>1 > /dev/null&"
+# Here's a convenient alias for visual diff of svn files
+# Define VISUALDIFF to your favorite visual diff tool or default to vimdiff
+alias svnvdiff='svn diff --diff-cmd /reg/common/tools/bin/svn-vdiffwrap.sh '
+
