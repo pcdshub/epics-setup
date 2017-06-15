@@ -25,6 +25,10 @@ fi
 # network adapters on the FEZ network.
 HOSTNAME=`hostname`
 case $HOSTNAME in
+	ioc-fee-rec* )
+		EPICS_CA_AUTO_ADDR_LIST=NO
+		EPICS_CA_ADDR_LIST=172.21.36.255
+		;;
 	amo-console | amo-daq | amo-monitor | amo-control )
 		EPICS_CA_AUTO_ADDR_LIST=NO
 		EPICS_CA_ADDR_LIST=172.21.37.255
