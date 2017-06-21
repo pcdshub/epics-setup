@@ -7,9 +7,9 @@
 #           This file sets up all EPICS clients side paths etc.     #
 #           See also envSet*.bash for the runtime connection conf.  #
 #                                                                   #
-#  History:                                                         # 
-#  24Feb2017 M Gibbs       Change V4 to 4.6.0, and add pvaPy        #
-#                          module to the PYTHONPATH                 #
+#  History:                                                         #   
+#  21Jun2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS/facility  #                                                   
+#  30Mar2017 K.Luchini     Add EPICS_CPU,CPU, TFTPBOOT              # 
 #  29Apr2016 M Shankar     Per Jingchen, created softlinks to all   #
 #                          the .so files in V4 in a lib/linux-x86   #
 #                          and add that single directory to         # 
@@ -82,10 +82,13 @@ HOSTNAME=`hostname`
 if [ -d /afs/slac/g/lcls ]; then
    export LCLS_ROOT=/afs/slac/g/lcls
    export IOCCONSOLE_ENV=Dev
+   export TFTPBOOT=$LCLS_ROOT/tftpboot
 else 
    export LCLS_ROOT=/usr/local/lcls 
    export IOCCONSOLE_ENV=Prod
+   export TFTPBOOT=/usr/local/common/tftpboot
 fi
+export FACILITY_ROOT=$LCLS_ROOT
 #
 # Set up LCLS_DATA
 #
@@ -110,6 +113,7 @@ fi
 #
 # Set up the rest of environment variables based on above root variables 
 #
+export FACILITY_ROOT=$LCLS_ROOT
 export RTEMS=$LCLS_ROOT/rtems
 export TOOLS=$LCLS_ROOT/tools
 export TOOLS_DATA=$LCLS_DATA/tools
@@ -129,8 +133,8 @@ export EPICS_BASE_TOP=$EPICS_TOP/base
 export EPICS_BASE_RELEASE=$EPICS_BASE_TOP/${EPICS_BASE_VER}
 
 # V4
-EPICS_PVCPP=${EPICS_BASE_TOP}/base-cpp-R4-6-0
-EPICS_PVJAVA=${EPICS_BASE_TOP}/base-java-R4-6-0/epics-core
+EPICS_PVCPP=${EPICS_BASE_TOP}/base-cpp-R4-5-0
+EPICS_PVJAVA=${EPICS_BASE_TOP}/base-java-R4-5-0
 
 # Extensions
 export EPICS_EXTENSIONS=$EPICS_TOP/extensions/extensions-${EPICS_EXTENSIONS_VER}
@@ -147,6 +151,11 @@ fi
 # Data
 export APP=$EPICS_IOC_TOP
 export EPICS_IOCS=$EPICS_TOP/iocCommon
+if [ -d $EPICS_TOP/cpuBoot ]; then 
+  export EPICS_CPUS=$EPICS_TOP/cpuBoot
+  export CPU=$EPICS_CPUS
+fi
+
 export EPICS_DATA=$LCLS_DATA/epics
 export EPICS_WWW=$WWW_ROOT/comp/unix/package/epics
 # temporary set EPICS_HOST_ARCH=linux-x86 during the transition to 64 bit
@@ -165,7 +174,7 @@ export IOC_DATA=$EPICS_DATA/ioc/data
 export IOC_OWNER=laci
 export IOC_OWNER_OS=Linux
 export IOC_OWNER_SHELL=bash
-export IOC_SCREEN=$EPICS_TOP/iocCommon/All/$IOCCONSOLE_ENV
+export IOC_SCREEN=$EPICS_IOCS/facility
 export IOC_PRIM_MAP=slc/primary.map
 #
 # Setup remaining EPICS CA environment variables
@@ -393,11 +402,3 @@ export NETSCAPEPATH=firefox
 #if [ -r $CMLOGSETUP/cmlogSetup.bash ]; then
 #  . $CMLOGSETUP/cmlogSetup.bash > /dev/null
 #fi
-
-###############################################
-# Add EPICS V4 pvaPy to PYTHONPATH
-###############################################
-PVAPY_DIR="${EPICS_PVCPP}/pvaPy/lib/python/2.7/${EPICS_HOST_ARCH}"
-if [ -z `echo $PYTHONPATH | grep ${PVAPY_DIR}` ]; then
-    export PYTHONPATH=${PVAPY_DIR}:${PYTHONPATH}
-fi
