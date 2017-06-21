@@ -3,9 +3,11 @@
 #  Title: epicsSetup_acctest.bash                                   #
 #                                                                   #
 #  Purpose: '.' this file to set your EPICS environment correctly   #
-#           This file sets up edm, vdct and cmlog as part of the deal
+#        This file sets up edm, vdct and cmlog as part of the deal  #
 #                                                                   #
-#  History:                                                         # 
+#  History:                                                         #
+#  21Jun2017 K. Luchini    Add FACILITY_ROOT  and FACILITY_DATA     #
+#                          chg IOC_SCREEN                           #
 #  06Nov2013 Jingchen Zhou remove CMLOG                             #
 #  01Nov2011 Jingchen Zhou cloned for Test Facilities               #
 #  19Jul2011 Jingchen Zhou changed setup.sh to setup_facet for edm  #
@@ -48,18 +50,18 @@
 #  08dec2005 Dayle Kotturi Change CLASSPATH to point to TOOLS/javalib#
 #  09Mar2006 Mike Zelazny  Added core* to CVSIGNORE                 #
 #  23aug2006 K. Luchini    Added $TOOLS/edm/script to path          #
-#  05Oct2006 Mike Zelazny  Set LCLS_DATA based on dir availability     #
+#  05Oct2006 Mike Zelazny  Set LCLS_DATA based on dir availability  #
 #                          instead of node name.                    #
-#  16Apr2007 Jingchen Zhou Set LCLS_DATA based on HOSTNAME             #
+#  16Apr2007 Jingchen Zhou Set LCLS_DATA based on HOSTNAME          #
 #                          Remove the conditional check for         # 
 #                          ALHLOGFILES and just set it.             #
 # 24Apr2007 Jingchen Zhou  Removed STRIPCONFIGFILES STRIPDATAFILES  #
 #                          Defined STRIP_FILE_SEARCH_PATH and       #
 #                          STRIP_FILE_SEARCH_PATH                   #
-# 22May2007 Jingchen Zhou Added PHYSDATA, a data area for physicists #
-# 30Oct2007 Jingchen Zhou updated to support standalone production #
-#            environment     
-# 07Dec2007 Jingchen Zhou Added $LCLS_ROOT/bin to PATH             #
+# 22May2007 Jingchen Zhou Added PHYSDATA, a data area for physicists#
+# 30Oct2007 Jingchen Zhou updated to support standalone production  #
+#                          environment                              #         
+# 07Dec2007 Jingchen Zhou Added $LCLS_ROOT/bin to PATH              #
 #####################################################################
 umask 002      
 HOSTNAME=`hostname`
@@ -67,9 +69,11 @@ HOSTNAME=`hostname`
 # Set up ACCTEST_ROOT
 #
 if [ -d /afs/slac/g/acctest ]; then
+   export FACILITY_ROOT=/afs/slac/g/acctest
    export ACCTEST_ROOT=/afs/slac/g/acctest
    export IOCCONSOLE_ENV=Acctest
 else 
+   export FACILITY_ROOT=/usr/local/acctest 
    export ACCTEST_ROOT=/usr/local/acctest 
    export IOCCONSOLE_ENV=Prod
 fi
@@ -77,8 +81,10 @@ fi
 # Set up ACCTEST_DATA
 #
 if [ -d /nfs/slac/g/acctest ]; then
+   export FACILITY_DATA=/nfs/slac/g/acctest
    export ACCTEST_DATA=/nfs/slac/g/acctest  
 elif [ -d /u1/acctest ]; then
+   export FACILITY_DATA=/u1/acctest
    export ACCTEST_DATA=/u1/acctest
 else
    export ACCTEST_DATA=	
@@ -135,7 +141,7 @@ export IOC_DATA=$EPICS_DATA/ioc/data
 export IOC_OWNER=acctf
 export IOC_OWNER_OS=Linux
 export IOC_OWNER_SHELL=bash
-export IOC_SCREEN=$EPICS_TOP/iocCommon/All/$IOCCONSOLE_ENV
+export IOC_SCREEN=$EPICS_IOCS/facility
 export IOC_PRIM_MAP=slc/primary.map
 #
 # Setup remaining EPICS CA environment variables
