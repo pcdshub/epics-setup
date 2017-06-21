@@ -6,6 +6,8 @@
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
 #  History:                                                         # 
+#  21Jun2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS/facility  #   
+#  30Mar2017 K.Luchini     Add EPICS_CPUS and TFTPBOOT              # 
 #  22Aug2014 Jingchen Zhou Add $TOOLS/AlarmConfigTop/SCRIPT         #	 
 #  11Feb2014 Jingchen Zhou switch EPICS from R3-14-8-2 to R3-14-12  #
 #  06Nov2013 Jingchen Zhou remove CMLOG                             #
@@ -67,10 +69,13 @@ HOSTNAME=`hostname`
 if [ -d /afs/slac/g/lcls ]; then
    export LCLS_ROOT=/afs/slac/g/lcls
    export IOCCONSOLE_ENV=Dev
+   export TFTPBOOT=$LCLS_ROOT/tftpboot
 else 
    export LCLS_ROOT=/usr/local/lcls 
    export IOCCONSOLE_ENV=Prod
+   export TFTPBOOT=/usr/local/common/tftpboot
 fi
+export FACILITY_ROOT=$LCLS_ROOT
 #
 # Set up LCLS_DATA
 #
@@ -126,7 +131,10 @@ fi
 export APP=$EPICS_IOC_TOP
 
 export EPICS_IOCS=$EPICS_TOP/iocCommon
-
+if [ -d $FACILITY_ROOT/epics/cpuBoot ]; then
+  export EPICS_CPUS=$FACILITY_ROOT/epics/cpuBoot
+  export CPU=$EPICS_CPUS
+fi
 export EPICS_DATA=$LCLS_DATA/epics
 export EPICS_WWW=$WWW_ROOT/comp/unix/package/epics
 export EPICS_HOST_ARCH=`$EPICS_BASE_RELEASE/startup/EpicsHostArch`
@@ -144,7 +152,7 @@ export IOC_DATA=$EPICS_DATA/ioc/data
 export IOC_OWNER=laci
 export IOC_OWNER_OS=Linux
 export IOC_OWNER_SHELL=bash
-export IOC_SCREEN=$EPICS_TOP/iocCommon/All/$IOCCONSOLE_ENV
+export IOC_SCREEN=$EPICS_IOCS/facility
 export IOC_PRIM_MAP=slc/primary.map
 #
 # Setup remaining EPICS CA environment variables

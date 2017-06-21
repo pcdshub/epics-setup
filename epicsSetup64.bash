@@ -7,8 +7,10 @@
 #           This file sets up all EPICS clients side paths etc.     #
 #           See also envSet*.bash for the runtime connection conf.  #
 #                                                                   #
-#  History:                                                         # 
-#  06Mar2017 B. Hill       Add jca.jar to CLASSPATH                 #
+#  History:                                                         #
+#  21Jun2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS/facility  #
+#  30Mar2017 K.Luchini     Add EPICS_CPUS,CPU,TFTPBOOT and          #
+#                          FACILITY_ROOT                            # 
 #  17Feb2017 B. Hill       Per Jingchen, created 64 bit variant     #
 #  29Apr2016 M Shankar     Per Jingchen, created softlinks to all   #
 #                          the .so files in V4 in a lib/linux-x86   #
@@ -82,10 +84,14 @@ HOSTNAME=`hostname`
 if [ -d /afs/slac/g/lcls ]; then
    export LCLS_ROOT=/afs/slac/g/lcls
    export IOCCONSOLE_ENV=Dev
+   export TFTPBOOT=/afs/slac/g/lcls/tftpboot
 else 
    export LCLS_ROOT=/usr/local/lcls 
    export IOCCONSOLE_ENV=Prod
+   export TFTPBOOT=/usr/local/common/tftpboot
 fi
+export FACILITY_ROOT=$LCLS_ROOT
+
 #
 # Set up LCLS_DATA
 #
@@ -147,6 +153,10 @@ fi
 # Data
 export APP=$EPICS_IOC_TOP
 export EPICS_IOCS=$EPICS_TOP/iocCommon
+if [ -d $EPICS_TOP/cpuBoot ]; then
+  export EPICS_CPUS=$EPICS_TOP/cpuBoot
+  export CPU=$EPICS_CPUS
+fi
 export EPICS_DATA=$LCLS_DATA/epics
 export EPICS_WWW=$WWW_ROOT/comp/unix/package/epics
 # Set EPICS_HOST_ARCH via current EPICS BASE release of EpicsHostArch script
@@ -164,7 +174,7 @@ export IOC_DATA=$EPICS_DATA/ioc/data
 export IOC_OWNER=laci
 export IOC_OWNER_OS=Linux
 export IOC_OWNER_SHELL=bash
-export IOC_SCREEN=$EPICS_TOP/iocCommon/All/$IOCCONSOLE_ENV
+export IOC_SCREEN=$EPICS_IOCS/facility
 export IOC_PRIM_MAP=slc/primary.map
 #
 # Setup remaining EPICS CA environment variables
@@ -327,16 +337,6 @@ if [ ! -z $DEBUG ]; then
   java -version
 fi
 
-# Add jca.jar to CLASSPATH
-JCA_JAR=$EPICS_EXTENSIONS/javalib/$EPICS_HOST_ARCH/jca.jar
-if [ -f $JCA_JAR ]; then
-	if [ -z "$CLASSPATH" ]; then
-		CLASSPATH=.:$JCA_JAR
-	elif [ -z `echo $CLASSPATH | grep ${JCA_JAR}` ]; then
-		CLASSPATH=$JCA_JAR:$CLASSPATH
-	fi
-fi
-
 ########################################################################
 # Printer related environment variables
 ########################################################################
@@ -399,11 +399,3 @@ export NETSCAPEPATH=firefox
 #if [ -r $CMLOGSETUP/cmlogSetup.bash ]; then
 #  . $CMLOGSETUP/cmlogSetup.bash > /dev/null
 #fi
-
-###############################################
-# Add EPICS V4 pvaPy to PYTHONPATH
-###############################################
-PVAPY_DIR="${EPICS_PVCPP}/pvaPy/lib/python/2.7/${EPICS_HOST_ARCH}"
-if [ -z `echo $PYTHONPATH | grep ${PVAPY_DIR}` ]; then
-    export PYTHONPATH=${PVAPY_DIR}:${PYTHONPATH}
-fi

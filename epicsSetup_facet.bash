@@ -5,8 +5,10 @@
 #  Purpose: '.' this file to set your EPICS environment correctly   #
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
-#  History:                                                         # 
-#  06Nov2013 Jingchen Zhou remove CMLOG
+#  History:                                                         #
+#  21Jun2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS/facility  # 
+#  30Mar2017 K.Luchini     Add EPICS_CPUS and TFTPBOOT              # 
+#  06Nov2013 Jingchen Zhou remove CMLOG                             #
 #  19Jul2011 Jingchen Zhou changed setup.sh to setup_facet for edm  #
 #  01Feb2011 jrock         changed ALHCONFIGFILES to facet dir      #
 #  02Nov2010 Jingchen Zhou Cloned from LCLS epicsSetup.bash         #
@@ -68,10 +70,13 @@ HOSTNAME=`hostname`
 if [ -d /afs/slac/g/facet ]; then
    export FACET_ROOT=/afs/slac/g/facet
    export IOCCONSOLE_ENV=Dev
+   export TFTPBOOT=$FACET_ROOT/tftpboot
 else 
    export FACET_ROOT=/usr/local/facet 
    export IOCCONSOLE_ENV=Prod
+   export TFTPBOOT=/usr/local/common/tftpboot
 fi
+export FACILITY_ROOT=$FACET_ROOT
 #
 # Set up FACET_DATA
 #
@@ -123,7 +128,10 @@ fi
 export APP=$EPICS_IOC_TOP
 
 export EPICS_IOCS=$EPICS_TOP/iocCommon
-
+if [ -d $EPICS_TOP/cpupBoot ]; then 
+  export EPICS_CPUS=$EPICS_TOP/cpuBoot
+  export CPU=$EPICS_CPUS
+fi
 export EPICS_DATA=$FACET_DATA/epics
 export EPICS_WWW=$WWW_ROOT/comp/unix/package/epics
 # temporary set EPICS_HOST_ARCH=linux-x86 during the transition to 64 bit
@@ -142,7 +150,7 @@ export IOC_DATA=$EPICS_DATA/ioc/data
 export IOC_OWNER=flaci
 export IOC_OWNER_OS=Linux
 export IOC_OWNER_SHELL=bash
-export IOC_SCREEN=$EPICS_TOP/iocCommon/All/$IOCCONSOLE_ENV
+export IOC_SCREEN=$EPICS_IOCS/facility
 export IOC_PRIM_MAP=slc/primary.map
 #
 # Setup remaining EPICS CA environment variables
