@@ -14,10 +14,10 @@ edmpathmunge $EDM/lcls
 edmpathmunge $EDM/vac
 edmpathmunge $EDM/event
 #edmpathmunge $XTOD/xtod
-edmpathmunge $EDM/xray
 edmpathmunge $EDM
 edmpathmunge ..
 edmpathmunge .
+edmpathmunge $EDM/xray
 
 # For alarm handler
 export ALHCONFIGFILES=$TOOLS/alh/config

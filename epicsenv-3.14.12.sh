@@ -32,6 +32,7 @@ source ${SETUP_SITE_TOP}/epics-ca-env.sh
 source ${SETUP_SITE_TOP}/pathmunge.sh
 
 export BASE_MODULE_VERSION=R3.14.12-0.4.0
+export EPICS_BASE_RELEASE=${BASE_MODULE_VERSION}
 
 export EPICS_TOOLS_SITE_TOP=${EPICS_SITE_TOP}
 

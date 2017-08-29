@@ -3,7 +3,7 @@
 
 #Sample Delivery System
 SDS_TOP_DEV=/reg/g/pcds/package/epics/3.14-dev/ioc/common/sds/current/
-alias iclsds="pushd $SDS_TOP_DEV; ./m2a-samplescreen.cmd"
+alias iclsds="pushd $SDS_TOP_DEV; ./icl-samplescreen.cmd"
 alias amosds="pushd $SDS_TOP_DEV; ./amo-samplescreen.cmd"
 alias sxrsds="pushd $SDS_TOP_DEV; ./sxr-samplescreen.cmd"
 alias iclcamera="pushd /reg/g/pcds/package/epics/3.14-dev/ioc/icl/gige/current; ./edm-ioc-icl-gige-01.cmd"

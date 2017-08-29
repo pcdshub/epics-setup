@@ -11,7 +11,7 @@ DRIVES=" -r disk:Package=/reg/common/package -r disk:${MECD} -r disk:${CXID} -r 
 #regular size
 reg_plc_com="rdesktop -g 1200x800 -a 32 -x 0x80 ${DRIVES}"
 # big size
-big_plc_com="rdesktop -g 1900x1028 -a 32 -x 0x80 ${DRIVES}"
+big_plc_com="rdesktop -g 1800x1028 -a 32 -x 0x80 ${DRIVES}"
 mega_plc_com="rdesktop -g 2100x1181 -a 32 -x 0x80 ${DRIVES}"
 # small size
 small_plc_com="rdesktop -g 960x640 -a 32 -x 0x80 ${DRIVES} "

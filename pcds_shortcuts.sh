@@ -28,7 +28,7 @@ if [ -z "$PACKAGE_SITE_TOP" ]; then
 export PACKAGE_SITE_TOP=/reg/g/pcds/package
 fi
 if [ -z "$EPICS_SITE_TOP" ]; then
-export EPICS_SITE_TOP=/reg/g/pcds/package/epics/3.14
+export EPICS_SITE_TOP=/reg/g/pcds/epics
 fi
 if [ -z "$IOC_COMMON" ]; then
 export IOC_COMMON=/reg/d/iocCommon
@@ -431,7 +431,14 @@ function hpl()
 	pushd $PKGS/epics/3.14-dev/screens/edm/hpl/current
 	./hplhome
 }
-export mfx
+export hpl
+
+function gw()
+{
+	pushd $PKGS/epics/3.14-dev/screens/edm/gateway/current
+	./gwhome
+}
+export gw
 
 
 function updateScreenLinks
