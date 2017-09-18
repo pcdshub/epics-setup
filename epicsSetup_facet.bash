@@ -151,7 +151,8 @@ export IOC_DATA=$EPICS_DATA/ioc/data
 export IOC_OWNER=flaci
 export IOC_OWNER_OS=Linux
 export IOC_OWNER_SHELL=bash
-export IOC_SCREEN=$EPICS_IOCS/facility
+#export IOC_SCREEN=$EPICS_TOP/iocCommon/All/$IOCCONSOLE_ENV
+export IOC_SCREEN=$EPICS_IOCS
 export IOC_PRIM_MAP=slc/primary.map
 #
 # Setup remaining EPICS CA environment variables
