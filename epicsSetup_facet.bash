@@ -6,6 +6,7 @@
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
 #  History:                                                         #
+#  18Jun2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS           # 
 #  21Jun2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS/facility  # 
 #  30Mar2017 K.Luchini     Add EPICS_CPUS and TFTPBOOT              # 
 #  06Nov2013 Jingchen Zhou remove CMLOG                             #

@@ -8,6 +8,7 @@
 #           See also envSet*.bash for the runtime connection conf.  #
 #                                                                   #
 #  History:                                                         #
+#  18Sep2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS           #
 #  21Jun2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS/facility  #
 #  30Mar2017 K.Luchini     Add EPICS_CPUS,CPU,TFTPBOOT and          #
 #                          FACILITY_ROOT                            # 

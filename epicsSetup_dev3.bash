@@ -5,7 +5,8 @@
 #  Purpose: '.' this file to set your EPICS environment correctly   #
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
-#  History:                                                         # 
+#  History:                                                         #
+#  18Sep2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS           # 
 #  21Jun2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS/facility  #   
 #  30Mar2017 K.Luchini     Add EPICS_CPUS and TFTPBOOT              # 
 #  22Aug2014 Jingchen Zhou Add $TOOLS/AlarmConfigTop/SCRIPT         #	 
@@ -152,7 +153,7 @@ export IOC_DATA=$EPICS_DATA/ioc/data
 export IOC_OWNER=laci
 export IOC_OWNER_OS=Linux
 export IOC_OWNER_SHELL=bash
-export IOC_SCREEN=$EPICS_IOCS/facility
+export IOC_SCREEN=$EPICS_IOCS
 export IOC_PRIM_MAP=slc/primary.map
 #
 # Setup remaining EPICS CA environment variables
