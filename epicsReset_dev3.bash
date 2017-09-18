@@ -61,6 +61,9 @@ export MATLABDATAFILES=""
 # Set EPICS environment for AFS based development or NFS based 
 # standalone production   
 #
+
+export PACKAGE_TOP=""
+
 if [ -d /afs/slac/g/lcls ]; then 
 	export LCLS_ROOT=/afs/slac/g/lcls
 else
