@@ -6,6 +6,7 @@
 #        This file sets up edm, vdct and cmlog as part of the deal  #
 #                                                                   #
 #  History:                                                         #
+#  18Sep2017,K. Luchini    Chg IOC_SCREEN                           #
 #  21Jun2017 K. Luchini    Add FACILITY_ROOT  and FACILITY_DATA     #
 #                          chg IOC_SCREEN                           #
 #  06Nov2013 Jingchen Zhou remove CMLOG                             #
@@ -141,7 +142,7 @@ export IOC_DATA=$EPICS_DATA/ioc/data
 export IOC_OWNER=acctf
 export IOC_OWNER_OS=Linux
 export IOC_OWNER_SHELL=bash
-export IOC_SCREEN=$EPICS_IOCS/facility
+export IOC_SCREEN=$EPICS_IOCS
 export IOC_PRIM_MAP=slc/primary.map
 #
 # Setup remaining EPICS CA environment variables
