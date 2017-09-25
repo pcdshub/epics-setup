@@ -6,7 +6,9 @@
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
 #  History:                                                         #
-#  18Sep2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS           # 
+#  25Sep2017 H.Slepicka    Add logic to call EpicsHostArch for      #
+#                          R3.15.5-1.0                              #
+#  18Jun2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS           # 
 #  21Jun2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS/facility  # 
 #  30Mar2017 K.Luchini     Add EPICS_CPUS and TFTPBOOT              # 
 #  06Nov2013 Jingchen Zhou remove CMLOG                             #
@@ -138,6 +140,11 @@ export EPICS_WWW=$WWW_ROOT/comp/unix/package/epics
 # temporary set EPICS_HOST_ARCH=linux-x86 during the transition to 64 bit
 #export EPICS_HOST_ARCH=`$EPICS_BASE_RELEASE/startup/EpicsHostArch`
 export EPICS_HOST_ARCH=linux-x86
+
+if [ "$EPICS_BASE_VER" == "R3.15.5-1.0" ]; then
+  export EPICS_HOST_ARCH=`$EPICS_BASE_RELEASE/startup/EpicsHostArch`
+fi
+
 #
 # For running IOCs and iocConsole
 #
@@ -151,6 +158,7 @@ export IOC_DATA=$EPICS_DATA/ioc/data
 export IOC_OWNER=flaci
 export IOC_OWNER_OS=Linux
 export IOC_OWNER_SHELL=bash
+#export IOC_SCREEN=$EPICS_TOP/iocCommon/All/$IOCCONSOLE_ENV
 export IOC_SCREEN=$EPICS_IOCS
 export IOC_PRIM_MAP=slc/primary.map
 #
