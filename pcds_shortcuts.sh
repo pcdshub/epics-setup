@@ -46,7 +46,7 @@ function ssh_show_procServ( )
 {
 	PROCSERV_HOST=`hostname`
 	EXPAND_TABS='/usr/bin/expand --tabs=6,16,42,52,72'
-	REORDER='gawk {OFS="\t";print$2,$3,$6,$4,$1,$5}'
+	REORDER='gawk {OFS="\t";print$2,$3,$5,$4,$1,$6}'
 	if [ -z "$1" ]; then
 		SSH_CMD=""
 	elif [ -z "$2" ]; then
@@ -56,56 +56,26 @@ function ssh_show_procServ( )
 		SSH_CMD="ssh $2@$1"
 		PROCSERV_HOST=$1
 	fi
+	# ps output is piped through sed to remove unwanted ps header
+	# and uninteresting procServ parameters and keywords
 	$SSH_CMD ps -C procServ -o pid,user,command     |\
 				sed	 -e "s/\S*procServ /procServ /"  \
 					 -e "s/--savelog//"              \
-					 -e "s/--allow//"                \
-					 -e "s/--ignore\s*\S*//"         \
-					 -e "s/--coresize\s*\S*//"       \
-					 -e "s/--logfile\s*\S*//"        \
+					 -e "s/--allow//g"               \
+					 -e "s/--ignore\s\+\S\+//"       \
+					 -e "s/--coresize\s\+\S\+//"     \
+					 -e "s/--logfile\s\+\S\+//"      \
 					 -e "s/--noautorestart//"        \
 					 -e "s/--logstamp//"             \
-					 -e "s/--name\s*\(\S\+\)\s*\([0-9]\+\)/\2 \1/"  \
-					 -e "s^/\S*/g/\S*\/caRepeater^caRepeater^"      \
-					 -e "s/^/$PROCSERV_HOST\t/"                     \
-					 -e "s/  */\t/g"                                \
-					 -e "/PID\tUSER\tCOMMAND/d"                    |\
-				$REORDER                                           |\
+					 -e "s/--name//"                 \
+					 -e "s/^/$PROCSERV_HOST\t/"      \
+					 -e "s/  */\t/g"                 \
+					 -e "/PID\tUSER\tCOMMAND/d"     |\
+				$REORDER                            |\
                 $EXPAND_TABS
 	return
 }
-
-function show_epics_sioc_filter( )
-{
-	if [ -e /usr/bin/expand ]; then
-		EXPAND_TABS='/usr/bin/expand --tabs=6,16,42,52,72'
-	else
-		EXPAND_TABS='cat'
-	fi
-	if [ -e /bin/gawk ]; then
-		REORDER='gawk {OFS="\t";print$2,$3,$6,$4,$1,$5}'
-	else
-		REORDER='cat'
-	fi
-	ps -C procServ -o pid,user,command		|\
-                env sed -e "s/\S*procServ /procServ /"  \
-                         -e "s/--savelog//"              \
-                         -e "s/--allow//"                \
-                         -e "s/--ignore\s*\S*//"         \
-                         -e "s/--coresize\s*\S*//"       \
-                         -e "s/--logfile\s*\S*//"        \
-                         -e "s/--noautorestart//"        \
-                         -e "s/--logstamp//"             \
-                         -e "s/--name\s*\(\S\+\)\s*\([0-9]\+\)/\2 \1/"  \
-                         -e "s^/\S*/g/\S*\/caRepeater^caRepeater^"    \
-                         -e "s/^/$HOSTNAME\t/"                          \
-                         -e "s/  */\t/g"                                \
-                         -e "/PID\tUSER\tCOMMAND/d"                    |\
-				$REORDER                                               |\
-                $EXPAND_TABS
-	return
-}
-export show_epics_sioc_filter
+export ssh_show_procServ
 
 function show_epics_sioc( )
 {
@@ -121,20 +91,17 @@ function show_epics_sioc( )
 	fi
 	if [ ! $1 ];
 	then
-		#show_epics_sioc_filter
 		ssh_show_procServ
 	else
 		for a in $*;
 		do
 			if [ $a != "all" ];
 			then
-				#ssh $a show_epics_sioc_filter
 				ssh_show_procServ $a
 			else
 				for h in $IOC_COMMON/hosts/*;
 				do
 					if [ ! -f $h/startup.cmd ]; then continue; fi
-					# ssh $(basename $h) show_epics_sioc_filter
 					ssh_show_procServ $(basename $h)
 				done
 			fi
