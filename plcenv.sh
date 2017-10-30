@@ -8,33 +8,14 @@ XCSD='XCS=/reg/g/pcds/package/epics/3.14-dev/tools/current/scripts/iss/xcs_plc_d
 DRIVES=" -r disk:Package=/reg/common/package -r disk:${MECD} -r disk:${CXID} -r disk:PLC=${PLC_DIR} -r disk:${XCSD}"
 
 # command templates
-#regular size
-reg_plc_com="rdesktop -g 1200x800 -a 32 -x 0x80 ${DRIVES}"
-# big size
-big_plc_com="rdesktop -g 1800x1028 -a 32 -x 0x80 ${DRIVES}"
-mega_plc_com="rdesktop -g 2100x1181 -a 32 -x 0x80 ${DRIVES}"
-# small size
-small_plc_com="rdesktop -g 960x640 -a 32 -x 0x80 ${DRIVES} "
-#tablet size
-tablet_plc_com="rdesktop -g 1200x600 -a 32 -x 0x80 ${DRIVES} "
+all='xfreerdp -sec-nla /d: /size:60% /drive:PLC,/reg/g/pcds/plc-common /v:'
+allbig='xfreerdp -sec-nla /d: /size:90% /drive:PLC,/reg/g/pcds/plc-common /v:'
 
-alias plcpc1='$reg_plc_com plc-prg-01 &' 
-alias smallplcpc1='$small_plc_com plc-prg-01 &' 
-alias bigplcpc1='${big_plc_com} plc-prg-01 &' 
-alias megaplcpc1='${mega_plc_com} plc-prg-01 &' 
-alias tabletplcpc4='${tablet_plc_com} plc-prg-01 &'
-alias plcpc2='$reg_plc_com plc-prg-02 &' 
-alias smallplcpc2='$small_plc_com plc-prg-02 &' 
-alias bigplcpc2='${big_plc_com} plc-prg-02 &' 
-alias megaplcpc2='${mega_plc_com} plc-prg-02 &' 
-alias tabletplcpc2='${tablet_plc_com} plc-prg-02 &'
-alias plcpc3='$reg_plc_com plc-prg-03 &' 
-alias smallplcpc3='$small_plc_com plc-prg-03 &' 
-alias bigplcpc3='$big_plc_com plc-prg-03 &'
-alias megaplcpc3='${mega_plc_com} plc-prg-03 &' 
-alias tabletplcpc3='${tablet_plc_com} plc-prg-03 &'
-alias plcpc4='$reg_plc_com plc-prg-04 &' 
-alias smallplcpc4='$small_plc_com plc-prg-04 &' 
-alias bigplcpc4='$big_plc_com plc-prg-04 &'
-alias megaplcpc4='${mega_plc_com} plc-prg-04 &' 
-alias tabletplcpc4='${tablet_plc_com} plc-prg-04 &' 
+alias plcpc1="${all}plc-prg-01 &" 
+alias bigplcpc1="${allbig}plc-prg-01 &"
+alias plcpc2="${all}plc-prg-02 &" 
+alias bigplcpc2="${allbig}plc-prg-02 &"
+alias plcpc3="${all}plc-prg-03 &"
+alias bigplcpc3="${allbig}plc-prg-03 &"
+alias plcpc4="${all}plc-prg-04 &"
+alias bigplcpc4="${allbig}plc-prg-04 &"
