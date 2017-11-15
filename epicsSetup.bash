@@ -10,6 +10,8 @@
 #  History:                                                         #   
 #  21Jun2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS/facility  #                                                   
 #  30Mar2017 K.Luchini     Add EPICS_CPU,CPU, TFTPBOOT              # 
+#  24Feb2017 M Gibbs       Change V4 to 4.6.0, and add pvaPy        #
+#                          module to the PYTHONPATH                 #
 #  29Apr2016 M Shankar     Per Jingchen, created softlinks to all   #
 #                          the .so files in V4 in a lib/linux-x86   #
 #                          and add that single directory to         # 
@@ -133,8 +135,8 @@ export EPICS_BASE_TOP=$EPICS_TOP/base
 export EPICS_BASE_RELEASE=$EPICS_BASE_TOP/${EPICS_BASE_VER}
 
 # V4
-EPICS_PVCPP=${EPICS_BASE_TOP}/base-cpp-R4-5-0
-EPICS_PVJAVA=${EPICS_BASE_TOP}/base-java-R4-5-0
+EPICS_PVCPP=${EPICS_BASE_TOP}/base-cpp-R4-6-0
+EPICS_PVJAVA=${EPICS_BASE_TOP}/base-java-R4-6-0/epics-core
 
 # Extensions
 export EPICS_EXTENSIONS=$EPICS_TOP/extensions/extensions-${EPICS_EXTENSIONS_VER}
@@ -402,3 +404,11 @@ export NETSCAPEPATH=firefox
 #if [ -r $CMLOGSETUP/cmlogSetup.bash ]; then
 #  . $CMLOGSETUP/cmlogSetup.bash > /dev/null
 #fi
+
+###############################################	 
+# Add EPICS V4 pvaPy to PYTHONPATH	 
+###############################################	 
+PVAPY_DIR="${EPICS_PVCPP}/pvaPy/lib/python/2.7/${EPICS_HOST_ARCH}"	 
+if [ -z `echo $PYTHONPATH | grep ${PVAPY_DIR}` ]; then	 
+    export PYTHONPATH=${PVAPY_DIR}:${PYTHONPATH}	 
+fi
