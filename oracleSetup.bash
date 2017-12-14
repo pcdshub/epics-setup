@@ -1,0 +1,1 @@
+/afs/slac/g/lcls/tools/oracle/oracleSetup.bash

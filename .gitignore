@@ -1,0 +1,11 @@
+*.new
+*~
+*SAVE
+*ORIG
+*NEW
+*.new
+*OLD
+.bck/
+CVS/
+configure/
+*.swp

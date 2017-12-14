@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <title>EPICS Software Modules</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta content="MSHTML 6.00.2900.3268" name="GENERATOR">
+  <meta content="FrontPage.Editor.Document" name="ProgId">
+  <style>DIV.MsoNormal {
+	FONT-SIZE: 12pt; MARGIN: 0in 0in 0pt; FONT-FAMILY: "Times New Roman"; mso-style-parent: "" }
+  TABLE.MsoNormalTable {
+	FONT-SIZE: 10pt; FONT-FAMILY: "Times New Roman"; mso-style-parent: "" }
+  </style>
+</head>
+
+<body>
+<center>
+<p></p>
+</center>
+<table width="100%">
+  <tbody>
+    <tr align="center" bgcolor="#9f1a27" valign="center">
+      <td>
+      <div align="center"><font color="#ffffff"
+ face="Times New Roman, Times, serif" size="2">SLAC CD Software
+Engineering Group</font></div>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+<table id="table2" width="100%">
+  <tbody>
+    <tr>
+      <td width="20%">
+      <center><a href="http://www.slac.stanford.edu/detailed.html"><img
+ alt="Stanford Linear Accelerator Center"
+ src="../../../../../images/slac2.gif" v:shapes="_x0000_i1025"
+ align="top" border="0" height="95" width="104"></a></center>
+      </td>
+      <td valign="center" width="60%">
+      <table id="table3" align="center" border="0" width="100%">
+
+        <tbody>
+          <tr>
+            <td align="center" valign="center"><font size="+1">EPICS at
+LCLS<br>
+            </font></td>
+          </tr>
+          <tr>
+            <td height="10"><br>
+            </td>
+
+          </tr>
+          <tr valign="center">
+            <td align="center" valign="center">
+            <h1 style="margin-bottom: 0px;"><font size="4">Software
+Module Release Versions &amp; Dependencies</font></h1>
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+      </td>
+      <td width="20%">
+      <table id="table4">
+        <tbody>
+          <tr>
+            <td valign="top"><a
+ href="http://www.slac.stanford.edu/detailed.html">SLAC Detailed</a></td>
+          </tr>
+
+          <tr>
+            <td valign="top"><a
+ href="http://www.slac.stanford.edu/slac/compute.html">SLAC Computing</a></td>
+          </tr>
+          <tr>
+            <td valign="top"><a
+ href="http://www-ssrl.slac.stanford.edu/lcls/project_home.shtml">LCLS
+Project Home</a></td>
+          </tr>
+          <tr>
+            <td valign="top"><a
+ href="http://www.slac.stanford.edu/cgi-wrap/cvsweb?sortby=file&hideattic=1&logsort=date&f=h&hidenonreadable=1&%3Froot=%2Fafs%2Fslac%2Fg%2Fcd%2Fsoft&cvsroot=LCLS">LCLS
+CVS</a></td>
+          </tr>
+          <tr>
+            <td valign="top"><a
+ href="http://www.slac.stanford.edu/grp/cd/soft/">CD Software Detailed</a></td>
+
+          </tr>
+        </tbody>
+
+      </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p style="margin: 5pt 0.5in;">This page contains the list 
+of EPICS software modules for LCLS installed in /usr/local/lcls/epics/modules.&nbsp;
+The latest version is recommended for use unless otherwise noted.&nbsp;
+</p>
+<hr align="center" size="2" width="100%">
+<p>
+
+
+<p style="margin: 5pt 0.5in;">
+<b>EPICS Base:</b> base-R3-14-11<br>
+<b>Operating system:</b> RTEMS <br>
+<b>CVS Root:</b> /afs/slac/g/lcls/cvs<br>
+<b>Build directory:</b> /afs/slac/g/lcls/epics/modules/R3-14-12<br>
+<b>Last updated: </b>7/20/2011 15:06:44<br>
+<p style="margin: 5pt 0.5in;">
+<a href="http://www.slac.stanford.edu/cgi-wrap/cvsweb/epics/site/src/?cvsroot=LCLS">Modules CVSWEB</a><br>
+<a href="././dev_modules_11_build_order.txt">Build Order</a><br>
+<p>
+<p style="margin: 5pt 0.5in;">
+<table border=1 width=90%>
+<tr><td align=center><b>Software Module</b></td>
+<td align=center><b>Release Version</b></td>
+<td align=center><b>Module Dependencies</b></td>
+<td align=center><b>Module Maintainer</b></td></tr>
+</p>
+<tr valign=top> <td><b>asyn</b></td><td>asyn-R4-17-RC1-lcls1</td><td>IPAC = ipac-R2-11-lcls1<br>SNCSEQ = seq-R2-0-11-lcls4<br>BASE = $(EPICS_BASE_VER)</td><td>Ernest Williams</td></tr>
+<tr valign=top> <td><b>autosave</b></td><td>autosave-R4-7-lcls4</td><td>BASE = $(EPICS_BASE_VER)</td><td>Zheqiao Geng</td></tr>
+<tr valign=top> <td><b>caenV792-asyn</b></td><td>caenV792-asyn-R1-0-1</td><td>ASYN = asyn-R4-17-RC1-lcls1</td><td><br></td></tr>
+<tr valign=top> <td><b>calc</b></td><td>calc-R2-7-lcls3</td><td>BASE = $(EPICS_BASE_VER)</td><td>Ernest Williams</td></tr>
+<tr valign=top> <td><b>devBusMapped</b></td><td>devBusMapped-R3-0-1</td><td>MISCUTILS = miscUtils-R2-2-2</td><td>Till Straumann</td></tr>
+<tr valign=top> <td><b>devGenVar</b></td><td>devGenVar-R0-0-3</td><td>BASE = $(EPICS_BASE_VER)</td><td><br></td></tr>
+<tr valign=top> <td><b>event</b></td><td>event-R3-2-2-br_generaltime</td><td>BASE = $(EPICS_BASE_VER)<br>MISCUTILS = miscUtils-R2-2-2</td><td>Kukhee Kim</td></tr>
+<tr valign=top> <td><b>genSub</b></td><td>genSub-R1-6-lcls6</td><td>BASE = $(EPICS_BASE_VER)</td><td>Kristi Luchini</td></tr>
+<tr valign=top> <td><b>gtr</b></td><td>gtr-R2-3-0</td><td>BASE = $(EPICS_BASE_VER)</td><td>Kukhee Kim</td></tr>
+<tr valign=top> <td><b>iocAdmin</b></td><td>iocAdmin-R3-3-1</td><td>BASE = $(EPICS_BASE_VER)</td><td>Ernest Williams</td></tr>
+<tr valign=top> <td><b>ip231-asyn</b></td><td>ip231-asyn-R1-0-0</td><td>IPAC = ipac-R2-11-lcls1<br>ASYN = asyn-R4-17-RC1-lcls1</td><td>Qing Yang</td></tr>
+<tr valign=top> <td><b>ip330-asyn</b></td><td>ip330-asyn-R2-6-lcls2</td><td>IPAC = ipac-R2-11-lcls1<br>ASYN = asyn-R4-17-RC1-lcls1</td><td>Qing Yang</td></tr>
+<tr valign=top> <td><b>ip440-asyn</b></td><td>ip440-asyn-R1-2</td><td>IPAC = ipac-R2-11-lcls1<br>ASYN = asyn-R4-17-RC1-lcls1</td><td><br></td></tr>
+<tr valign=top> <td><b>ip445-asyn</b></td><td>ip445-asyn-R1-2</td><td>IPAC = ipac-R2-11-lcls1<br>ASYN = asyn-R4-17-RC1-lcls1</td><td><br></td></tr>
+<tr valign=top> <td><b>ipac</b></td><td>ipac-R2-11-lcls1</td><td></td><td>Ernest Williams</td></tr>
+<tr valign=top> <td><b>miscUtils</b></td><td>miscUtils-R2-2-2</td><td>BASE = $(EPICS_BASE_VER)</td><td>Till Straumann</td></tr>
+<tr valign=top> <td><b>modbus</b></td><td>modbus-R2-2-lcls1</td><td>ASYN = asyn-R4-17-RC1-lcls1<br>BASE = $(EPICS_BASE_VER)</td><td>Ernest Williams</td></tr>
+<tr valign=top> <td><b>motor</b></td><td>motor-R6-6-RC1-lcls1</td><td>ASYN = asyn-R4-17-RC1-lcls1<br>SEQ = seq-R2-0-11-lcls4<br>IPAC = ipac-R2-11-lcls1<br>BASE = $(EPICS_BASE_VER)</td><td>Ernest Williams</td></tr>
+<tr valign=top> <td><b>mps</b></td><td>mps-R1-0-1-branch</td><td>UDPCOMM = udpComm-R2-1-1</td><td>Luciano Piccoli</td></tr>
+<tr valign=top> <td><b>rtemsutils</b></td><td>rtemsutils-R1-0-0-lcls5</td><td>BASE = $(EPICS_BASE_VER)</td><td>Ernest Williams</td></tr>
+<tr valign=top> <td><b>seq</b></td><td>seq-R2-0-11-lcls4</td><td>BASE = $(EPICS_BASE_VER)</td><td>Kristi Luchini</td></tr>
+<tr valign=top> <td><b>streamdevice</b></td><td>streamdevice-R2-snapshot20081007-lcls3</td><td>BASE = $(EPICS_BASE_VER)<br>ASYN = asyn-R4-17-RC1-lcls1</td><td>Matt Boyes</td></tr>
+<tr valign=top> <td><b>tds3000</b></td><td>tds3000-R2-2-3</td><td>GENSUB = genSub-R1-6-lcls6<br>SEQ = seq-R2-0-11-lcls4</td><td>Zen Szalata</td></tr>
+<tr valign=top> <td><b>udpComm</b></td><td>udpComm-R2-1-1</td><td>EVENT = event-R3-2-2-br_generaltime<br>MISCUTILS = miscUtils-R2-2-2</td><td>Till Straumann</td></tr>
+</table>
+</body>
+</html>
