@@ -1,0 +1,285 @@
+EPICS Version 4 RELEASE PLAN
+=============================
+
+This document lists the items composing the release of 
+EPICS V4 into the LCLS control system.
+
+Greg White, Ernest Williams, Murali Shankar, Jingchen Zhou, Mike Zelazny.
+19-Aug-2015
+
+
+RELEASE of EPICS 4.4.0.
+=======================
+Release is composed of:
+  EPICS V4.4.0 release binary (C++ source) (dev and prod)
+  Matlab client support (dev and prod)
+  Python client support (dev and prod)
+  Java client support (dev and prod)
+
+CHECKLIST
+---------
+X * Develop dev and prod release plan (changes to login env) - this document
+X * EPICS V4.4.0 on dev and prod
+       dev  prod
+  C++   X     X
+  Java  X     X
+  pvaPy X     X
+X * Develop release tests.
+X * Deploy: Add command line and libs login config
+  x dev
+  x prod
+* Deploy: Add Matlab startup modifications
+  ? dev
+  prod
+* Deploy: Python pvaPy support
+  dev
+  prod
+X * Make post-release Tests. 
+* Applications Programmers Guide
+* Develop Matlab client example
+* Develop python client example
+* Develop Java client example and send to Mike for replacing AIDA with DS
+  (SLAC specific c++ client probably wait for coming EPICS 4.5.0)
+
+RELEASE 1.0 DETAILS
+===================
+File Change Summary. All and only these files (no _swe, _facet etc)
+Prod:
+  epics/setup/epicsSetup.bash      Dirs and paths
+  epics/setup/envSet.bash          Environment - EPICS_PVA* additions
+
+Dev:
+  epics/setup/epicsSetup_dev.bash  Dirs and paths
+  epics/setup/envSet_dev.bash      Environment - EPICS_PVA* additions
+
+  
+PROD Detailed release plan.
+===========================
+The following describes changes required to release EPICS V4 on development.
+At the time of writing, the CPP and Java of V4.4.0 have been built,
+see EPICS_PVCPP and EPICS_PVJAVA below.
+
+EPICS V4 binary and java
+------------------------
+Add the following to epics/setup/epicsSetup.bash
+
+(assuming EPICS_BASE and EPICS_HOST_ARCH are already defined)
+
+EPICS_PVCPP=/usr/local/lcls/epics/base/base-cpp-R4-4-0
+EPICS_PVJAVA=/usr/local/lcls/epics/base/base-java-R4-4-0
+
+** The following are LOGICAL additions, actual edits will probably
+include existence tests following the pattern in epicsSetup.bash **
+
+# Paths. 
+# Add both EPICS base and EPICS V4 libs and bins to PATHS
+#
+LD_LIBRARY_PATH=\
+${EPICS_BASE}/lib/${EPICS_HOST_ARCH}:\
+${EPICS_PVCPP}/pvAccessCPP/lib/${EPICS_HOST_ARCH}:\
+${EPICS_PVCPP}/pvDataCPP/lib/${EPICS_HOST_ARCH}:\
+${EPICS_PVCPP}/pvCommonCPP/lib/${EPICS_HOST_ARCH}:\
+${EPICS_PVCPP}/normativeTypesCPP/lib/${EPICS_HOST_ARCH}:\
+${LD_LIBRARY_PATH}
+
+PATH=\
+${EPICS_BASE}/bin/${EPICS_HOST_ARCH}:\
+${EPICS_PVCPP}/pvAccessCPP/bin/${EPICS_HOST_ARCH}:\
+${EPICS_PVCPP}/pvDataCPP/bin/${EPICS_HOST_ARCH}:\
+${PATH}
+
+# Exports
+#
+export EPICS_BASE 
+export EPICS_HOST_ARCH
+export EPICS_PVCPP EPICS_PVJAVA
+export LD_LIBRARY_PATH PATH
+
+* Runtime PVA config
+  See http://epics-pvdata.sourceforge.net/pvAccessConfig.xlsx
+  Add the following to envSet.bash
+  export EPICS_PVA_ADDR_LIST=mccas0.slac.stanford.edu
+  # SLAC overrides default PVA port
+  export EPICS_PVA_BROADCAST_PORT=5056
+  export EPICS_PVA_AUTO_ADDR_LIST=FALSE
+
+Prod Matlab
+-----------
+* On prod, the Java EPICS V4 installation MUST have symlinks from the generic jar file
+name to the specific version file name, eg  pvAccessJava.jar -> pvAccessJava-4.0.3.jar.
+
+NOTE: The following mechanism of adding to the jar files to the MATLAB JAVA classpath
+by adding dynaimially to the startup.m file, may be problematic (Mike reports).
+May have instead to add to the static path - and maybe we should anyway (hm,
+no, that means editting the static file on every release).
+
+* ... then, Add the following to /usr/local/lcls/tools/matlab/toolbox/startup.m
+%% EPICS (V4) 
+global EPICSPATHROOT;
+EPICSPATHROOT='/usr/local/lcls/epics/base/';           % EPICS V4.4
+EPICSJAVAPATHROOT=fullfile(EPICSPATHROOT,'base-java-R4-4-0');
+javaaddpath(fullfile(EPICSJAVAPATHROOT,'pvDataJava.jar'));
+javaaddpath(fullfile(EPICSJAVAPATHROOT,'pvAccessJava.jar'));
+javaaddpath(fullfile(EPICSJAVAPATHROOT,'easyPVAJava.jar'));
+javaaddpath(fullfile(EPICSJAVAPATHROOT,'jca.jar'));
+javaaddpath(fullfile(EPICSJAVAPATHROOT,'caj.jar'));
+
+* Add the following to /usr/local/matlab/2012a/bin/glnx86/java.opts
+-DEPICS_PVA_ADDR_LIST=mccas0.slac.stanford.edu
+-DEPICS_PVA_BROADCAST_PORT=5056
+
+Prod Python
+-----------
+PVAPY_PACKAGE_TOP=${EPICS_PVCPP}/pvaPy
+export PATH=$PVAPY_PACKAGE_TOP/python/current/bin:$PATH
+(TODO)
+
+DEV release plan
+=================
+The following describes changes required to release EPICS V4 on development.
+At the time of writing, the CPP and Java of V4.4.0 have been built,
+see EPICS_PVCPP and EPICS_PVJAVA below.
+
+Dev EPICS V4 binary and java
+----------------------------
+Add the following to epics/setup/epicsSetup_dev.bash
+
+(assuming EPICS_BASE and EPICS_HOST_ARCH are already defined by epicsSetup_dev.bash) 
+
+EPICS_PVCPP=/afs/slac/g/lcls/epics/base/base-cpp-R4-4-0
+EPICS_PVJAVA=/afs/slac/g/lcls/epics/base/base-java-R4-4-0-pre1
+
+** The following are LOGICAL additions, actual edits will probably
+include existence tests following the pattern in epicsSetup.bash **
+
+# Paths. 
+# Add both EPICS base and EPICS V4 libs and bins to PATHS.
+#
+LD_LIBRARY_PATH=\
+${EPICS_BASE}/lib/${EPICS_HOST_ARCH}:\
+${EPICS_PVCPP}/pvAccessCPP/lib/${EPICS_HOST_ARCH}:\
+${EPICS_PVCPP}/pvDataCPP/lib/${EPICS_HOST_ARCH}:\
+${EPICS_PVCPP}/pvCommonCPP/lib/${EPICS_HOST_ARCH}:\
+${EPICS_PVCPP}/normativeTypesCPP/lib/${EPICS_HOST_ARCH}:\
+${LD_LIBRARY_PATH}
+
+PATH=\
+${EPICS_BASE}/bin/${EPICS_HOST_ARCH}:\
+${EPICS_PVCPP}/pvAccessCPP/bin/${EPICS_HOST_ARCH}:\
+${EPICS_PVCPP}/pvDataCPP/bin/${EPICS_HOST_ARCH}:\
+${PATH}
+
+# Exports
+#
+export EPICS_BASE 
+export EPICS_HOST_ARCH
+export EPICS_PVCPP EPICS_PVJAVA
+export LD_LIBRARY_PATH PATH
+
+* Runtime PVA config
+  Add the following to envSet_dev.bash
+  For dev on dev
+  # Set the production PVA address list; so far just services hosted on lcls-prod01.
+  export EPICS_PVA_ADDR_LIST=lcls-dev1.slac.stanford.edu
+  # Set SLAC config for port.
+  export EPICS_PVA_BROADCAST_PORT=5056
+  # Stop answers from other PVA servers on the same network (eg those on dev host lcls-dev1)
+  export EPICS_PVA_AUTO_ADDR_LIST=FALSE
+
+  For prod on dev
+  # Set the production PVA address list; so far just services hosted on lcls-prod01.
+  export EPICS_PVA_ADDR_LIST=mccas0.slac.stanford.edu
+  # Set SLAC config for port.
+  export EPICS_PVA_BROADCAST_PORT=5056
+  # Stop answers from other PVA servers on the same network (eg those on dev host lcls-dev1)
+  export EPICS_PVA_AUTO_ADDR_LIST=FALSE
+
+
+Dev Matlab
+----------
+The following would set up "dev" matlab - that is, Matlab on AFS, as "Prod-on-dev".
+That is, access to production EPICS V4 PVs. For connection to development
+EPICS V4 servers, a user would override EPICS_PVA_ADDR_LIST using a local
+java.opts file in thier working directory).
+
+(In discussion with John Bartelt the package owner).
+
+Ideally would be:
+
+* ... then, Add the following to /usr/local/lcls/tools/matlab/toolbox/startup.m
+%% EPICS (V4) 
+global EPICSPATHROOT;
+EPICSPATHROOT='/afs/slac/g/lcls/epics/base/';           % EPICS V4.4
+EPICSJAVAPATHROOT=fullfile(EPICSPATHROOT,'base-java-R4-4-0-pre1');
+javaaddpath(fullfile(EPICSJAVAPATHROOT,'pvDataJava.jar'));
+javaaddpath(fullfile(EPICSJAVAPATHROOT,'pvAccessJava.jar'));
+javaaddpath(fullfile(EPICSJAVAPATHROOT,'easyPVAJava.jar'));
+javaaddpath(fullfile(EPICSJAVAPATHROOT,'jca.jar'));
+javaaddpath(fullfile(EPICSJAVAPATHROOT,'caj.jar'));
+
+* Create /afs/slac/package/matlab/2012a/bin/glnx86/java.opts, with the following contents:
+-DEPICS_PVA_ADDR_LIST=mccas0.slac.stanford.edu
+-DEPICS_PVA_BROADCAST_PORT=5056
+
+
+Dev Python
+-----------
+Add the following to ${LCLS_ROOT}/tools/python/setupPython.bash
+
+# EPICS V4 pvaPy requires the dynamically loaded lib
+#
+# Note that PACKAGE_TOP is a prerequistite.
+#
+if [ -z ${PACKAGE_TOP} ]; then
+  if [ -z `echo $LD_LIBRARY_PATH | grep ${PACKAGE_TOP}/python/current/lib:${PACKAGE_TOP}/python/current/lib/python2.7/lib-dynload` ]; then
+      export LD_LIBRARY_PATH=\
+${LD_LIBRARY_PATH}:${PACKAGE_TOP}/python/current/lib:${PACKAGE_TOP}/python/current/lib/python2.7/lib-dynload
+  fi
+  # pvaPy requires Boost
+  if [ -z `echo $LD_LIBRARY_PATH | grep $PACKAGE_TOP/boost/1.58.0/linux-x86/lib` ]; then
+      export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$PACKAGE_TOP/boost/1.58.0/linux-x86/lib
+  fi
+fi
+
+
+# Add EPICS V4 pvaPy to PYTHONPATH
+#
+if test -z "$PYTHONPATH" ; then
+    export PYTHONPATH=${EPICS_PVCPP}/pvaPy/lib/linux-x86
+else
+    export PYTHONPATH=${EPICS_PVCPP}/pvaPy/lib/linux-x86:$PYTHONPATH
+fi
+
+
+Addendum - testing
+===================
+To test setup scripts prior to release, in your own directory:
+make you rown ENVS.bash taht points to your version of epics/setup:
+then:
+[lcls-dev2]:u/cd/greg> bash -norc
+bash-3.2$ pwd
+/u/cd/greg
+bash-3.2$ cd Development/meme/tmp
+bash-3.2$ source ENVS.bash
+
+Check paths
+-----------
+pipe paths throgh xargs and stat. 
+The following basic form splits up a path into elements and checks existence of each component:
+bash-3.2$ echo -n ${PATH} | xargs -r -d: stat -c %n
+
+Diverting all stdout to dev/null leaves only errors
+bash-3.2$ echo -n ${LD_LIBRARY_PATH} | xargs -r -d: stat -c %n >1 /dev/null
+stat: cannot stat `/usr/X11R6/lib': No such file or directory
+stat: cannot stat `/afs/slac/g/lcls/package/python/tcltk/lib': No such file or directory
+
+To release:
+----------
+For dev you have changed:
+envSet_dev.bash   Status: Locally Modified
+epicsSetup_dev.bash       Status: Locally Modified
+
+Prior to release,
+1. make sure not to release epicsReset.bash
+2, set line in epicsSetup_dev.bash back to ". $EPICS_SETUP/envSet.bash"
+
