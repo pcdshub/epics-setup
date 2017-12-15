@@ -12,6 +12,8 @@
 #
 #--------------------------------------------------------------
 #  Mod:
+#        10-May-2016, K. Luchini (luchini)
+#        chg EPICS_TS_NTP_INET, current one does not exist
 #        15-Mar-2016, J. Zhou
 #        Removed 134.79.151.21:5061 (nonexistent GW) from EPICS_CA_ADDR_LIST
 #        21-Aug-0215, Greg White 
@@ -90,15 +92,16 @@
 #
 if [ -d /afs/slac/g/lcls ]; then
     # setup for dev
-    if [ -z `echo $HOSTNAME | grep lcls-prod` ] && [ -z `echo $HOSTNAME | grep mcclogin` ] ; then
+    if [ -z `echo $HOSTNAME | grep lcls-prod` ] && [ -z `echo $HOSTNAME | grep mcclogin` ] && [ -z `echo $HOSTNAME | grep mccas0` ]; then
 	export EPICS_PVA_ADDR_LIST="lcls-dev1.slac.stanford.edu"
 	export EPICS_PVA_BROADCAST_PORT=5056
 	export EPICS_PVA_AUTO_ADDR_LIST=FALSE
 	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="134.79.219.255"
 	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5067"
 	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5066"
-	export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.16.9"
-	export EPICS_IOC_LOG_INET; EPICS_IOC_LOG_INET="134.79.219.12"
+	export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.18.40"
+	export EPICS_IOC_LOG_INET; EPICS_IOC_LOG_INET="134.79.219.136"
+
     # setup for prod on dev
     else
 	export EPICS_PVA_ADDR_LIST="mccas0.slac.stanford.edu"
@@ -111,6 +114,7 @@ if [ -d /afs/slac/g/lcls ]; then
 	export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.48.11"
 	export EPICS_IOC_LOG_INET; EPICS_IOC_LOG_INET="134.79.151.21"
     fi
+    
 elif [ -d /usr/local/lcls ]; then
 	export EPICS_PVA_ADDR_LIST="mccas0.slac.stanford.edu"
 	export EPICS_PVA_BROADCAST_PORT=5056

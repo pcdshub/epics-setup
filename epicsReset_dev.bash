@@ -17,6 +17,7 @@
 #  08Apr2013 Jingchen Zhou kept PROD and DEV in sync
 #  06Nov2013 Jingchen Zhou remove CMLOG
 #  11Feb2014 Jingchen Zhou switch EPICS from R3-14-8-2 to R3-14-12
+#  22Jul2014 Jingchen Zhou make EPICS R3-14-12 as the default
 #####################################################################
 #
 # Nullify old EPICS environment and export environment for LCLS EPICS.  

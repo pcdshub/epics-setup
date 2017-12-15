@@ -25,6 +25,9 @@ export EPICS_MODULES_TOP=${EPICS_TOP}/modules
 export MOD=$EPICS_MODULES_TOP
 export EPICS_IOC_TOP=${EPICS_TOP}/iocTop
 
+# Murali added this to get around a potential bug in the dev version of base - March 14, 2016
+export EPICS_CA_AUTO_ADDR_LIST=NO
+
 source ${LCLS_ROOT}/tools/script/ENVS_dev3.bash
 export EPICS_MBA_TEMPLATE_TOP=${EPICS_MODULES_TOP}/icdTemplates/icdTemplates-R1-2-0
 
@@ -60,6 +63,14 @@ export CAQTDM_DISPLAY=$TOOLS/caQtDM/display
 export CAQTDM_DISPLAY_PATH=$CAQTDM_DISPLAY/Tests:$CAQTDM_DISPLAY/iocAdmin
 # ================================================================
 
+#=================================================================================================
+# Setup Python Version 2.7.9: Overide the default
+# ================================================================================================
+export PATH=$PACKAGE_TOP/python/python2.7.9/linux-x86_64/bin:$PATH
+#export PYTHONPATH=<location to other libraries not in site-packages>
+export LD_LIBRARY_PATH=$PACKAGE_TOP/python/python2.7.9/linux-x86_64/lib:$PACKAGE_TOP/python/python2.7.9/linux-x86_64/lib/python2.7/lib-dynload:$LD_LIBRARY_PATH
+# ================================================================================================
+
 # ================================================================
 # Setup for EPICS QT (QE Framework) from Austraila:
 # Using QT5
@@ -69,6 +80,6 @@ export QE_FFMPEG=YES
 #export QE_CAQTDM="${EPICS_EXTENSIONS}/src/caQtDM/caQtDM-R3-8-10"
 export QE_CAQTDM="${EPICS_EXTENSIONS}/src/caQtDM/caQtDM-R3-9-3"
 export QE_CAQTDM_LIB=${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}
-export LD_LIBRARY_PATH=$QWT_ROOT/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${QWT_ROOT}/lib
 # ================================================================
 
