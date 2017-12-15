@@ -1,6 +1,6 @@
 #####################################################################
 #                                                                   #
-#  Title: epicsReset                                                #
+#  Title: epicsReset_facet                                          #
 #                                                                   #
 #  Purpose: '.' this file to reset an old EPICS environment and     #
 #           set your EPICS environment correctly                    #
@@ -14,13 +14,12 @@
 #  17Nov2009 Jingchen Zhou removed /usr/local/bin/environ provided  #
 #                          SCCS                                     #
 #  14Dec2009 Jingchen Zhou removed reset LD_LIBRARY_PATH            #
-#  08Apr2013 Jingchen Zhou kept PROD and DEV in sync
+#  02Nov2010 Jingchen Zhou cloned from LCLS epicsReset.bash 
 #  06Nov2013 Jingchen Zhou remove CMLOG
-#  11Feb2014 Jingchen Zhou switch EPICS from R3-14-8-2 to R3-14-12
-#  22Jul2014 Jingchen Zhou make EPICS R3-14-12 as the default
+#  15Jul2014 Jingchen Zhou make EPICS R3-14-12 as the default      
 #####################################################################
 #
-# Nullify old EPICS environment and export environment for LCLS EPICS.  
+# Nullify old EPICS environment and export environment for FACET EPICS.  
 #
 #-----------------------------------------------------------------------------
 #
@@ -46,7 +45,8 @@ export EPICS_HOST_ARCH=""
 export EDMDATAFILES=""
 export EPICS_PR_LIST=""
 export EPICS_BASE_RELEASE=""
-#export EPICS_EXTENSIONS=""
+export EPICS_EXTENSIONS=""
+export EPICS_MODULES_TOP=""
 #
 export MATLAB_ROOT=""
 export MATLAB_VER=""
@@ -62,10 +62,10 @@ export MATLABDATAFILES=""
 # Set EPICS environment for AFS based development or NFS based 
 # standalone production   
 #
-if [ -d /afs/slac/g/lcls ]; then 
-	export LCLS_ROOT=/afs/slac/g/lcls
+if [ -d /afs/slac/g/facet ]; then 
+	export FACET_ROOT=/afs/slac/g/facet
 else
-	export LCLS_ROOT=/usr/local/lcls
+	export FACET_ROOT=/usr/local/facet
 fi
 
 if [ -z $EPICS_BASE_VER ]; then
@@ -82,5 +82,5 @@ if [ -z $JAVAVER ]; then
         export JAVAVER=1.7.0_05
 fi
 
-. ${LCLS_ROOT}/epics/setup/epicsSetup.bash
+. ${FACET_ROOT}/epics/setup/epicsSetup_facet.bash
 

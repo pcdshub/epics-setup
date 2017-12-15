@@ -1,9 +1,8 @@
-#-*-sh-*-
 #==============================================================
 #
 #  Abs:  Setup EPICS build environment variables
 #
-#  Name: envSet.bash
+#  Name: envSet_facet.bash
 #
 #  Facility:  SLAC
 #
@@ -12,24 +11,10 @@
 #
 #--------------------------------------------------------------
 #  Mod:
-#        10-May-2016, K. Luchini (luchini)
-#        chg EPICS_TS_NTP_INET, current one does not exist
-#        15-Mar-2016, J. Zhou
-#        Removed 134.79.151.21:5061 (nonexistent GW) from EPICS_CA_ADDR_LIST
-#        21-Aug-0215, Greg White 
-#        Added EPICS V4 MEME Servers (mccas0) talking pvAccess (EPICS_PVA).
-#        07-Aug-2013, J. Zhou
-#        Added 172.27.3.255:5068 to EPICS_CA_ADDR_LIST
-#        Will remove 172.27.11.255:5068 after the network splitting
-#        is completed.
-#        01-Aug-2013, J. Zhou
-#        Added EPICS_CA_AUTO_ADDR_LIST=NO on DMZ
-#        28-Jun-2011, J. Rock
-#        Updated EPICS_CA_ADDR_LIST to include facet gateway host
-#        18-May-2011, J. Zhou
-#        Updated EPICS_CA_ADDR_LIST for prod on dev 
-#        07-Jan-2011, brobeck
-#	 Added MCCLOGIN check for env setup
+#        13-May-2011, Judy Rock
+#        add 172.27.8.31:5070 to EPICS_CA_ADDR_LIST for accessing LCLS PVs 
+#        02-Nov-2010, J. Zhou
+#        cloned from LCLS envSet.bash
 #        09-Aug-2010, J. Zhou
 #        explicitly defining EPICS_CAS_BEACON_ADDR_LIST to prevent softIOCs 
 #        started from command line via st.cmd from sending beacon messages 
@@ -86,50 +71,15 @@
 #          than ip addresses
 #
 #==============================================================
-#
-# Set LCLS environment based on if the system is a 
-# standalone for production or public machine for development
-#
-if [ -d /afs/slac/g/lcls ]; then
-    # setup for dev
-    if [ -z `echo $HOSTNAME | grep lcls-prod` ] && [ -z `echo $HOSTNAME | grep mcclogin` ] && [ -z `echo $HOSTNAME | grep mccas0` ]; then
-	export EPICS_PVA_ADDR_LIST="lcls-dev1.slac.stanford.edu"
-	export EPICS_PVA_BROADCAST_PORT=5056
-	export EPICS_PVA_AUTO_ADDR_LIST=FALSE
-	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="134.79.219.255"
-	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5067"
-	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5066"
-	export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.18.40"
-	export EPICS_IOC_LOG_INET; EPICS_IOC_LOG_INET="134.79.219.136"
-
-    # setup for prod on dev
-    else
-	export EPICS_PVA_ADDR_LIST="mccas0.slac.stanford.edu"
-	export EPICS_PVA_BROADCAST_PORT=5056
-	export EPICS_PVA_AUTO_ADDR_LIST=FALSE
-	export EPICS_CA_AUTO_ADDR_LIST=NO
-	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="lcls-prod01:5068 lcls-prod01:5063 mcc-dmz"
-	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5069"
-	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5068"
-	export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.48.11"
-	export EPICS_IOC_LOG_INET; EPICS_IOC_LOG_INET="134.79.151.21"
-    fi
-    
-elif [ -d /usr/local/lcls ]; then
-	export EPICS_PVA_ADDR_LIST="mccas0.slac.stanford.edu"
-	export EPICS_PVA_BROADCAST_PORT=5056
-	export EPICS_PVA_AUTO_ADDR_LIST=FALSE
-	export EPICS_CA_AUTO_ADDR_LIST=NO
-	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="172.27.3.255:5068 mcc-dmz 172.21.40.63:5064 172.27.72.24:5070"
-	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5069"
-	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5068"
-	export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.151.11"
-	export EPICS_IOC_LOG_INET; EPICS_IOC_LOG_INET="172.27.8.31"
-        export EPICS_CAS_BEACON_ADDR_LIST; EPICS_CAS_BEACON_ADDR_LIST="172.27.11.255 mcc-dmz"  
-else
-   echo "ERROR: this ${HOSTNAME} is not supported for LCLS dev/prod" 
-   exit 1
-fi
+# ====================================================================
+# Set EPICS Environment variables used by CA Clients and Soft IOCs
+# On the LCLSDEV Network
+# ====================================================================
+export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="134.79.219.255"
+export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5067"
+export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5066"
+export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.16.9"
+export EPICS_IOC_LOG_INET; EPICS_IOC_LOG_INET="134.79.219.12"
 
 export EPICS_CA_CONN_TMO; EPICS_CA_CONN_TMO="30.0"
 export EPICS_CA_BEACON_PERIOD; EPICS_CA_BEACON_PERIOD="15.0"
@@ -137,10 +87,11 @@ export EPICS_CA_BEACON_PERIOD; EPICS_CA_BEACON_PERIOD="15.0"
 #export EPICS_CAS_BEACON_ADDR_LIST; EPICS_CAS_BEACON_ADDR_LIST=""
 #export EPICS_CAS_AUTO_ADDR_LIST; EPICS_CAS_AUTO_ADDR_LIST=""
 #export EPICS_CAS_SERVER_PORT; EPICS_CAS_SERVER_PORT=""
+
 export EPICS_TS_MIN_WEST; EPICS_TS_MIN_WEST="480"
 export EPICS_IOC_LOG_PORT; EPICS_IOC_LOG_PORT="7004"
 export EPICS_IOC_LOG_FILE_LIMIT; EPICS_IOC_LOG_FILE_LIMIT="1000000"
 export EPICS_IOC_LOG_FILE_COMMAND; EPICS_IOC_LOG_FILE_COMMAND=""
 export EPICS_CMD_PROTO_PORT; EPICS_CMD_PROTO_PORT=""
 export EPICS_AR_PORT; EPICS_AR_PORT="7002"
-export EPICS_CA_MAX_ARRAY_BYTES="80000000"
+export EPICS_CA_MAX_ARRAY_BYTES="300000"

@@ -1,6 +1,6 @@
 #####################################################################
 #                                                                   #
-#  Title: epicsReset                                                #
+#  Title: epicsReset_testacc                                                #
 #                                                                   #
 #  Purpose: '.' this file to reset an old EPICS environment and     #
 #           set your EPICS environment correctly                    #
@@ -14,10 +14,11 @@
 #  17Nov2009 Jingchen Zhou removed /usr/local/bin/environ provided  #
 #                          SCCS                                     #
 #  14Dec2009 Jingchen Zhou removed reset LD_LIBRARY_PATH            #
-#  08Apr2013 Jingchen Zhou kept PROD and DEV in sync
+#  01Nov2011 Jingchen Zhou updated for ACCTEST
+#  05Nov2011 Jingchen Zhou added EPICS_VER to build up any EPICS 
+#                          version related environment variable
+#  11Mar2013 Jingchen Zhou upgraded java to 1.7  
 #  06Nov2013 Jingchen Zhou remove CMLOG
-#  11Feb2014 Jingchen Zhou switch EPICS from R3-14-8-2 to R3-14-12
-#  22Jul2014 Jingchen Zhou make EPICS R3-14-12 as the default
 #####################################################################
 #
 # Nullify old EPICS environment and export environment for LCLS EPICS.  
@@ -38,7 +39,7 @@ export ETC=""
 export CLUSTER_DIR=""
 # Now the rest.
 #export LD_LIBRARY_PATH=""
-#export CLASSPATH=""
+export CLASSPATH=""
 export JAVA_HOME=""
 #
 export EPICS_DISPLAY_PATH=""
@@ -46,7 +47,7 @@ export EPICS_HOST_ARCH=""
 export EDMDATAFILES=""
 export EPICS_PR_LIST=""
 export EPICS_BASE_RELEASE=""
-#export EPICS_EXTENSIONS=""
+export EPICS_EXTENSIONS=""
 #
 export MATLAB_ROOT=""
 export MATLAB_VER=""
@@ -59,28 +60,22 @@ export MATLABDATAFILES=""
 #export CMLOG_CONFIG=""
 #export CDEVTAGTABLE=""
 #
-# Set EPICS environment for AFS based development or NFS based 
-# standalone production   
+# Set EPICS environment for AFS based production environment for ACCTEST
 #
-if [ -d /afs/slac/g/lcls ]; then 
-	export LCLS_ROOT=/afs/slac/g/lcls
-else
-	export LCLS_ROOT=/usr/local/lcls
+if [ -d /afs/slac/g/acctest ]; then 
+	export ACCTEST_ROOT=/afs/slac/g/acctest
 fi
 
-if [ -z $EPICS_BASE_VER ]; then
-	export EPICS_BASE_VER=base-R3-14-12
-fi
-if [ -z $EPICS_EXTENSIONS_VER ]; then
-	export EPICS_EXTENSIONS_VER=R3-14-12
-fi
-if [ -z $EPICS_MODULES_VER ]; then
-        export EPICS_MODULES_VER=R3-14-12
-fi
+export EPICS_VER=R3-14-12
+
+export EPICS_BASE_VER=base-${EPICS_VER}
+export EPICS_EXTENSIONS_VER=${EPICS_VER}
+export EPICS_MODULES_VER=${EPICS_VER}
+export EPICS_IOC_VER=${EPICS_VER}
 
 if [ -z $JAVAVER ]; then
-        export JAVAVER=1.7.0_05
+        export JAVAVER=1.7.0_01
 fi
 
-. ${LCLS_ROOT}/epics/setup/epicsSetup.bash
+. ${ACCTEST_ROOT}/epics/setup/epicsSetup_acctest.bash
 

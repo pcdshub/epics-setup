@@ -6,6 +6,7 @@
 #           set your EPICS environment correctly                    #
 #                                                                   #
 #  History:                                                         #
+#  17Feb2017 B. Hill       Per Jingchen, created 64 bit variant     #
 #  17Jan2006 Debbie Rogind added export EPICS_HOST_ARCH=""          #
 #  30Oct2007 Jingchen Zhou updated to support standalone production #
 #            environment                                            #
@@ -16,7 +17,6 @@
 #  14Dec2009 Jingchen Zhou removed reset LD_LIBRARY_PATH            #
 #  08Apr2013 Jingchen Zhou kept PROD and DEV in sync
 #  06Nov2013 Jingchen Zhou remove CMLOG
-#  11Feb2014 Jingchen Zhou switch EPICS from R3-14-8-2 to R3-14-12
 #  22Jul2014 Jingchen Zhou make EPICS R3-14-12 as the default
 #####################################################################
 #
@@ -40,13 +40,17 @@ export CLUSTER_DIR=""
 #export LD_LIBRARY_PATH=""
 #export CLASSPATH=""
 export JAVA_HOME=""
+export JAVAVER=""
 #
 export EPICS_DISPLAY_PATH=""
 export EPICS_HOST_ARCH=""
 export EDMDATAFILES=""
 export EPICS_PR_LIST=""
 export EPICS_BASE_RELEASE=""
-#export EPICS_EXTENSIONS=""
+export EPICS_BASE_VER=""
+export EPICS_EXTENSIONS=""
+export EPICS_EXTENSIONS_VER=""
+export EPICS_MODULES_VER=""
 #
 export MATLAB_ROOT=""
 export MATLAB_VER=""
@@ -74,13 +78,15 @@ fi
 if [ -z $EPICS_EXTENSIONS_VER ]; then
 	export EPICS_EXTENSIONS_VER=R3-14-12
 fi
+
 if [ -z $EPICS_MODULES_VER ]; then
         export EPICS_MODULES_VER=R3-14-12
 fi
 
-if [ -z $JAVAVER ]; then
-        export JAVAVER=1.7.0_05
+if [ -z "$JAVAVER" ]; then
+#        export JAVAVER=1.7.0_05
+        export JAVAVER=1.8.0_121
 fi
 
-. ${LCLS_ROOT}/epics/setup/epicsSetup.bash
+. ${LCLS_ROOT}/epics/setup/epicsSetup64.bash
 

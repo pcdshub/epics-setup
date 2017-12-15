@@ -1,17 +1,12 @@
 #####################################################################
 #                                                                   #
-#  Title: epicsSetup_facet.bash                                     #
+#  Title: epicsSetup_swe.bash                                       #
 #                                                                   #
 #  Purpose: '.' this file to set your EPICS environment correctly   #
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
-#  History:                                                         #
-#  25Sep2017 H.Slepicka    Add logic to call EpicsHostArch for      #
-#                          R3.15.5-1.0                              #
-#  18Jun2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS           # 
-#  21Jun2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS/facility  # 
-#  30Mar2017 K.Luchini     Add EPICS_CPUS and TFTPBOOT              # 
-#  06Nov2013 Jingchen Zhou remove CMLOG                             #
+#  History:                                                         # 
+#  14Sept2011 Ernest Williams : cloned FACET setup                  #
 #  19Jul2011 Jingchen Zhou changed setup.sh to setup_facet for edm  #
 #  01Feb2011 jrock         changed ALHCONFIGFILES to facet dir      #
 #  02Nov2010 Jingchen Zhou Cloned from LCLS epicsSetup.bash         #
@@ -68,55 +63,48 @@
 umask 002      
 HOSTNAME=`hostname`
 #
-# Set up FACET_ROOT
+# Set up SWE_ROOT_RHEL6
 #
-if [ -d /afs/slac/g/facet ]; then
-   export FACET_ROOT=/afs/slac/g/facet
+if [ -d /afs/slac/g/cd/swe/rhel6 ]; then
+   export SWE_ROOT_RHEL6=/afs/slac/g/cd/swe/rhel6
    export IOCCONSOLE_ENV=Dev
-   export TFTPBOOT=$FACET_ROOT/tftpboot
-else 
-   export FACET_ROOT=/usr/local/facet 
-   export IOCCONSOLE_ENV=Prod
-   export TFTPBOOT=/usr/local/common/tftpboot
 fi
-export FACILITY_ROOT=$FACET_ROOT
 #
-# Set up FACET_DATA
+# Set up SWE_DATA
 #
-if [ -d /nfs/slac/g/facet ]; then
-   export FACET_DATA=/nfs/slac/g/facet  
-elif [ -d /u1/facet ]; then
-   export FACET_DATA=/u1/facet
-else
-   export FACET_DATA=	
-#   echo "ERROR: this ${HOSTNAME} is not supported for FACET dev/prod" 
-#   exit 1		
+if [ -d /nfs/slac/g/cd/swe ]; then
+   export SWE_DATA=/nfs/slac/g/cd/swe  
 fi
 #
 # Set up WWW_ROOT
 #
 if [ -d /afs/slac/www ]; then
    export WWW_ROOT=/afs/slac/www
-else 
-   export WWW_ROOT=/usr/local/www 
 fi
 
 #
 # Set up the rest of environment variables based on above root variables 
 #
-export RTEMS=$FACET_ROOT/rtems
-export TOOLS=$FACET_ROOT/tools
-export TOOLS_DATA=$FACET_DATA/tools
-export FACET_WWW=$WWW_ROOT/grp/facet/controls
+export RTEMS_DEV=/afs/slac/package/rtems
+export VXWORKS_DEV=/afs/slac/package/vxworks
+export PACKAGE=$SWE_ROOT_RHEL6/package
+export TOOLS=$SWE_ROOT_RHEL6/tools
+export TOOLS_DATA=$SWE_DATA/tools
+export FACET_WWW=$WWW_ROOT/grp/cd
 
-export JAVA_HOME=$FACET_ROOT/package/java/jdk${JAVAVER}
-export ANT_HOME=$FACET_ROOT/package/ant/apache-ant-1.7.0
-export PHYSDATA=$FACET_DATA/physics
+# =============================================================
+# Setup Java, Netbeans and Ant
+export JAVA_HOME=$SWE_ROOT_RHEL6/package/java/jdk${JAVA_VER}
+export ANT_HOME=$SWE_ROOT_RHEL6/package/ant/apache-ant-1.8.2
+export NETBEANS_HOME=$SWE_ROOT_RHEL6/package/netbeans/netbeans-${NETBEANS_VER}
+# =============================================================
 
-export EPICS_SETUP=$FACET_ROOT/epics/setup
+export PHYSDATA=$SWE_DATA/physics
+
+export EPICS_SETUP=$SWE_ROOT_RHEL6/epics/setup
 export HOST_ARCH=`$EPICS_SETUP/HostArch`
 
-export EPICS_TOP=$FACET_ROOT/epics
+export EPICS_TOP=$SWE_ROOT_RHEL6/epics
 export EPICS_BASE_TOP=$EPICS_TOP/base
 export EPICS_BASE_RELEASE=$EPICS_BASE_TOP/${EPICS_BASE_VER}
 export EPICS_EXTENSIONS=$EPICS_TOP/extensions/extensions-${EPICS_EXTENSIONS_VER}
@@ -125,49 +113,32 @@ if [ -z $EPICS_MODULES_TOP ]; then
    export EPICS_MODULES_TOP=$EPICS_TOP/modules/${EPICS_MODULES_VER}
 fi
 if [ -z $EPICS_IOC_TOP ]; then
-   export EPICS_IOC_TOP=$EPICS_TOP/iocTop
+   export EPICS_IOC_TOP=$EPICS_TOP/iocTop/${EPICS_IOC_VER}
 fi
 
 export APP=$EPICS_IOC_TOP
 
 export EPICS_IOCS=$EPICS_TOP/iocCommon
-if [ -d $EPICS_TOP/cpupBoot ]; then 
-  export EPICS_CPUS=$EPICS_TOP/cpuBoot
-  export CPU=$EPICS_CPUS
-fi
-export EPICS_DATA=$FACET_DATA/epics
+
+export EPICS_DATA=$SWE_DATA/epics
 export EPICS_WWW=$WWW_ROOT/comp/unix/package/epics
-# temporary set EPICS_HOST_ARCH=linux-x86 during the transition to 64 bit
-#export EPICS_HOST_ARCH=`$EPICS_BASE_RELEASE/startup/EpicsHostArch`
-export EPICS_HOST_ARCH=linux-x86
-
-if [ "$EPICS_BASE_VER" == "R3.15.5-1.0" ]; then
-  export EPICS_HOST_ARCH=`$EPICS_BASE_RELEASE/startup/EpicsHostArch`
-fi
-
+export EPICS_HOST_ARCH=`$EPICS_BASE_RELEASE/startup/EpicsHostArch`
 #
-# For running IOCs and iocConsole
+# For running iocConsole
 #
-if [ -z `echo $HOSTNAME | grep tftp` ]; then
-  export IOC=$EPICS_IOCS
-else
-  export FACET_TFTP=/tftpboot/g/facet
-  export IOC=$FACET_TFTP/ioc/iocBoot
-fi
 export IOC_DATA=$EPICS_DATA/ioc/data
-export IOC_OWNER=flaci
+export IOC_OWNER=laci
 export IOC_OWNER_OS=Linux
 export IOC_OWNER_SHELL=bash
-#export IOC_SCREEN=$EPICS_TOP/iocCommon/All/$IOCCONSOLE_ENV
-export IOC_SCREEN=$EPICS_IOCS
-export IOC_PRIM_MAP=slc/primary.map
+export IOC_SCREEN=$EPICS_TOP/iocCommon/All/$IOCCONSOLE_ENV
+
 #
 # Setup remaining EPICS CA environment variables
 #
-if [ -e $EPICS_SETUP/envSet_facet.bash ]; then
-  . $EPICS_SETUP/envSet_facet.bash
+if [ -e $EPICS_SETUP/envSet_swe_rhel6.bash ]; then
+  . $EPICS_SETUP/envSet_swe_rhel6.bash
 else
-  echo $EPICS_SETUP/envSet.bash does not exist
+  echo $EPICS_SETUP/envSet_swe_rhel6.bash does not exist
 fi
 #
 # Add EPICS base and extensions to PATH
@@ -196,25 +167,11 @@ fi
 if [ -z `echo $PATH | grep $TOOLS/edm/script` ]; then
   export PATH=$PATH:$TOOLS/edm/script
 fi
-#
-# Add $FACET_ROOT/bin to PATH
-#
-if [ -z `echo $PATH | grep $FACET_ROOT/bin` ]; then
-  export PATH=$PATH:$FACET_ROOT/bin
-fi
-#
-# Add X to PATH
-#
-if [ -z `echo $PATH | grep /usr/X11R6/bin` ]; then
-  export PATH=$PATH:/usr/X11R6/bin
-fi
-if [ ! -z $DEBUG ]; then
-  echo PATH is $PATH
-fi
+
 # Add procServ
 export PATH=$TOOLS/procServ:$PATH
 
-# Add our FACET Java Package to the path.
+# Add our Java Package to the path.
 # Do not use the java provided by SCCS!!
 if [ -z `echo $PATH | grep $JAVA_HOME/bin` ]; then
   export PATH=$JAVA_HOME/bin:$PATH
@@ -223,55 +180,20 @@ fi
 #
 # Add system areas to LD_LIBRARY_PATH (for graphics and java)
 #
-if [ $HOST_ARCH=="Linux" ]; then
-# To avoid pthread_cancel() crash when exiting a CA client. 
-#  export LD_ASSUME_KERNEL=2.4.1
-#  export JAVA_HOME=$JAVA_HOME/i386_linux2/jdk$JAVAVER
+
   export SCREENBIN=/home/screen/bin
-  if [ -z $LD_LIBRARY_PATH ];  then
-    export LD_LIBRARY_PATH=/usr/X11R6/lib
-  fi
-  if [ -z `echo $LD_LIBRARY_PATH | grep /usr/X11R6/lib` ]; then
-    export LD_LIBRARY_PATH=/usr/X11R6/lib:$LD_LIBRARY_PATH
-  fi
+  
   # to find libjava.so
-  if [ -z `echo $LD_LIBRARY_PATH | grep $JAVA_HOME/jre/lib/i386` ]; then
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/i386
+  if [ -z `echo $LD_LIBRARY_PATH | grep $JAVA_HOME/jre/lib/amd64` ]; then
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/amd64
   fi
   # to find libjvm.so
-  if [ -z `echo $LD_LIBRARY_PATH | grep $JAVA_HOME/jre/lib/i386/server` ]; then
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/i386/server
-  fi
-  # to find libtcl8.5.so and libtk8.5.so
-  if [ -z `echo $LD_LIBRARY_PATH | grep $FACET_ROOT/package/python/tcltk/lib` ]; then
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$FACET_ROOT/package/python/tcltk/lib
-  fi
-else
-  if [ $HOST_ARCH=="solaris" ]; then
-  export JAVA_HOME=$JAVA_HOME/sun4x_55/jdk$JAVAVER
-  export SCREENBIN=/opt/screen/bin
-  if [ -z $LD_LIBRARY_PATH ]; then #give it the basics
-    export LD_LIBRARY_PATH=/usr/openwin/lib:/usr/dt/lib:/usr/local/lib
+  if [ -z `echo $LD_LIBRARY_PATH | grep $JAVA_HOME/jre/lib/amd64/server` ]; then
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/amd64/server
   fi
   if [ -z `echo $LD_LIBRARY_PATH | grep /usr/local/lib` ]; then
-    export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
   fi
-  if [ -z `echo $LD_LIBRARY_PATH | grep /usr/dt/lib` ]; then
-    export LD_LIBRARY_PATH=/usr/dt/lib:$LD_LIBRARY_PATH
-  fi
-  if [ -z `echo $LD_LIBRARY_PATH | grep /usr/openwin/lib` ]; then
-    export LD_LIBRARY_PATH=/usr/openwin/lib:$LD_LIBRARY_PATH
-  fi
-  # to find libjava.so
-  if [ -z `echo $LD_LIBRARY_PATH | grep $JAVA_HOME/jre/lib/sparc` ]; then
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/sparc
-  fi
-  # to find libjvm.so
-  if [ -z `echo $LD_LIBRARY_PATH | grep $JAVA_HOME/jre/lib/sparc/server` ]; then
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/sparc/server
-  fi
-  fi
-fi
 #
 # Add EPICS base and extensions to LD_LIBRARY_PATH
 #
@@ -350,7 +272,7 @@ export NETSCAPEPATH=firefox
 ########################################################################
 # For cmlog
 ########################################################################
-#export CMLOGSETUP=$FACET_ROOT/package/cmlog/config
-#if [ -r $CMLOGSETUP/cmlogSetup.bash ]; then
-#  . $CMLOGSETUP/cmlogSetup.bash > /dev/null
-#fi
+export CMLOGSETUP=$FACET_ROOT/package/cmlog/config
+if [ -r $CMLOGSETUP/cmlogSetup.bash ]; then
+  . $CMLOGSETUP/cmlogSetup.bash > /dev/null
+fi
