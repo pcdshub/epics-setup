@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 CVS
 *.o
 *.new
@@ -5,3 +6,16 @@ CVS
 *ORIG
 *SAVE
 *.save
+=======
+*.new
+*~
+*SAVE
+*ORIG
+*NEW
+*.new
+*OLD
+.bck/
+CVS/
+configure/
+*.swp
+>>>>>>> 5047cb4... Adding .gitignore and removing unneeded MODULES_STABLE_VERSION (Needs to be base version specific)
