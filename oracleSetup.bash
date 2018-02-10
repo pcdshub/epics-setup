@@ -1,0 +1,1 @@
+/usr/local/lcls/tools/oracle/oracleSetup.bash
