@@ -54,6 +54,10 @@ case $HOSTNAME in
 		EPICS_CA_AUTO_ADDR_LIST=NO
 		EPICS_CA_ADDR_LIST=172.21.45.255
 		;;
+	mfx-console | mfx-daq | mfx-monitor | mfx-control | mfx-hutch01 )
+		EPICS_CA_AUTO_ADDR_LIST=NO
+		EPICS_CA_ADDR_LIST=172.21.42.255
+		;;
 	pscaa0* | pscaesrv | pscaasrv )
 		EPICS_CA_AUTO_ADDR_LIST=NO
 		EPICS_CA_ADDR_LIST=134.79.165.255

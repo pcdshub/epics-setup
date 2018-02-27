@@ -412,7 +412,7 @@ function updateScreenLinks
 {
 	EPICS_SITE_TOP=${PACKAGE_SITE_TOP}/epics/3.14
 	EPICS_DEV_AREA=${PACKAGE_SITE_TOP}/epics/3.14-dev
-	areas="amo sxr xpp xcs cxi mec fee las thz";
+	areas="amo sxr xpp xcs cxi mec mfx fee las thz";
 	relpath="$1";
 	if [ "$relpath" != "" -a ! -e "$relpath" ]; then
 		relpath=$EPICS_SITE_TOP/$relpath
