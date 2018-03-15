@@ -1,12 +1,12 @@
 #####################################################################
 #                                                                   #
-#  Title: epicsSetup_dev.bash                                           #
+#  Title: epicsSetup_dev.bash                                       #
 #                                                                   #
 #  Purpose: source this file to set your EPICS environment.         #
 #           This file sets up edm, vdct and cmlog                   #
 #                                                                   #
 #  History:                                                         #
-#  22Sep2-17 K. Luchini    Revert to 1.9 due to conflicts in 1.10   #
+#  22Sep2017 K. Luchini    Revert to 1.9 due to conflicts in 1.10   #
 #  18Aug2015 Greg White    Added EPICS Version 4 (specifically      #
 #                          4.4.0).                                  #
 #  22Aug2014 Jingchen Zhou Add $TOOLS/AlarmConfigTop/SCRIPT         #	 

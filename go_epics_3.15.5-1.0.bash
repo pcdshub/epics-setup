@@ -36,6 +36,13 @@ source ${LCLS_ROOT}/tools/script/ENVS_dev3.bash
 export EPICS_MBA_TEMPLATE_TOP=${EPICS_MODULES_TOP}/icdTemplates/icdTemplates-R2-0-0
 
 # ======================================================================
+# Add Epics V4 Client Tools to the path
+# ======================================================================
+export PVACCESSCPP_MODULE_VERSION=R6.0.0-0.3.0
+export PVACCESSCPP_HOME=${EPICS_MODULES_TOP}/pvAccessCPP/${PVACCESSCPP_MODULE_VERSION}
+export PATH=${PVACCESSCPP_HOME}/bin/rhel6-x86_64:$PATH
+
+# ======================================================================
 # Setup for Octave
 # ======================================================================
 export OCTAVE=/afs/slac/g/lcls/package/octave
