@@ -8,7 +8,13 @@
 #
 
 # Setup the common directory env variables
-source /afs/slac/g/lcls/epics/config/common_dirs.sh
+if [    -f /afs/slac/g/lcls/epics/config/common_dirs.sh ]; then
+	source /afs/slac/g/lcls/epics/config/common_dirs.sh
+elif [  -f ${FACILITY_ROOT}/epics/config/common_dirs.sh ]; then
+	source ${FACILITY_ROOT}/epics/config/common_dirs.sh
+elif [  -f /usr/local/lcls/epics/config/common_dirs.sh ]; then
+	source /usr/local/lcls/epics/config/common_dirs.sh
+fi
 
 # Select the EPICS base version and EPICS extensions version
 export BASE_MODULE_VERSION=R3.15.5-1.0
