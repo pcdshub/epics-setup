@@ -62,8 +62,8 @@ fi
 # The following setup is for EDM
 export EDMWEBBROWSER=firefox
 #export EDMDATAFILES=.
-export EDM=${TOOLS}/edm/display
-export EDMFILES=${TOOLS}/edm/config
+export EDM=${TOOLS_SITE_TOP}/edm/display
+export EDMFILES=${TOOLS_SITE_TOP}/edm/config
 export EDMCALC=${EDMFILES}/calc.list
 export EDMOBJECTS=$EDMFILES
 export EDMPVOBJECTS=$EDMFILES
