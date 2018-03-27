@@ -12,6 +12,8 @@
 #
 #--------------------------------------------------------------
 #  Mod:
+#        16-Mar-2018, P. Pascual (ppascual)
+#	 Added 172.26.97.63 to EPICS_CA_ADDR_LIST for LCLS-II Laser Locker test stand
 #        10-May-2016, K. Luchini (luchini)
 #        chg EPICS_TS_NTP_INET, current one does not exist
 #        15-Mar-2016, J. Zhou
@@ -96,7 +98,7 @@ if [ -d /afs/slac/g/lcls ]; then
 	export EPICS_PVA_ADDR_LIST="lcls-dev1.slac.stanford.edu"
 	export EPICS_PVA_BROADCAST_PORT=5056
 	export EPICS_PVA_AUTO_ADDR_LIST=FALSE
-	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="134.79.219.255"
+	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="134.79.219.255 172.26.97.63"
 	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5067"
 	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5066"
 	export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.18.40"
