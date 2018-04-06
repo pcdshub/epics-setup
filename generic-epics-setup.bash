@@ -1,6 +1,6 @@
 # generic-epics-setup.bash
 if [ -z "$EPICS_SITE_TOP" ]; then
-	echo "ERROR: No binaries in ${EPICS_BASE}/bin/${EPICS_HOST_ARCH}."
+	echo "Warning: EPICS_SITE_TOP undefined."
 fi
 
 if [ -z "$EPICS_CA_AUTO_ADDR_LIST" ]; then
@@ -11,11 +11,8 @@ fi
 # get some functions for manipulating assorted env path variables
 source ${SETUP_SITE_TOP}/pathmunge.bash
 
-if [ "$EPICS_HOST_ARCH" == "" ]; then
-	export EPICS_HOST_ARCH=$(${EPICS_BASE}/startup/EpicsHostArch)
-fi
-
 # Make sure we have a valid path to EPICS binaries
+export EPICS_HOST_ARCH=$(${EPICS_BASE}/startup/EpicsHostArch)
 if [ ! -d ${EPICS_BASE}/bin/${EPICS_HOST_ARCH} ]; then
 	echo "ERROR: No binaries in ${EPICS_BASE}/bin/${EPICS_HOST_ARCH}."
 fi
@@ -26,12 +23,16 @@ pathpurge "${EPICS_SITE_TOP}/extensions/*/bin/*"
 
 # Set path to utilities provided by EPICS and its extensions
 pathmunge ${EPICS_BASE}/bin/${EPICS_HOST_ARCH}
-pathmunge ${EPICS_EXTENSIONS}/bin/${EPICS_HOST_ARCH}
+if [ -d ${EPICS_EXTENSIONS}/bin/${EPICS_HOST_ARCH} ]; then
+	pathmunge ${EPICS_EXTENSIONS}/bin/${EPICS_HOST_ARCH}
+fi
 export PATH
 
 # Set path to libraries provided by EPICS and its extensions (required by EPICS tools)
 ldpathmunge ${EPICS_BASE}/lib/${EPICS_HOST_ARCH}
-ldpathmunge ${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}
+if [ -d ${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH} ]; then
+	ldpathmunge ${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}
+fi
 export LD_LIBRARY_PATH
 
 # EPICS V4 support
@@ -48,7 +49,7 @@ if [ -d "$PVACCESS" ]; then
 	# Add other V4 libs to LD_LIBRARY_PATH
 	ldpathmunge ${NORMATIVETYPES}/lib/${EPICS_HOST_ARCH}
 	ldpathmunge ${PVDATA}/lib/${EPICS_HOST_ARCH}
-	ldpathmunge ${PVDATABASE}/lib/${EPICS_HOST_ARCH}
+	#ldpathmunge ${PVDATABASE}/lib/${EPICS_HOST_ARCH}
 	export LD_LIBRARY_PATH
 fi
 
@@ -60,18 +61,18 @@ if [ -d "$PVAPY" ]; then
 fi
 
 # The following setup is for EDM
-export EDMWEBBROWSER=firefox
-#export EDMDATAFILES=.
-export EDM=${TOOLS_SITE_TOP}/edm/display
-export EDMFILES=${TOOLS_SITE_TOP}/edm/config
-export EDMCALC=${EDMFILES}/calc.list
-export EDMOBJECTS=$EDMFILES
-export EDMPVOBJECTS=$EDMFILES
-export EDMFILTERS=$EDMFILES
-#export EDMHELPFILES=${EPICS_EXTENSIONS}/helpFiles
-export EDMHELPFILES=$EPICS_EXTENSIONS/src/edm/helpFiles
-export EDMLIBS=${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}
-export EDMUSERLIB=${EDMLIBS}
+if [ -z "$EDMDATAFILES" -a -f $TOOLS_SITE_TOP/edm/config/setup.sh ]; then
+	if [ -z "$TOOLS" ]; then
+		export TOOLS=$TOOLS_SITE_TOP
+	fi
+	source $TOOLS_SITE_TOP/edm/config/setup.sh
+fi
+if [ -e $EPICS_EXTENSIONS/helpFiles ]; then
+	export EDMHELPFILES=$EPICS_EXTENSIONS/helpFiles
+elif [ -e $EPICS_EXTENSIONS/src/edm/helpFiles ]; then
+	export EDMHELPFILES=$EPICS_EXTENSIONS/src/edm/helpFiles
+fi
+export EDMLIBS=$EPICS_EXTENSIONS/lib/$EPICS_HOST_ARCH
 
 # The following setup is for vdct
 # WARNING: java-1.6.0-sun must be installed on the machine running vdct!!!
