@@ -1,4 +1,19 @@
+#-*-sh-*-
+#
+#   Title: generic-epics-setup.bash
 # generic-epics-setup.bash
+#
+#  Purpose:
+#   Source this file after setting or changing EPICS
+#   versions via any of the following EPICS environment variables:
+#       EPICS_BASE          - Path to top of base release
+#       EPICS_EXTENSIONS    - Path to top of extensions release
+#   These are needed for PVA prior to Base R7.* only
+#       NORMATIVETYPES      - Path to top of PVA NormativeTypesCPP
+#       PVACCESS            - Path to top of PVA PvAccessCPP release
+#       PVDATA              - Path to top of PVA PvDataCPP release
+#       PVAPY               - Path to top of PVA pvaPy release
+#
 if [ -z "$EPICS_SITE_TOP" ]; then
 	echo "Warning: EPICS_SITE_TOP undefined."
 fi
@@ -22,6 +37,7 @@ pathpurge "${EPICS_SITE_TOP}/base/*/bin/*"
 pathpurge "${EPICS_SITE_TOP}/extensions/*/bin/*"
 
 # Set path to utilities provided by EPICS and its extensions
+pathmunge "/usr/local/lcls/tools/script"
 pathmunge ${EPICS_BASE}/bin/${EPICS_HOST_ARCH}
 if [ -d ${EPICS_EXTENSIONS}/bin/${EPICS_HOST_ARCH} ]; then
 	pathmunge ${EPICS_EXTENSIONS}/bin/${EPICS_HOST_ARCH}
@@ -61,6 +77,7 @@ if [ -d "$PVAPY" ]; then
 fi
 
 # The following setup is for EDM
+export EDMLIBS=$EPICS_EXTENSIONS/lib/$EPICS_HOST_ARCH
 if [ -z "$EDMDATAFILES" -a -f $TOOLS_SITE_TOP/edm/config/setup.sh ]; then
 	if [ -z "$TOOLS" ]; then
 		export TOOLS=$TOOLS_SITE_TOP
@@ -72,7 +89,6 @@ if [ -e $EPICS_EXTENSIONS/helpFiles ]; then
 elif [ -e $EPICS_EXTENSIONS/src/edm/helpFiles ]; then
 	export EDMHELPFILES=$EPICS_EXTENSIONS/src/edm/helpFiles
 fi
-export EDMLIBS=$EPICS_EXTENSIONS/lib/$EPICS_HOST_ARCH
 
 # The following setup is for vdct
 # WARNING: java-1.6.0-sun must be installed on the machine running vdct!!!
