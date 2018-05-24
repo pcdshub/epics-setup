@@ -44,6 +44,10 @@ if [ -d ${EPICS_EXTENSIONS}/bin/${EPICS_HOST_ARCH} ]; then
 fi
 export PATH
 
+# Clear out old EPICS LD_LIBRARY_PATH paths
+ldpathpurge "${EPICS_SITE_TOP}/base/*/lib/*"
+ldpathpurge "${EPICS_SITE_TOP}/extensions/*/lib/*"
+
 # Set path to libraries provided by EPICS and its extensions (required by EPICS tools)
 ldpathmunge ${EPICS_BASE}/lib/${EPICS_HOST_ARCH}
 if [ -d ${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH} ]; then
@@ -78,11 +82,15 @@ fi
 
 # The following setup is for EDM
 export EDMLIBS=$EPICS_EXTENSIONS/lib/$EPICS_HOST_ARCH
-if [ -z "$EDMDATAFILES" -a -f $TOOLS_SITE_TOP/edm/config/setup.sh ]; then
+export EDMUSERLIB=$EPICS_EXTENSIONS/lib/$EPICS_HOST_ARCH
+if [ -z "$EDMDATAFILES" ]; then
+	# Initial edm setup
 	if [ -z "$TOOLS" ]; then
 		export TOOLS=$TOOLS_SITE_TOP
 	fi
-	source $TOOLS_SITE_TOP/edm/config/setup.sh
+	if [   -f  $TOOLS/edm/config/setup.sh ]; then
+		source $TOOLS/edm/config/setup.sh
+	fi
 fi
 if [ -e $EPICS_EXTENSIONS/helpFiles ]; then
 	export EDMHELPFILES=$EPICS_EXTENSIONS/helpFiles
