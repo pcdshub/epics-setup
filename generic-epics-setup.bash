@@ -61,18 +61,18 @@ if [ -d "$PVAPY" ]; then
 fi
 
 # The following setup is for EDM
-export EDMWEBBROWSER=firefox
-#export EDMDATAFILES=.
-export EDM=${TOOLS}/edm/display
-export EDMFILES=${TOOLS}/edm/config
-export EDMCALC=${EDMFILES}/calc.list
-export EDMOBJECTS=$EDMFILES
-export EDMPVOBJECTS=$EDMFILES
-export EDMFILTERS=$EDMFILES
-#export EDMHELPFILES=${EPICS_EXTENSIONS}/helpFiles
-export EDMHELPFILES=$EPICS_EXTENSIONS/src/edm/helpFiles
-export EDMLIBS=${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}
-export EDMUSERLIB=${EDMLIBS}
+if [ -z "$EDMDATAFILES" -a -f $TOOLS_SITE_TOP/edm/config/setup.sh ]; then
+	if [ -z "$TOOLS" ]; then
+		export TOOLS=$TOOLS_SITE_TOP
+	fi
+	source $TOOLS_SITE_TOP/edm/config/setup.sh
+fi
+if [ -e $EPICS_EXTENSIONS/helpFiles ]; then
+	export EDMHELPFILES=$EPICS_EXTENSIONS/helpFiles
+elif [ -e $EPICS_EXTENSIONS/src/edm/helpFiles ]; then
+	export EDMHELPFILES=$EPICS_EXTENSIONS/src/edm/helpFiles
+fi
+export EDMLIBS=$EPICS_EXTENSIONS/lib/$EPICS_HOST_ARCH
 
 # The following setup is for vdct
 # WARNING: java-1.6.0-sun must be installed on the machine running vdct!!!
