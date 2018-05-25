@@ -7,6 +7,10 @@ pathpurge()
 		echo Usage: pathpurge dirname
 		return
 	fi
+	if [ "$1" == "." ] ; then
+		# pathpurge doesn't support remove . from PATH
+		return
+	fi
 	while [ $# -gt 0 ] ;
 	do
 		PATH=`echo $PATH | sed -e "s%$1:%%g"`
@@ -39,6 +43,9 @@ edmpathpurge()
 {
 	if [ "$1" == "" ] ; then
 		echo Usage: edmpathpurge dirname
+		return
+	fi
+	if [ "$1" == "." ] ; then
 		return
 	fi
 	while [ $# -gt 0 ] ;
@@ -74,6 +81,9 @@ ldpathpurge()
 		echo Usage: ldpathpurge dirname
 		return
 	fi
+	if [ "$1" == "." ] ; then
+		return
+	fi
 	while [ $# -gt 0 ] ;
 	do
 		LD_LIBRARY_PATH=`echo $LD_LIBRARY_PATH | sed -e "s%$1:%%g"`
@@ -106,6 +116,9 @@ pythonpathpurge()
 {
 	if [ "$1" == "" ] ; then
 		echo Usage: pythonpathpurge dirname
+		return
+	fi
+	if [ "$1" == "." ] ; then
 		return
 	fi
 	while [ $# -gt 0 ] ;
