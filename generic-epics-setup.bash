@@ -37,7 +37,6 @@ pathpurge "${EPICS_SITE_TOP}/base/*/bin/*"
 pathpurge "${EPICS_SITE_TOP}/extensions/*/bin/*"
 
 # Set path to utilities provided by EPICS and its extensions
-pathmunge "/usr/local/lcls/tools/script"
 pathmunge ${EPICS_BASE}/bin/${EPICS_HOST_ARCH}
 if [ -d ${EPICS_EXTENSIONS}/bin/${EPICS_HOST_ARCH} ]; then
 	pathmunge ${EPICS_EXTENSIONS}/bin/${EPICS_HOST_ARCH}
