@@ -11,8 +11,10 @@ fi
 # get some functions for manipulating assorted env path variables
 source ${SETUP_SITE_TOP}/pathmunge.bash
 
-# Make sure we have a valid path to EPICS binaries
+# Set EPICS_HOST_ARCH 
 export EPICS_HOST_ARCH=$(${EPICS_BASE}/startup/EpicsHostArch)
+
+# Make sure we have a valid path to EPICS binaries
 if [ ! -d ${EPICS_BASE}/bin/${EPICS_HOST_ARCH} ]; then
 	echo "ERROR: No binaries in ${EPICS_BASE}/bin/${EPICS_HOST_ARCH}."
 fi
