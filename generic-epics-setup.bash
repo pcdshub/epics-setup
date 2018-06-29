@@ -66,8 +66,12 @@ if [ -d "$PVACCESS" ]; then
 	export PATH
 
 	# Add other V4 libs to LD_LIBRARY_PATH
-	ldpathmunge ${NORMATIVETYPES}/lib/${EPICS_HOST_ARCH}
-	ldpathmunge ${PVDATA}/lib/${EPICS_HOST_ARCH}
+	if [ -d "${NORMATIVETYPES}/lib/${EPICS_HOST_ARCH}" ]; then
+		ldpathmunge ${NORMATIVETYPES}/lib/${EPICS_HOST_ARCH}
+	fi
+	if [ -d "${PVDATA}/lib/${EPICS_HOST_ARCH}" ]; then
+		ldpathmunge ${PVDATA}/lib/${EPICS_HOST_ARCH}
+	fi
 	#ldpathmunge ${PVDATABASE}/lib/${EPICS_HOST_ARCH}
 	export LD_LIBRARY_PATH
 fi
