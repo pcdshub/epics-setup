@@ -33,11 +33,11 @@ if [ ! -d ${EPICS_BASE}/bin/${EPICS_HOST_ARCH} ]; then
 fi
 
 # Clear out old EPICS paths
-pathpurge "${EPICS_SITE_TOP}/base/*/bin/*"
-pathpurge "${EPICS_SITE_TOP}/extensions/*/bin/*"
+pathpurge ${EPICS_SITE_TOP}/base/*/bin/*
+pathpurge ${EPICS_SITE_TOP}/extensions/*/bin/*
 
 # Set path to utilities provided by EPICS and its extensions
-pathmunge "/usr/local/lcls/tools/script"
+pathmunge /usr/local/lcls/tools/script
 pathmunge ${EPICS_BASE}/bin/${EPICS_HOST_ARCH}
 if [ -d ${EPICS_EXTENSIONS}/bin/${EPICS_HOST_ARCH} ]; then
 	pathmunge ${EPICS_EXTENSIONS}/bin/${EPICS_HOST_ARCH}
@@ -45,8 +45,8 @@ fi
 export PATH
 
 # Clear out old EPICS LD_LIBRARY_PATH paths
-ldpathpurge "${EPICS_SITE_TOP}/base/*/lib/*"
-ldpathpurge "${EPICS_SITE_TOP}/extensions/*/lib/*"
+ldpathpurge ${EPICS_SITE_TOP}/base/*/lib/*
+ldpathpurge ${EPICS_SITE_TOP}/extensions/*/lib/*
 
 # Set path to libraries provided by EPICS and its extensions (required by EPICS tools)
 ldpathmunge ${EPICS_BASE}/lib/${EPICS_HOST_ARCH}
@@ -58,8 +58,8 @@ export LD_LIBRARY_PATH
 # EPICS V4 support
 if [ -d "$PVACCESS" ]; then
 	# Clear out old V4 paths
-	pathpurge "${EPICS_MODULES_TOP}/pvAccessCPP/*/bin/*"
-	ldpathpurge "${EPICS_MODULES_TOP}/*CPP/*/lib/*"
+	pathpurge ${EPICS_MODULES_TOP}/pvAccessCPP/*/bin/*
+	ldpathpurge ${EPICS_MODULES_TOP}/*CPP/*/lib/*
 
 	# Add pvAccessCPP to PATH and LD_LIBRARY_PATH
 	pathmunge   ${PVACCESS}/bin/${EPICS_HOST_ARCH}
@@ -75,7 +75,7 @@ fi
 
 if [ -d "$PVAPY" ]; then
 	# Add pvaPy to PYTHONPATH
-	pythonpathpurge "${EPICS_MODULES_TOP}/pvaPy/*/lib/python/*/*"
+	pythonpathpurge ${EPICS_MODULES_TOP}/pvaPy/*/lib/python/*/*
 	pythonpathmunge ${PVAPY}/lib/python/2.7/${EPICS_HOST_ARCH}
 	export PYTHONPATH
 fi
@@ -103,3 +103,10 @@ fi
 if [ -e ${EPICS_EXTENSIONS}/javalib/VisualDCT.jar ]; then
 	export VDCT_CLASSPATH="${EPICS_EXTENSIONS}/javalib/VisualDCT.jar"
 fi
+
+# Fix MATLABPATH
+matlabpathpurge ${EPICS_SITE_TOP}/extensions/*/lib/*
+matlabpathpurge ${EPICS_SITE_TOP}/extensions/*/bin/*/labca
+matlabpathmunge $EPICS_EXTENSIONS/lib/$EPICS_HOST_ARCH
+matlabpathmunge $EPICS_EXTENSIONS/bin/$EPICS_HOST_ARCH/labca
+

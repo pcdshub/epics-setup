@@ -112,6 +112,43 @@ ldpathmunge ()
 #	echo ldpathmunge: prepended $1 to LD_LIBRARY_PATH
 }
 
+matlabpathpurge()
+{
+	if [ "$1" == "" ] ; then
+		echo Usage: matlabpathpurge dirname
+		return
+	fi
+	if [ "$1" == "." ] ; then
+		return
+	fi
+	while [ $# -gt 0 ] ;
+	do
+		MATLABPATH=`echo $MATLABPATH | sed -e "s%$1:%%g"`
+		MATLABPATH=`echo $MATLABPATH | sed -e "s%:$1\$%%g"`
+		MATLABPATH=`echo $MATLABPATH | sed -e "s%^$1\$%%"`
+		shift
+	done
+}
+
+matlabpathmunge ()
+{
+	if [ "$1" == "" ] ; then
+		echo Usage: matlabpathmunge dirname
+		return
+	fi
+	if [ ! -d "$1" ] ; then
+		echo matlabpathmunge: $1 is not a directory
+		return
+	fi
+	if [ "$MATLABPATH" == "" -o "$MATLABPATH" == "$1" ] ; then
+		export MATLABPATH=$1
+		return
+	fi
+	matlabpathpurge $1
+	export MATLABPATH=$1:$MATLABPATH
+}
+
+
 pythonpathpurge()
 {
 	if [ "$1" == "" ] ; then
