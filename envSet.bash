@@ -12,6 +12,8 @@
 #
 #--------------------------------------------------------------
 #  Mod:
+#        05-Jul-2018, J. Zhou
+#        Added 172.27.131.255 to EPICS_CA_ADDR_LIST for lcls2ioc subnet 
 #        15-Mar-2016, J. Zhou
 #        Removed 134.79.151.21:5061 (nonexistent GW) from EPICS_CA_ADDR_LIST
 #        21-Aug-0215, Greg White 
@@ -116,7 +118,7 @@ elif [ -d /usr/local/lcls ]; then
 	export EPICS_PVA_BROADCAST_PORT=5056
 	export EPICS_PVA_AUTO_ADDR_LIST=FALSE
 	export EPICS_CA_AUTO_ADDR_LIST=NO
-	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="172.27.3.255:5068 mcc-dmz 172.21.40.63:5064 172.27.72.24:5070"
+	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="172.27.3.255:5068 172.27.131.255:5068 mcc-dmz 172.21.40.63:5064 172.27.72.24:5070"
 	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5069"
 	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5068"
 	export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.151.11"
