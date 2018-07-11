@@ -18,7 +18,7 @@ if [ -z "$EPICS_SITE_TOP" ]; then
 	echo "Warning: EPICS_SITE_TOP undefined."
 fi
 
-if [ -z "$EPICS_CA_AUTO_ADDR_LIST" ]; then
+if [ -z "$EPICS_CA_SERVER_PORT" ]; then
 	# Setup the EPICS Channel Access environment
 	source ${SETUP_SITE_TOP}/envSet.bash
 fi
@@ -33,8 +33,10 @@ if [ ! -d ${EPICS_BASE}/bin/${EPICS_HOST_ARCH} ]; then
 fi
 
 # Clear out old EPICS paths
-pathpurge ${EPICS_SITE_TOP}/base/*/bin/*
-pathpurge ${EPICS_SITE_TOP}/extensions/*/bin/*
+#pathpurge ${EPICS_SITE_TOP}/base/*/bin/*
+#pathpurge ${EPICS_SITE_TOP}/extensions/*/bin/*
+pathpurge   $(printenv PATH | sed -e "s/:/\n/g" | egrep ${EPICS_SITE_TOP})
+ldpathpurge $(printenv LD_LIBRARY_PATH | sed -e "s/:/\n/g" | egrep ${EPICS_SITE_TOP})
 
 # Set path to utilities provided by EPICS and its extensions
 pathmunge /usr/local/lcls/tools/script
@@ -44,33 +46,25 @@ if [ -d ${EPICS_EXTENSIONS}/bin/${EPICS_HOST_ARCH} ]; then
 fi
 export PATH
 
-# Clear out old EPICS LD_LIBRARY_PATH paths
-ldpathpurge ${EPICS_SITE_TOP}/base/*/lib/*
-ldpathpurge ${EPICS_SITE_TOP}/extensions/*/lib/*
-
-# Set path to libraries provided by EPICS and its extensions (required by EPICS tools)
+# Set LD_LIBRARY_PATH to libraries provided by EPICS and its extensions (required by EPICS tools)
 ldpathmunge ${EPICS_BASE}/lib/${EPICS_HOST_ARCH}
 if [ -d ${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH} ]; then
 	ldpathmunge ${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}
 fi
 export LD_LIBRARY_PATH
 
+# icdTemplates
+export EPICS_MBA_TEMPLATE_TOP=$EPICS_MODULES_TOP/icdTemplates/icdTemplates-R1-2-2
+
 # EPICS V4 support
-if [ -d "$PVACCESS" ]; then
+if [ -d "$PVACCESSCPP" ]; then
 	# Clear out old V4 paths
 	pathpurge ${EPICS_MODULES_TOP}/pvAccessCPP/*/bin/*
 	ldpathpurge ${EPICS_MODULES_TOP}/*CPP/*/lib/*
 
-	# Add pvAccessCPP to PATH and LD_LIBRARY_PATH
-	pathmunge   ${PVACCESS}/bin/${EPICS_HOST_ARCH}
-	ldpathmunge ${PVACCESS}/lib/${EPICS_HOST_ARCH}
+	# Add pvAccessCPP to PATH
+	pathmunge   ${PVACCESSCPP}/bin/${EPICS_HOST_ARCH}
 	export PATH
-
-	# Add other V4 libs to LD_LIBRARY_PATH
-	ldpathmunge ${NORMATIVETYPES}/lib/${EPICS_HOST_ARCH}
-	ldpathmunge ${PVDATA}/lib/${EPICS_HOST_ARCH}
-	#ldpathmunge ${PVDATABASE}/lib/${EPICS_HOST_ARCH}
-	export LD_LIBRARY_PATH
 fi
 
 if [ -d "$PVAPY" ]; then
@@ -81,22 +75,19 @@ if [ -d "$PVAPY" ]; then
 fi
 
 # The following setup is for EDM
-export EDMLIBS=$EPICS_EXTENSIONS/lib/$EPICS_HOST_ARCH
-export EDMUSERLIB=$EPICS_EXTENSIONS/lib/$EPICS_HOST_ARCH
 if [ -z "$EDMDATAFILES" ]; then
-	# Initial edm setup
-	if [ -z "$TOOLS" ]; then
-		export TOOLS=$TOOLS_SITE_TOP
-	fi
-	if [   -f  $TOOLS/edm/config/setup.sh ]; then
-		source $TOOLS/edm/config/setup.sh
+	if [  -f  "$TOOLS_SITE_TOP/edm/config/setup.sh" ]; then
+		source $TOOLS_SITE_TOP/edm/config/setup.sh
 	fi
 fi
+# Update extensions related EDM env variables
 if [ -e $EPICS_EXTENSIONS/helpFiles ]; then
 	export EDMHELPFILES=$EPICS_EXTENSIONS/helpFiles
-elif [ -e $EPICS_EXTENSIONS/src/edm/helpFiles ]; then
+else
 	export EDMHELPFILES=$EPICS_EXTENSIONS/src/edm/helpFiles
 fi
+export EDMLIBS=$EPICS_EXTENSIONS/lib/$EPICS_HOST_ARCH
+export EDMUSERLIB=$EDMLIBS
 
 # The following setup is for vdct
 # WARNING: java-1.6.0-sun must be installed on the machine running vdct!!!
