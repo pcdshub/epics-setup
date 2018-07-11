@@ -105,8 +105,8 @@ if [ -d /afs/slac/g/lcls ]; then
 	export EPICS_TS_NTP_INET="134.79.18.40"
 	export EPICS_IOC_LOG_INET="134.79.219.136"
 
-    # setup for prod on dev
     else
+    # setup for prod on dev
 	source envSet_prodOnDev.bash
 	#export EPICS_PVA_ADDR_LIST="mccas0.slac.stanford.edu"
 	#export EPICS_PVA_BROADCAST_PORT=5056
