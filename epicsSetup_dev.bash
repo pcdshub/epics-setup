@@ -6,6 +6,7 @@
 #           This file sets up edm, vdct and cmlog                   #
 #                                                                   #
 #  History:                                                         #
+#  14Mar2018 B. Hill       comment typo fix                         #
 #  22Sep2017 K. Luchini    Revert to 1.9 due to conflicts in 1.10   #
 #  18Aug2015 Greg White    Added EPICS Version 4 (specifically      #
 #                          4.4.0).                                  #

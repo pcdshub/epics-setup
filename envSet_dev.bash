@@ -12,6 +12,8 @@
 #
 #--------------------------------------------------------------
 #  Mod:
+#        11-Jul-2018, B. Hill (bhill)
+#        Reworked envSet.bash script to simplify, also breaking out separate files envSet_prod.bash and envSet_prodOnDev.bash
 #        16-Mar-2018, P. Pascual (ppascual)
 #	 Added 172.26.97.63 to EPICS_CA_ADDR_LIST for LCLS-II Laser Locker test stand
 #        10-May-2016, K. Luchini (luchini)
