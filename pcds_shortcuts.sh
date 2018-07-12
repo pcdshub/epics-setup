@@ -44,7 +44,7 @@ export PKGS=$PACKAGE_SITE_TOP
 
 function ssh_show_procServ( )
 {
-	PROCSERV_HOST=`hostname`
+	PROCSERV_HOST=`hostname -s`
 	EXPAND_TABS='/usr/bin/expand --tabs=6,16,42,52,72'
 	REORDER='gawk {OFS="\t";print$2,$3,$5,$4,$1,$6}'
 	if [ -z "$1" ]; then
@@ -199,7 +199,23 @@ function find_pv( )
 export find_pv
 
 # Handy way to get host IP addr into a shell variable
-if [ -e /sbin/ifconfig -a -e /bin/awk -a -e /bin/grep ]; then
+if [ -e /usr/bin/gethostip -a -e /sbin/ifconfig -a -e /bin/grep ]; then
+dns_addr=`/usr/bin/gethostip -d "$HOSTNAME"`
+ip_list="$(/sbin/ifconfig | /bin/grep -w inet | sed -e 's/ *inet[^0-9]*\([0-9.]*\) .*/\1/')"
+for ip in $ip_list;
+do
+if [ "$ip" == "$dns_addr" ]; then
+	export IP="$dns_addr"
+fi
+done
+unset dns_addr
+unset ip_list
+if [ -z $IP ]; then
+export IP=`/sbin/ifconfig | /bin/grep -w inet | head -1 | sed -e 's/ *inet[^0-9]*\([0-9.]*\) .*/\1/'`
+fi
+export SUBNET=`echo $IP | cut -d. -f3`
+# if we don't have gethostip use the older less reliable way this fails if the CDS interface is not the first
+elif [ -e /sbin/ifconfig -a -e /bin/awk -a -e /bin/grep ]; then
 #export IP=`/sbin/ifconfig | /bin/grep 'inet addr:' | head -1 | cut -d: -f2 | /bin/awk '{ print $1 }'`
 export IP=`/sbin/ifconfig | /bin/grep -w inet | head -1 | sed -e 's/ *inet[^0-9]*\([0-9.]*\) .*/\1/'`
 export SUBNET=`echo $IP | cut -d. -f3`
