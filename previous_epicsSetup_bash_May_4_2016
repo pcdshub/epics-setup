@@ -7,7 +7,9 @@
 #           This file sets up all EPICS clients side paths etc.     #
 #           See also envSet*.bash for the runtime connection conf.  #
 #                                                                   #
-#  History:                                                         # 
+#  History:                                                         #
+#  14Mar2018 B. Hill       comment typo fix                         #
+#  22Sep2017 K. Luchini    Revert to 1.9 due to conflicts in 1.10   #
 #  26Apr2016 M Shankar     Version in ${TOOLS}/script has extra     #
 #                          PATH of $TOOLS/AlarmConfigsTop/SCRIPT    #
 #                          Added these lines into CVS               #
