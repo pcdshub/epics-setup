@@ -31,6 +31,9 @@ source ${SETUP_SITE_TOP}/epics-ca-env.sh
 # get some functions for manipulating assorted env path variables
 source ${SETUP_SITE_TOP}/pathmunge.sh
 
+# Add eco, epics-releaes, netconfig and other common tools to path
+pathmunge ${TOOLS_SITE_TOP}/bin
+
 export BASE_MODULE_VERSION=R3.14.12-0.4.0
 
 export EPICS_TOOLS_SITE_TOP=${EPICS_SITE_TOP}
