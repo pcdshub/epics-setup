@@ -145,7 +145,7 @@ sub addModuleToHTML($$$)
 #
 ##################################################
 print ">>>moduleBuilder.pl\n";
-if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help" || $ARGV[0] eq "-help" || $ARGV[0] eq "-HELP" || $ARGV[0] eq "-Help" || $ARGV[0] eq "-h" ) { usage(); } 
+if ($ARGV[0] eq "help" || $ARGV[0] eq "HELP" || $ARGV[0] eq "Help" || $ARGV[0] eq "-help" || $ARGV[0] eq "-HELP" || $ARGV[0] eq "-Help" ) { usage(); } 
 if ($#ARGV < 1) { usage(); }
 
 if (!(defined $ENV{EPICS_MODULES_TOP}))
