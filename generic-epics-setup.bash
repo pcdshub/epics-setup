@@ -35,8 +35,14 @@ fi
 # Clear out old EPICS paths
 #pathpurge ${EPICS_SITE_TOP}/base/*/bin/*
 #pathpurge ${EPICS_SITE_TOP}/extensions/*/bin/*
-pathpurge   $(printenv PATH | sed -e "s/:/\n/g" | egrep ${EPICS_SITE_TOP})
-ldpathpurge $(printenv LD_LIBRARY_PATH | sed -e "s/:/\n/g" | egrep ${EPICS_SITE_TOP})
+OLD_EPICS_PATHS=$(printenv PATH | sed -e "s/:/\n/g" | egrep ${EPICS_SITE_TOP})
+OLD_EPICS_LD_PATHS=$(printenv LD_LIBRARY_PATH | sed -e "s/:/\n/g" | egrep ${EPICS_SITE_TOP})
+if [ -n "$OLD_EPICS_PATHS" ]; then
+	pathpurge   $OLD_EPICS_PATHS
+fi
+if [ -n "$OLD_EPICS_LD_PATHS" ]; then
+	ldpathpurge   $OLD_EPICS_LD_PATHS
+fi
 
 # Set path to utilities provided by EPICS and its extensions
 pathmunge ${EPICS_BASE}/bin/${EPICS_HOST_ARCH}
