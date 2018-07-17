@@ -43,7 +43,7 @@ pathmunge ${EPICS_BASE}/bin/${EPICS_HOST_ARCH}
 if [ -d ${EPICS_EXTENSIONS}/bin/${EPICS_HOST_ARCH} ]; then
 	pathmunge ${EPICS_EXTENSIONS}/bin/${EPICS_HOST_ARCH}
 fi
-pathmunge /usr/local/lcls/tools/script
+pathmunge $TOOLS_SITE_TOP/script
 export PATH
 
 # Set LD_LIBRARY_PATH to libraries provided by EPICS and its extensions (required by EPICS tools)
