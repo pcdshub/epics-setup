@@ -99,16 +99,16 @@
 if [ -d /afs/slac/g/lcls ]; then
     # setup for dev
     if [ -z `echo $HOSTNAME | grep lcls-prod` ] && [ -z `echo $HOSTNAME | grep mcclogin` ] && [ -z `echo $HOSTNAME | grep mccas0` ]; then
-		source envSet_dev.bash
+		source $EPICS_SETUP/envSet_dev.bash
 
     else
     	# setup for prod on dev
-		source envSet_prodOnDev.bash
+		source $EPICS_SETUP/envSet_prodOnDev.bash
     fi
     
 elif [ -d /usr/local/lcls ]; then
 	# setup for production
-	source envSet_prod.bash
+	source $EPICS_SETUP/envSet_prod.bash
 else
    echo "ERROR: this ${HOSTNAME} is not supported for LCLS dev/prod" 
    exit 1
