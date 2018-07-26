@@ -58,6 +58,8 @@ if [ -d ${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH} ]; then
 	ldpathmunge ${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}
 fi
 export LD_LIBRARY_PATH
+export PYEPICS_LIBCA=${EPICS_BASE}/lib/${EPICS_HOST_ARCH}/libca.so
+export PYEPICS_LIBCOM=${EPICS_BASE}/lib/${EPICS_HOST_ARCH}/libCom.so
 
 # icdTemplates
 export EPICS_MBA_TEMPLATE_TOP=$EPICS_MODULES_TOP/icdTemplates/icdTemplates-R1-2-2
