@@ -33,15 +33,17 @@ if [ ! -d ${EPICS_BASE}/bin/${EPICS_HOST_ARCH} ]; then
 fi
 
 # Clear out old EPICS paths
-#pathpurge ${EPICS_SITE_TOP}/base/*/bin/*
-#pathpurge ${EPICS_SITE_TOP}/extensions/*/bin/*
-OLD_EPICS_PATHS=$(printenv PATH | sed -e "s/:/\n/g" | egrep ${EPICS_SITE_TOP})
-OLD_EPICS_LD_PATHS=$(printenv LD_LIBRARY_PATH | sed -e "s/:/\n/g" | egrep ${EPICS_SITE_TOP})
+OLD_EPICS_PATHS=$(printenv PATH | sed -e "s/:/\n/g" | fgrep ${EPICS_SITE_TOP})
+OLD_EPICS_LD_PATHS=$(printenv LD_LIBRARY_PATH | sed -e "s/:/\n/g" | fgrep ${EPICS_SITE_TOP})
+OLD_MATLAB_PATHS=$(printenv MATLABPATH | sed -e "s/:/\n/g" | fgrep ${EPICS_SITE_TOP})
 if [ -n "$OLD_EPICS_PATHS" ]; then
 	pathpurge   $OLD_EPICS_PATHS
 fi
 if [ -n "$OLD_EPICS_LD_PATHS" ]; then
 	ldpathpurge   $OLD_EPICS_LD_PATHS
+fi
+if [ -n "$OLD_MATLAB_PATHS" ]; then
+	matlabpathpurge $OLD_MATLAB_PATHS
 fi
 
 # Set path to utilities provided by EPICS and its extensions
@@ -66,10 +68,6 @@ export EPICS_MBA_TEMPLATE_TOP=$EPICS_MODULES_TOP/icdTemplates/icdTemplates-R1-2-
 
 # EPICS V4 support
 if [ -d "$PVACCESSCPP" ]; then
-	# Clear out old V4 paths
-	pathpurge ${EPICS_MODULES_TOP}/pvAccessCPP/*/bin/*
-	ldpathpurge ${EPICS_MODULES_TOP}/*CPP/*/lib/*
-
 	# Add pvAccessCPP to PATH
 	pathmunge   ${PVACCESSCPP}/bin/${EPICS_HOST_ARCH}
 	export PATH
@@ -77,7 +75,6 @@ fi
 
 if [ -d "$PVAPY" ]; then
 	# Add pvaPy to PYTHONPATH
-	pythonpathpurge ${EPICS_MODULES_TOP}/pvaPy/*/lib/python/*/*
 	pythonpathmunge ${PVAPY}/lib/python/2.7/${EPICS_HOST_ARCH}
 	export PYTHONPATH
 fi
@@ -104,8 +101,6 @@ if [ -e ${EPICS_EXTENSIONS}/javalib/VisualDCT.jar ]; then
 fi
 
 # Fix MATLABPATH
-matlabpathpurge ${EPICS_SITE_TOP}/extensions/*/lib/*
-matlabpathpurge ${EPICS_SITE_TOP}/extensions/*/bin/*/labca
 matlabpathmunge $EPICS_EXTENSIONS/lib/$EPICS_HOST_ARCH
 matlabpathmunge $EPICS_EXTENSIONS/bin/$EPICS_HOST_ARCH/labca
 
