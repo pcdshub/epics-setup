@@ -58,5 +58,9 @@ export LD_LIBRARY_PATH=$OCTAVE_HOME/lib:$LD_LIBRARY_PATH
 export PATH=$PACKAGE_TOP/python/python2.7.9/linux-x86_64/bin:$PATH
 #export PYTHONPATH=<location to other libraries not in site-packages>
 export LD_LIBRARY_PATH=$PACKAGE_TOP/python/python2.7.9/linux-x86_64/lib:$PACKAGE_TOP/python/python2.7.9/linux-x86_64/lib/python2.7/lib-dynload:$LD_LIBRARY_PATH
+
+export PYEPICS_LIBCA=$EPICS_BASE_TOP/$EPICS_BASE_VER/lib/$EPICS_HOST_ARCH/libca.so
+export PYEPICS_LIBCOM=$EPICS_BASE_TOP/$EPICS_BASE_VER/lib/$EPICS_HOST_ARCH/libCom.so
+
 # ================================================================================================
 
