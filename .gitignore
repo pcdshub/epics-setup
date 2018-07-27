@@ -1,0 +1,7 @@
+CVS
+*.o
+*.new
+*.old
+*ORIG
+*SAVE
+*.save
