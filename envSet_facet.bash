@@ -86,7 +86,7 @@
 # Set FACET environment based on if the system is a 
 # standalone for production or public machine for development
 #
-if [ -d /afs/slac/g/facet ]; then
+if [ -d /afs/slac/g/lcls ]; then
     # setup for dev
     if [ -z `echo $HOSTNAME | grep lcls-prod` ]; then
 	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="134.79.219.255"
@@ -112,7 +112,6 @@ elif [ -d /usr/local/facet ]; then
         export EPICS_CAS_BEACON_ADDR_LIST; EPICS_CAS_BEACON_ADDR_LIST="172.27.75.255 mcc-dmz"  
 else
    echo "ERROR: this ${HOSTNAME} is not supported for FACET dev/prod" 
-   exit 1
 fi
 
 export EPICS_CA_CONN_TMO; EPICS_CA_CONN_TMO="30.0"
