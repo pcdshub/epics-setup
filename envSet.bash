@@ -127,3 +127,13 @@ export EPICS_IOC_LOG_FILE_COMMAND; EPICS_IOC_LOG_FILE_COMMAND=""
 export EPICS_CMD_PROTO_PORT; EPICS_CMD_PROTO_PORT=""
 export EPICS_AR_PORT; EPICS_AR_PORT="7002"
 export EPICS_CA_MAX_ARRAY_BYTES="80000000"
+
+# URL and firefox launcher for the Archiver Appliance Management web U/I
+# Recommend firefox version 43 or newer or google-chrome version 44 or newer
+export FACET_ARCHIVER_URL=http://facet-archapp:17665/mgmt/ui/index.html
+export LCLS_ARCHIVER_URL=http://lcls-archapp01:17665/mgmt/ui/index.html
+export TESTFAC_ARCHIVER_URL=http://testfac-archappp:17665/mgmt/ui/index.html
+alias FacetArchiver="firefox --no-remote $FACET_ARCHIVER_URL 2>1 > /dev/null&"
+alias LCLSArchiver="firefox --no-remote $LCLS_ARCHIVER_URL 2>1 > /dev/null&"
+alias TestFacArchiver="firefox --no-remote $TESTFAC_ARCHIVER_URL 2>1 > /dev/null&"
+
