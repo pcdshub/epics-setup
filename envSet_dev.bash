@@ -16,8 +16,11 @@
 # PVs from the development network
 #
 export EPICS_PVA_ADDR_LIST="lcls-dev1.slac.stanford.edu"
+export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} lcls-dev1"
+export EPICS_PVA_SERVER_PORT=5055
 export EPICS_PVA_BROADCAST_PORT=5056
 export EPICS_PVA_AUTO_ADDR_LIST=FALSE
+
 export EPICS_CA_AUTO_ADDR_LIST=NO
 export EPICS_CA_ADDR_LIST="134.79.219.255 172.26.97.63"
 export EPICS_CA_REPEATER_PORT="5067"
