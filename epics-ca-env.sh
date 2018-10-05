@@ -70,10 +70,10 @@ export EPICS_CA_ADDR_LIST
 # Recommend firefox version 43 or newer or google-chrome version 44 or newer
 export ARCHIVER_URL=http://pscaa02.slac.stanford.edu:17665/mgmt/ui/index.html
 alias Archiver="firefox --no-remote $ARCHIVER_URL 2>1 > /dev/null&"
-alias ArchiveManager="google-chrome --no-remote $ARCHIVER_URL 2>1 > /dev/null&"
+alias ArchiveManager="firefox --no-remote $ARCHIVER_URL 2>1 > /dev/null&"
 
 # Archiver Appliance Viewer URL:
-# Recommend firefox version 43 or newer or google-chrome version 44 or newer
-export ARCHIVE_VIEWER_URL=https://pswww.slac.stanford.edu/apps/EpicsViewer
-alias ArchiveViewer="google-chrome --no-remote $ARCHIVE_VIEWER_URL 2>1 > /dev/null&"
+# Recommend firefox version 60 or newer or google-chrome version 44 or newer
+export ARCHIVE_VIEWER_URL=https://pswww.slac.stanford.edu/archiveviewer/retrieval/ui/viewer/archViewer.html
+alias ArchiveViewer="firefox --no-remote $ARCHIVE_VIEWER_URL 2>1 > /dev/null&"
 
