@@ -42,6 +42,9 @@ fi
 
 export PKGS=$PACKAGE_SITE_TOP
 
+# Set umask default to allow group write access
+umask 0002
+
 function ssh_show_procServ( )
 {
 	PROCSERV_HOST=`hostname -s`
@@ -387,7 +390,7 @@ function mec()
 	else
 		echo "Launching read-only MEC screen ..."
 	fi
-	pushd $PKGS/epics/3.14-dev/screens/edm/mec/current
+	pushd /reg/g/pcds/epics-dev/screens/edm/mec/current
 	./mechome
 }
 export mec
