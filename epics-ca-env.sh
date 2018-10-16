@@ -12,6 +12,11 @@ export EPICS_CA_BEACON_PERIOD=15.0
 export EPICS_CA_CONN_TMO=30.0
 export EPICS_CA_MAX_SEARCH_PERIOD=300
 
+# EPICS pvAccess env variables
+export EPICS_PVA_SERVER_PORT=5075
+export EPICS_PVA_BROADCAST_PORT=5076
+export EPICS_PVA_AUTO_ADDR_LIST=YES
+
 if [ ! -d /reg/neh ];
 then
 	# Setup LCLS Channel Access environment
