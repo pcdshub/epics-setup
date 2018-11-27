@@ -15,7 +15,7 @@
 # Set LCLS CA and PVA environment variables to access
 # PVs from the development network
 #
-export EPICS_PVA_ADDR_LIST="lcls-dev1.slac.stanford.edu"
+export EPICS_PVA_ADDR_LIST="134.79.228.23 134.79.216.240"
 export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} lcls-dev1"
 export EPICS_PVA_SERVER_PORT=5055
 export EPICS_PVA_BROADCAST_PORT=5056
