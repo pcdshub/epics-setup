@@ -7,10 +7,6 @@ if [ -z "$EPICS_BASE" ]; then
 	echo "generic-epics-setup Error: EPICS_BASE undefined."
 	return -1
 fi
-if [ -z "$EPICS_EXTENSIONS" ]; then
-	echo "generic-epics-setup Error: EPICS_EXTENSIONS undefined."
-	return -1
-fi
 if [ -z "$SETUP_SITE_TOP" ]; then
 	echo "generic-epics-setup Error: SETUP_SITE_TOP undefined."
 	return -1
@@ -38,7 +34,7 @@ if [ -d ${TOOLS_SITE_TOP}/script ]; then
 fi
 
 # Set EPICS_HOST_ARCH 
-export EPICS_HOST_ARCH=$(${EPICS_BASE}/startup/EpicsHostArch)
+export EPICS_HOST_ARCH=$(source ${EPICS_BASE}/startup/EpicsHostArch)
 
 # Make sure we have a valid path to EPICS binaries
 if [ ! -d ${EPICS_BASE}/bin/${EPICS_HOST_ARCH} ]; then
@@ -51,14 +47,14 @@ pathpurge "${EPICS_SITE_TOP}/extensions/*/bin/*"
 
 # Set path to utilities provided by EPICS and its extensions
 pathmunge ${EPICS_BASE}/bin/${EPICS_HOST_ARCH}
-if [ -d ${EPICS_EXTENSIONS}/bin/${EPICS_HOST_ARCH} ]; then
+if [ -n "${EPICS_EXTENSIONS}" -a -d ${EPICS_EXTENSIONS}/bin/${EPICS_HOST_ARCH} ]; then
 	pathmunge ${EPICS_EXTENSIONS}/bin/${EPICS_HOST_ARCH}
 fi
 export PATH
 
 # Set path to libraries provided by EPICS and its extensions (required by EPICS tools)
 ldpathmunge ${EPICS_BASE}/lib/${EPICS_HOST_ARCH}
-if [ -d ${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH} ]; then
+if [ -n "${EPICS_EXTENSIONS}" -a -d ${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH} ]; then
 	ldpathmunge ${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}
 fi
 export LD_LIBRARY_PATH
@@ -98,29 +94,31 @@ if [ -d "$PVAPY" ]; then
 	export PYTHONPATH
 fi
 
-# Set EDMLIBS, used in $EDMOBJECTS/edmObjects and edmPvObjects
-export EDMLIBS=${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}
+if [ -n "${EPICS_EXTENSIONS}" ]; then
+	# Set EDMLIBS, used in $EDMOBJECTS/edmObjects and edmPvObjects
+	export EDMLIBS=${EPICS_EXTENSIONS}/lib/${EPICS_HOST_ARCH}
 
-# Set EDMHELPFILES
-if [ -d "$EPICS_EXTENSIONS/helpFiles" ]; then
-	export EDMHELPFILES=$EPICS_EXTENSIONS/helpFiles
-else
-	export EDMHELPFILES=$EPICS_EXTENSIONS/src/edm/helpFiles
-fi
+	# Set EDMHELPFILES
+	if [ -d "$EPICS_EXTENSIONS/helpFiles" ]; then
+		export EDMHELPFILES=$EPICS_EXTENSIONS/helpFiles
+	else
+		export EDMHELPFILES=$EPICS_EXTENSIONS/src/edm/helpFiles
+	fi
 
-# The following could go to a one-time $EDMFILES/setup.sh
-export EDMWEBBROWSER=mozilla
-#export EDMDATAFILES=.
-export EDM=${TOOLS}/edm/display
-export EDMFILES=${TOOLS}/edm/config
-export EDMCALC=${EDMFILES}/calc.list
-export EDMOBJECTS=$EDMFILES
-export EDMPVOBJECTS=$EDMFILES
-export EDMFILTERS=$EDMFILES
-export EDMUSERLIB=$EDMLIBS
+	# The following could go to a one-time $EDMFILES/setup.sh
+	export EDMWEBBROWSER=mozilla
+	#export EDMDATAFILES=.
+	export EDM=${TOOLS}/edm/display
+	export EDMFILES=${TOOLS}/edm/config
+	export EDMCALC=${EDMFILES}/calc.list
+	export EDMOBJECTS=$EDMFILES
+	export EDMPVOBJECTS=$EDMFILES
+	export EDMFILTERS=$EDMFILES
+	export EDMUSERLIB=$EDMLIBS
 
-# The following setup is for vdct
-# WARNING: java-1.6.0-sun must be installed on the machine running vdct!!!
-if [ -e ${EPICS_EXTENSIONS}/javalib/VisualDCT.jar ]; then
-	export VDCT_CLASSPATH="${EPICS_EXTENSIONS}/javalib/VisualDCT.jar"
+	# The following setup is for vdct
+	# WARNING: java-1.6.0-sun must be installed on the machine running vdct!!!
+	if [ -e ${EPICS_EXTENSIONS}/javalib/VisualDCT.jar ]; then
+		export VDCT_CLASSPATH="${EPICS_EXTENSIONS}/javalib/VisualDCT.jar"
+	fi
 fi
