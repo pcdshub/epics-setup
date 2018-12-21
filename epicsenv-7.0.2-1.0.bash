@@ -11,11 +11,8 @@
 source /afs/slac/g/lcls/epics/config/common_dirs.sh
 
 # Select the EPICS base version and EPICS extensions version
-export BASE_MODULE_VERSION=R3.16.1-1.0
+export BASE_MODULE_VERSION=R7.0.2-1.0
 export EPICS_EXTENSIONS=${EPICS_SITE_TOP}/extensions/R0.3.0
-
-# Select EPICS V4 support modules (Not needed for BASE R7.0.0 or greater)
-export PVACCESSCPP_MODULE_VERSION=R6.1.0-0.1.0
 
 export EPICS_BASE=${EPICS_SITE_TOP}/base/${BASE_MODULE_VERSION}
 export EPICS_MODULES=${EPICS_SITE_TOP}/${BASE_MODULE_VERSION}/modules
@@ -26,7 +23,7 @@ export EPICS_MODULES_VER=${BASE_MODULE_VERSION}
 export EPICS_BASE_RELEASE=${EPICS_BASE}
 export EPICS_MODULES_TOP=${EPICS_MODULES}
 
-export PVACCESSCPP=${EPICS_MODULES}/pvAccessCPP/${PVACCESSCPP_MODULE_VERSION}
+unset PVACCESSCPP
 
 source ${SETUP_SITE_TOP}/generic-epics-setup.bash
 
