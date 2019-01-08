@@ -531,5 +531,5 @@ export gsed
 
 # Here's a convenient alias for visual diff of svn files
 # Define VISUALDIFF to your favorite visual diff tool or default to vimdiff
-alias svnvdiff='svn diff --diff-cmd /reg/common/tools/bin/svn-vdiffwrap.sh '
+alias svnvdiff='svn diff --diff-cmd $TOOLS_SITE_TOP/bin/svn-vdiffwrap.sh '
 
