@@ -1,20 +1,19 @@
 # This script provides access to our python 2.7 installation (this
 # currently includes SIP, PyQt, numpy, Matplotlib and ipython)
-if [ -z "$SETUP_SITE_TOP" ]; then
-	export SETUP_SITE_TOP=/reg/g/pcds/setup
+if   [ -f  /reg/g/pcds/pyps/config/common_dirs.sh ]; then
+    source /reg/g/pcds/pyps/config/common_dirs.sh
+elif [ -f  /afs/slac/g/pcds/config/common_dirs.sh ]; then
+	source /afs/slac/g/pcds/config/common_dirs.sh
 fi
-#if [ -z "$PSPKG_ROOT" ]; then
-export PSPKG_ROOT=/reg/g/pcds/pkg_mgr
-#fi
+if [ -z "$PSPKG_ROOT" ]; then
+	export PSPKG_ROOT=/reg/g/pcds/pkg_mgr
+fi
+
 source $PSPKG_ROOT/etc/env_add_pkg.sh python/2.7.5
+
 source $SETUP_SITE_TOP/pathmunge.sh
 source $SETUP_SITE_TOP/lsb_family.sh
 
-#if [ "$LSB_FAMILY" == "rhel6" ]; then
-#	pythondir=$PSPKG_ROOT/python/2.7.2-rhel6
-#else
-#	pythondir=$PSPKG_ROOT/python/2.7.2-rhel5
-#fi
-#pathmunge $pythondir/bin
-#ldpathmunge $pythondir/lib
-
+TCL_TK_DIR=$PSPKG_ROOT/release/tcl-tk/8.5.12/$PSPKG_ARCH
+pathmunge $TCL_TK_DIR/bin
+ldpathmunge $TCL_TK_DIR/lib

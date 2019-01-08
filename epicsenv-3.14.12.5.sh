@@ -4,12 +4,8 @@
 # to EDM, VDCT and other development tools that are part of EPICS.
 #
 # Copyright @2012 SLAC National Accelerator Laboratory
+# Copyright @2017 SLAC National Accelerator Laboratory
 #
-# Note: You can pre-define EPICS_HOST_ARCH to select which host
-# architecture to use, or allow it to be auto-defined.
-# For PCDS, we support setting EPICS_HOST_ARCH to linux-x86
-# when running on a RHEL5 64 bit system, in order to run
-# the RHEL5 32 bit version of the EPICS applications
 
 # Setup the common directory env variables
 if [ -e /reg/g/pcds/pyps/config/common_dirs.sh ]; then
@@ -24,44 +20,38 @@ else
 	export EPICS_SITE_TOP=/afs/slac/g/pcds/epics
 fi
 
+# Select the EPICS base version and EPICS extensions version
+export BASE_MODULE_VERSION=R3.14.12.5-2.1
+export EPICS_EXTENSIONS=${EPICS_SITE_TOP}/extensions/R3.14.12
+
+# TODO: The rest of this is generic w/ regard to base and extensions versions
+# so we should push it into a shared script, or maybe one for base and
+# one for extensions
+
 # Setup the EPICS Channel Access environment
 source ${SETUP_SITE_TOP}/epics-ca-env.sh
 
 # get some functions for manipulating assorted env path variables
 source ${SETUP_SITE_TOP}/pathmunge.sh
 
-export BASE_MODULE_VERSION=R3.14.12.5-2.1
-
 export EPICS_TOOLS_SITE_TOP=${EPICS_SITE_TOP}
 
 export EPICS_BASE=${EPICS_SITE_TOP}/base/${BASE_MODULE_VERSION}
-
+export EPICS_BASE_RELEASE=${EPICS_BASE}
 export EPICS_MODULES_TOP=${EPICS_SITE_TOP}/${BASE_MODULE_VERSION}/modules
 
-export EPICS_EXTENSIONS=${EPICS_SITE_TOP}/extensions/R3.14.12
-
 if [ "$EPICS_HOST_ARCH" == "" ]; then
-	if [ "$(which perl)" != "" ]; then
-		export EPICS_HOST_ARCH=$(${EPICS_BASE}/startup/EpicsHostArch.pl)
-	fi
+	export EPICS_HOST_ARCH=$(${EPICS_BASE}/startup/EpicsHostArch)
 fi
 
-# Default to linuxRT if perl isn't installed or EpicsHostArch.pl fails
-if [ "$EPICS_HOST_ARCH" == "" ]; then
-	export EPICS_HOST_ARCH=linuxRT_glibc-x86_64
-fi
-
-# If EPICS_HOST_ARCH is linux-x86_64 but not available, fall back to 32bit
-if [ ! -d ${EPICS_BASE}/bin/${EPICS_HOST_ARCH} ]; then
-	if [ "${EPICS_HOST_ARCH}" == "linux-x86_64" ]; then
-		# Try behaving as a 32bits system
-		echo "WARNING: No linux-x86_64 binaries.  Falling back to linux-x86"
-		EPICS_HOST_ARCH=linux-x86
-	fi
-fi
+# Make sure we have a valid path to EPICS binaries
 if [ ! -d ${EPICS_BASE}/bin/${EPICS_HOST_ARCH} ]; then
 	echo "ERROR: No binaries in ${EPICS_BASE}/bin/${EPICS_HOST_ARCH}."
 fi
+
+# Clear out old EPICS paths
+pathpurge "${EPICS_SITE_TOP}/base/*/bin/*"
+pathpurge "${EPICS_SITE_TOP}/extensions/*/bin/*"
 
 # Set path to utilities provided by EPICS and its extensions
 pathmunge ${EPICS_BASE}/bin/${EPICS_HOST_ARCH}
