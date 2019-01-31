@@ -18,7 +18,7 @@ fi
 
 # Select the EPICS base version and EPICS extensions version
 export BASE_MODULE_VERSION=R3.15.5-1.0
-export EPICS_EXTENSIONS=${EPICS_SITE_TOP}/extensions/R0.3.0
+export EPICS_EXTENSIONS=${EPICS_SITE_TOP}/extensions/R0.4.0
 
 # Select EPICS V4 support modules (Not needed for BASE R7.0.0 or greater)
 export PVACCESSCPP_MODULE_VERSION=R6.1.0-0.1.0
