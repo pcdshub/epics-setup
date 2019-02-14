@@ -48,8 +48,18 @@ umask 0002
 function ssh_show_procServ( )
 {
 	PROCSERV_HOST=`hostname -s`
-	EXPAND_TABS='/usr/bin/expand --tabs=6,16,42,52,72'
-	REORDER='gawk {OFS="\t";print$2,$3,$5,$4,$1,$6}'
+	if [ -e /usr/bin/expand ]; then
+		EXPAND_TABS='/usr/bin/expand --tabs=6,16,42,52,72'
+	else
+		EXPAND_TABS='cat'
+	fi
+	if [   -e /usr/bin/gawk ]; then
+		REORDER='/usr/bin/gawk {OFS="\t";print$2,$3,$5,$4,$1,$6}'
+	elif [ -e /usr/bin/awk ]; then
+		REORDER='/usr/bin/awk {OFS="\t";print$2,$3,$5,$4,$1,$6}'
+	else
+		REORDER='cat'
+	fi
 	if [ -z "$1" ]; then
 		SSH_CMD=""
 	elif [ -z "$2" ]; then
@@ -87,7 +97,7 @@ function show_epics_sioc( )
 	else
 		EXPAND_TABS='cat'
 	fi
-	if [ -n "`which gawk`" ]; then
+	if [ -e /usr/bin/gawk -o -e /usr/bin/awk ]; then
 		echo "PID	USER	SIOC	COMMAND	HOSTNAME	PORT" | $EXPAND_TABS
 	else
 		echo "HOSTNAME		PID	USER	COMMAND		PORT	SIOC" | $EXPAND_TABS
