@@ -42,3 +42,8 @@ export PVAPY=${EPICS_MODULES}/pvaPy/${PVAPY_MODULE_VERSION}
 
 source ${SETUP_SITE_TOP}/generic-epics-setup.sh
 
+if [ -n "${BASH_VERSION}" ]; then
+	# Run PCDS bash shortcuts
+	source ${SETUP_SITE_TOP}/pcds_shortcuts.sh
+fi
+
