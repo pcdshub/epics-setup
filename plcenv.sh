@@ -6,11 +6,12 @@ PLC_DIR='/reg/g/pcds/plc-common'
 MECD='MEC=/reg/g/pcds/package/epics/3.14-dev/tools/current/scripts/iss/mec_plc_dump'
 CXID='CXI=/reg/g/pcds/package/epics/3.14-dev/tools/current/scripts/iss/cxi_plc_dump'
 XCSD='XCS=/reg/g/pcds/package/epics/3.14-dev/tools/current/scripts/iss/xcs_plc_dump'
-DRIVES=" -r disk:Package=/reg/common/package -r disk:${MECD} -r disk:${CXID} -r disk:PLC=${PLC_DIR} -r disk:${XCSD}"
+DRIVES=" -r disk:Package=/reg/common/package -r disk:${MECD} -r disk:${CXID} -r disk:PLC=${PLC_DIR} -r disk:${XCSD} -r disk:'Home=~'"
+DRIVEX=" /drive:Package,/reg/common/package /drive:PLC,/reg/g/pcds/plc-common /drive:Home,${HOME}"
 
 # command templates
-all='xfreerdp -sec-nla /d: /size:60% /drive:PLC,/reg/g/pcds/plc-common /cert-ignore /v:'
-allbig='xfreerdp -sec-nla /d: /size:90% /drive:PLC,/reg/g/pcds/plc-common /v:'
+all="xfreerdp -sec-nla /d: /size:60% ${DRIVEX} /cert-ignore /v:"
+allbig='xfreerdp -sec-nla /d: /size:90% /drive:PLC,/reg/g/pcds/plc-common /cert-ignore /v:'
 
 alias plcpc1="${all}plc-prg-01 &" 
 alias bigplcpc1="${allbig}plc-prg-01 &"
@@ -36,3 +37,4 @@ alias oldbigplcpc3='$big_plc_com plc-prg-03 &'
 alias oldplcpc4='$reg_plc_com plc-prg-04 &' 
 alias oldbigplcpc4='$big_plc_com plc-prg-04 &'
 
+alias plcprog='xfreerdp -g 60% -u ${USER} --plugin cliprdr plcprog-console &'

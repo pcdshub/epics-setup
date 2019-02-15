@@ -88,7 +88,7 @@ if [ -d "$PVACCESS" ]; then
 	export LD_LIBRARY_PATH
 fi
 
-if [ -d "$PVAPY" ]; then
+if [ -d "${PVAPY}/lib/python/2.7/${EPICS_HOST_ARCH}" ]; then
 	# Add pvaPy to PYTHONPATH
 	pythonpathmunge ${PVAPY}/lib/python/2.7/${EPICS_HOST_ARCH}
 	export PYTHONPATH
