@@ -26,8 +26,14 @@ fi
 # get some functions for manipulating assorted env path variables
 source ${SETUP_SITE_TOP}/pathmunge.bash
 
+# Set EPICS_HOST_ARCH
+if [ "${BASE_MODULE_VERSION}" = "base-R3-14-12" ]; then
+	export EPICS_HOST_ARCH=linux-x86
+else
+	export EPICS_HOST_ARCH=$(${EPICS_BASE}/startup/EpicsHostArch)
+fi
+
 # Make sure we have a valid path to EPICS binaries
-export EPICS_HOST_ARCH=$(${EPICS_BASE}/startup/EpicsHostArch)
 if [ ! -d ${EPICS_BASE}/bin/${EPICS_HOST_ARCH} ]; then
 	echo "ERROR: No binaries in ${EPICS_BASE}/bin/${EPICS_HOST_ARCH}."
 fi
