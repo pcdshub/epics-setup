@@ -108,8 +108,12 @@ if [ -n "${EPICS_EXTENSIONS}" ]; then
 	# The following could go to a one-time $EDMFILES/setup.sh
 	export EDMWEBBROWSER=mozilla
 	#export EDMDATAFILES=.
-	export EDM=${TOOLS}/edm/display
-	export EDMFILES=${TOOLS}/edm/config
+	export EDM=${TOOLS_SITE_TOP}/edm/display
+	if [ -d ${TOOLS_SITE_TOP}/edm/config ]; then
+		export EDMFILES=${TOOLS_SITE_TOP}/edm/config
+	else
+		export EDMFILES=${EPICS_SITE_TOP}/tools/edm/config
+	fi
 	export EDMCALC=${EDMFILES}/calc.list
 	export EDMOBJECTS=$EDMFILES
 	export EDMPVOBJECTS=$EDMFILES
