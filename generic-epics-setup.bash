@@ -18,9 +18,11 @@ if [ -z "$EPICS_SITE_TOP" ]; then
 	echo "Warning: EPICS_SITE_TOP undefined."
 fi
 
-if [ -z "$EPICS_CA_SERVER_PORT" ]; then
-	# Setup the EPICS Channel Access environment
-	source ${SETUP_SITE_TOP}/envSet.bash
+if [ "$SETUP_DEF_EPICS_ENV" != "NO" ]; then
+	if [ -z "$EPICS_CA_SERVER_PORT" ]; then
+		# Setup the EPICS Channel Access environment
+		source ${SETUP_SITE_TOP}/envSet.bash
+	fi
 fi
 
 # get some functions for manipulating assorted env path variables
