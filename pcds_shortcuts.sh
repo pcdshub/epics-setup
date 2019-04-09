@@ -79,8 +79,11 @@ function ssh_show_procServ( )
 					 -e "s/--coresize\s\+\S\+//"     \
 					 -e "s/--logfile\s\+\S\+//"      \
 					 -e "s/--noautorestart//"        \
+					 -e "s/--foreground//"           \
+					 -e "s/-f//"                     \
 					 -e "s/--logstamp//"             \
 					 -e "s/--name//"                 \
+					 -e "s/-n//"                     \
 					 -e "s/^/$PROCSERV_HOST\t/"      \
 					 -e "s/  */\t/g"                 \
 					 -e "/PID\tUSER\tCOMMAND/d"     |\
@@ -223,16 +226,13 @@ fi
 done
 unset dns_addr
 unset ip_list
-if [ -z $IP ]; then
-export IP=`/sbin/ifconfig | /bin/grep -w inet | head -n1 | sed -e 's/ *inet[^0-9]*\([0-9.]*\) .*/\1/'`
 fi
-export SUBNET=`echo $IP | cut -d. -f3`
+
 # if we don't have gethostip use the older less reliable way this fails if the CDS interface is not the first
-elif [ -e /sbin/ifconfig -a -e /bin/awk -a -e /bin/grep ]; then
-#export IP=`/sbin/ifconfig | /bin/grep 'inet addr:' | head -n1 | cut -d: -f2 | /bin/awk '{ print $1 }'`
-export IP=`/sbin/ifconfig | /bin/grep -w inet | head -n1 | sed -e 's/ *inet[^0-9]*\([0-9.]*\) .*/\1/'`
-export SUBNET=`echo $IP | cut -d. -f3`
+if [ -z "$IP" -a -e /sbin/ifconfig -a -e /bin/grep ]; then
+	export IP=`/sbin/ifconfig | /bin/grep -w inet | head -n1 | sed -e 's/ *inet[^0-9]*\([0-9.]*\) .*/\1/'`
 fi
+export SUBNET=`echo $IP | cut -d. -f3`
 export MGT_SUBNET=24
 export SRV_SUBNET=32
 export DMZ_SUBNET=33
