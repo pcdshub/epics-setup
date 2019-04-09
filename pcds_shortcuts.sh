@@ -224,19 +224,20 @@ done
 unset dns_addr
 unset ip_list
 if [ -z $IP ]; then
-export IP=`/sbin/ifconfig | /bin/grep -w inet | head -1 | sed -e 's/ *inet[^0-9]*\([0-9.]*\) .*/\1/'`
+export IP=`/sbin/ifconfig | /bin/grep -w inet | head -n1 | sed -e 's/ *inet[^0-9]*\([0-9.]*\) .*/\1/'`
 fi
 export SUBNET=`echo $IP | cut -d. -f3`
 # if we don't have gethostip use the older less reliable way this fails if the CDS interface is not the first
 elif [ -e /sbin/ifconfig -a -e /bin/awk -a -e /bin/grep ]; then
-#export IP=`/sbin/ifconfig | /bin/grep 'inet addr:' | head -1 | cut -d: -f2 | /bin/awk '{ print $1 }'`
-export IP=`/sbin/ifconfig | /bin/grep -w inet | head -1 | sed -e 's/ *inet[^0-9]*\([0-9.]*\) .*/\1/'`
+#export IP=`/sbin/ifconfig | /bin/grep 'inet addr:' | head -n1 | cut -d: -f2 | /bin/awk '{ print $1 }'`
+export IP=`/sbin/ifconfig | /bin/grep -w inet | head -n1 | sed -e 's/ *inet[^0-9]*\([0-9.]*\) .*/\1/'`
 export SUBNET=`echo $IP | cut -d. -f3`
 fi
 export MGT_SUBNET=24
 export SRV_SUBNET=32
 export DMZ_SUBNET=33
 export CDS_SUBNET=35
+export DET_SUBNET=58
 export FEE_SUBNET=36
 export AMO_SUBNET=37
 export XPP_SUBNET=38
