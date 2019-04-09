@@ -34,7 +34,7 @@ if [ -d ${TOOLS_SITE_TOP}/script ]; then
 fi
 
 # Set EPICS_HOST_ARCH 
-export EPICS_HOST_ARCH=$(${EPICS_BASE}/startup/EpicsHostArch)
+export EPICS_HOST_ARCH=$(source ${EPICS_BASE}/startup/EpicsHostArch)
 
 # Make sure we have a valid path to EPICS binaries
 if [ ! -d ${EPICS_BASE}/bin/${EPICS_HOST_ARCH} ]; then
