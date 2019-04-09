@@ -16,7 +16,7 @@ fi
 export EPICS_SITE_TOP=/reg/g/pcds/epics
 
 # Select the EPICS base version and EPICS extensions version
-export BASE_MODULE_VERSION=R7.0.2-2.0
+export BASE_MODULE_VERSION=bleeding_edge-7.0
 export EPICS_EXTENSIONS=${EPICS_SITE_TOP}/extensions/R0.2.0
 
 export EPICS_BASE=${EPICS_SITE_TOP}/base/${BASE_MODULE_VERSION}
