@@ -12,7 +12,7 @@ source /afs/slac/g/lcls/epics/config/common_dirs.sh
 
 # Select the EPICS base version and EPICS extensions version
 export BASE_MODULE_VERSION=bleeding_edge-7.0
-export EPICS_EXTENSIONS=${EPICS_SITE_TOP}/extensions/R0.4.0
+export EPICS_EXTENSIONS=${EPICS_SITE_TOP}/extensions/R0.5.0
 
 export EPICS_BASE=${EPICS_SITE_TOP}/base/${BASE_MODULE_VERSION}
 export EPICS_MODULES=${EPICS_SITE_TOP}/${BASE_MODULE_VERSION}/modules
