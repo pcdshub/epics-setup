@@ -11,6 +11,8 @@
 #
 #--------------------------------------------------------------
 #  Mod:
+#      19-Jul-2019, K. Luchini     (luchini)
+#         remove commented out fields
 #      13-Aug-2013, Jingchen Zhouo (Jingchen)
 #         replace 172.27.8.31:5070 with 172.27.1.11:5070
 #      23-Aug-2012, Jingchen Zhou (Jingchen)
@@ -116,10 +118,6 @@ fi
 
 export EPICS_CA_CONN_TMO; EPICS_CA_CONN_TMO="30.0"
 export EPICS_CA_BEACON_PERIOD; EPICS_CA_BEACON_PERIOD="15.0"
-#export EPICS_CAS_INTF_ADDR_LIST; EPICS_CAS_INTF_ADDR_LIST=""
-#export EPICS_CAS_BEACON_ADDR_LIST; EPICS_CAS_BEACON_ADDR_LIST=""
-#export EPICS_CAS_AUTO_ADDR_LIST; EPICS_CAS_AUTO_ADDR_LIST=""
-#export EPICS_CAS_SERVER_PORT; EPICS_CAS_SERVER_PORT=""
 export EPICS_TS_MIN_WEST; EPICS_TS_MIN_WEST="480"
 export EPICS_IOC_LOG_PORT; EPICS_IOC_LOG_PORT="7004"
 export EPICS_IOC_LOG_FILE_LIMIT; EPICS_IOC_LOG_FILE_LIMIT="1000000"
