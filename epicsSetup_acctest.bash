@@ -6,6 +6,7 @@
 #        This file sets up edm, vdct and cmlog as part of the deal  #
 #                                                                   #
 #  History:                                                         #
+#  19Jul2019 K.Luchini     Add FACILITY and FACIILTY_DATA           #
 #  18Sep2017,K. Luchini    Chg IOC_SCREEN                           #
 #  21Jun2017 K. Luchini    Add FACILITY_ROOT  and FACILITY_DATA     #
 #                          chg IOC_SCREEN                           #
@@ -67,29 +68,31 @@
 umask 002      
 HOSTNAME=`hostname`
 #
-# Set up ACCTEST_ROOT
+# Set up ROOT directory
 #
 if [ -d /afs/slac/g/acctest ]; then
-   export FACILITY_ROOT=/afs/slac/g/acctest
+   export FACILITY=acctest
    export ACCTEST_ROOT=/afs/slac/g/acctest
    export IOCCONSOLE_ENV=Acctest
-else 
-   export FACILITY_ROOT=/usr/local/acctest 
+   export TFTPBOOT=$ACCTEST_ROOT/tftpboot
+else
    export ACCTEST_ROOT=/usr/local/acctest 
    export IOCCONSOLE_ENV=Prod
 fi
+export FACILITY_ROOT=$ACCTEST_ROOT
+
 #
-# Set up ACCTEST_DATA
+# Set up DATA directory
 #
 if [ -d /nfs/slac/g/acctest ]; then
-   export FACILITY_DATA=/nfs/slac/g/acctest
    export ACCTEST_DATA=/nfs/slac/g/acctest  
 elif [ -d /u1/acctest ]; then
-   export FACILITY_DATA=/u1/acctest
    export ACCTEST_DATA=/u1/acctest
 else
    export ACCTEST_DATA=	
 fi
+export FACILITY_DATA=$ACCTEST_DATA
+
 #
 # Set up WWW_ROOT
 #
@@ -101,19 +104,19 @@ fi
 #
 # Set up the rest of environment variables based on above root variables 
 #
-export RTEMS=$ACCTEST_ROOT/rtems
-export TOOLS=$ACCTEST_ROOT/tools
-export TOOLS_DATA=$ACCTEST_DATA/tools
+export RTEMS=$FACILITY_ROOT/rtems
+export TOOLS=$FACILITY_ROOT/tools
+export TOOLS_DATA=$FACILITY_DATA/tools
 export ACCTEST_WWW=$WWW_ROOT/grp/acctest/controls
 
-export JAVA_HOME=$ACCTEST_ROOT/package/java/jdk${JAVAVER}
-export ANT_HOME=$ACCTEST_ROOT/package/ant/apache-ant-1.7.0
-export PHYSDATA=$ACCTEST_DATA/physics
+export JAVA_HOME=$FACILITY_ROOT/package/java/jdk${JAVAVER}
+export ANT_HOME=$FACILITY_ROOT/package/ant/apache-ant-1.7.0
+export PHYSDATA=$FACILITY_DATA/physics
 
-export EPICS_SETUP=$ACCTEST_ROOT/epics/setup
+export EPICS_SETUP=$FACILITY_ROOT/epics/setup
 export HOST_ARCH=`$EPICS_SETUP/HostArch`
 
-export EPICS_TOP=$ACCTEST_ROOT/epics
+export EPICS_TOP=$FACILITY_ROOT/epics
 export EPICS_BASE_TOP=$EPICS_TOP/base
 export EPICS_BASE_RELEASE=$EPICS_BASE_TOP/${EPICS_BASE_VER}
 export EPICS_EXTENSIONS=$EPICS_TOP/extensions/extensions-${EPICS_EXTENSIONS_VER}
@@ -124,7 +127,7 @@ export APP=$EPICS_IOC_TOP
 
 export EPICS_IOCS=$EPICS_TOP/iocCommon
 
-export EPICS_DATA=$ACCTEST_DATA/epics
+export EPICS_DATA=$FACILITY_DATA/epics
 export EPICS_WWW=$WWW_ROOT/comp/unix/package/epics
 # temporary set EPICS_HOST_ARCH=linux-x86 during the transition to 64 bit
 #export EPICS_HOST_ARCH=`$EPICS_BASE_RELEASE/startup/EpicsHostArch`
@@ -135,6 +138,7 @@ export EPICS_HOST_ARCH=linux-x86
 if [ -z `echo $HOSTNAME | grep tftp` ]; then
   export IOC=$EPICS_IOCS
 else
+  export FACILITY_TFTP=/tftpboot/g/acctest
   export ACCTEST_TFTP=/tftpboot/g/acctest
   export IOC=$ACCTEST_TFTP/ioc/iocBoot
 fi
@@ -180,10 +184,10 @@ if [ -z `echo $PATH | grep $TOOLS/edm/script` ]; then
   export PATH=$TOOLS/edm/script:$PATH
 fi
 #
-# Add $ACCTEST_ROOT/bin to PATH
+# Add $FACILITY_ROOT/bin to PATH
 #
-if [ -z `echo $PATH | grep $ACCTEST_ROOT/bin` ]; then
-  export PATH=$ACCTEST_ROOT/bin:$PATH
+if [ -z `echo $PATH | grep $FACILITY_ROOT/bin` ]; then
+  export PATH=$FACILITY_ROOT/bin:$PATH
 fi
 #
 # Add X to PATH
@@ -197,7 +201,7 @@ fi
 # Add procServ
 export PATH=$TOOLS/procServ:$PATH
 
-# Add our ACCTEST Java Package to the path.
+# Add our Java Package to the path.
 # Do not use the java provided by SCCS!!
 if [ -z `echo $PATH | grep $JAVA_HOME/bin` ]; then
   export PATH=$JAVA_HOME/bin:$PATH
@@ -226,8 +230,8 @@ if [ $HOST_ARCH=="Linux" ]; then
     export LD_LIBRARY_PATH=$JAVA_HOME/jre/lib/i386/server:$LD_LIBRARY_PATH
   fi
   # to find libtcl8.5.so and libtk8.5.so
-  if [ -z `echo $LD_LIBRARY_PATH | grep $ACCTEST_ROOT/package/python/tcltk/lib` ]; then
-    export LD_LIBRARY_PATH=$ACCTEST_ROOT/package/python/tcltk/lib:$LD_LIBRARY_PATH
+  if [ -z `echo $LD_LIBRARY_PATH | grep $FACILITY_ROOT/package/python/tcltk/lib` ]; then
+    export LD_LIBRARY_PATH=$FACILITY_ROOT/package/python/tcltk/lib:$LD_LIBRARY_PATH
   fi
 else
   if [ $HOST_ARCH=="solaris" ]; then
@@ -330,10 +334,3 @@ export ALARMHANDLER=$ALHCONFIGFILES
 export ALHLOGFILES=$TOOLS_DATA/alh/log
 export NETSCAPEPATH=firefox
 
-########################################################################
-# For cmlog
-########################################################################
-#export CMLOGSETUP=$ACCTEST_ROOT/tools/cmlog/config
-#if [ -r $CMLOGSETUP/cmlogSetup.bash ]; then
-#  . $CMLOGSETUP/cmlogSetup.bash > /dev/null
-#fi
