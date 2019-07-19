@@ -6,6 +6,7 @@
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
 #  History:                                                         #
+#  19Jul2019 K.Luchini     Add FACILITY and FACIILTY_DATA           #
 #  25Sep2017 H.Slepicka    Add logic to call EpicsHostArch for      #
 #                          R3.15.5-1.0                              #
 #  18Jun2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS           # 
@@ -68,23 +69,26 @@
 umask 002      
 HOSTNAME=`hostname`
 #
-# Set up FACET_ROOT
+# Set up ROOT directory
 #
 if [ -d /afs/slac/g/facet ]; then
+   export FACILITY=dev
    export FACET_ROOT=/afs/slac/g/facet
    export IOCCONSOLE_ENV=Dev
    export TFTPBOOT=$FACET_ROOT/tftpboot
-else 
-   export FACET_ROOT=/usr/local/facet 
-   export IOCCONSOLE_ENV=Prod
+else
+   export FACILITY=facet
+   export FACET_ROOT=/usr/local/facet
+   export IOCCONSOLE_ENV=$FACILITY
    export TFTPBOOT=/usr/local/common/tftpboot
 fi
 export FACILITY_ROOT=$FACET_ROOT
+
 #
-# Set up FACET_DATA
+# Set up DATA directory
 #
 if [ -d /nfs/slac/g/facet ]; then
-   export FACET_DATA=/nfs/slac/g/facet  
+   export FACET_DATA=/nfs/slac/g/facet
 elif [ -d /u1/facet ]; then
    export FACET_DATA=/u1/facet
 else
@@ -92,6 +96,7 @@ else
 #   echo "ERROR: this ${HOSTNAME} is not supported for FACET dev/prod" 
 #   exit 1		
 fi
+export FACILITY_DATA=$FACET_DATA
 #
 # Set up WWW_ROOT
 #
@@ -106,12 +111,12 @@ fi
 #
 export RTEMS=$FACET_ROOT/rtems
 export TOOLS=$FACET_ROOT/tools
-export TOOLS_DATA=$FACET_DATA/tools
+export TOOLS_DATA=$FACILITY_DATA/tools
 export FACET_WWW=$WWW_ROOT/grp/facet/controls
 
 export JAVA_HOME=$FACET_ROOT/package/java/jdk${JAVAVER}
 export ANT_HOME=$FACET_ROOT/package/ant/apache-ant-1.7.0
-export PHYSDATA=$FACET_DATA/physics
+export PHYSDATA=$FACILITY_DATA/physics
 
 export EPICS_SETUP=$FACET_ROOT/epics/setup
 export HOST_ARCH=`$EPICS_SETUP/HostArch`
@@ -135,7 +140,7 @@ if [ -d $EPICS_TOP/cpupBoot ]; then
   export EPICS_CPUS=$EPICS_TOP/cpuBoot
   export CPU=$EPICS_CPUS
 fi
-export EPICS_DATA=$FACET_DATA/epics
+export EPICS_DATA=$FACILITY_DATA/epics
 export EPICS_WWW=$WWW_ROOT/comp/unix/package/epics
 # temporary set EPICS_HOST_ARCH=linux-x86 during the transition to 64 bit
 #export EPICS_HOST_ARCH=`$EPICS_BASE_RELEASE/startup/EpicsHostArch`
@@ -151,6 +156,7 @@ fi
 if [ -z `echo $HOSTNAME | grep tftp` ]; then
   export IOC=$EPICS_IOCS
 else
+  export FACILITY_TFTP=/tftpboot/g/facet 
   export FACET_TFTP=/tftpboot/g/facet
   export IOC=$FACET_TFTP/ioc/iocBoot
 fi
@@ -214,7 +220,7 @@ fi
 # Add procServ
 export PATH=$TOOLS/procServ:$PATH
 
-# Add our FACET Java Package to the path.
+# Add our Java Package to the path.
 # Do not use the java provided by SCCS!!
 if [ -z `echo $PATH | grep $JAVA_HOME/bin` ]; then
   export PATH=$JAVA_HOME/bin:$PATH
@@ -347,10 +353,3 @@ export ALARMHANDLER=$ALHCONFIGFILES
 export ALHLOGFILES=$TOOLS_DATA/alh/log
 export NETSCAPEPATH=firefox
 
-########################################################################
-# For cmlog
-########################################################################
-#export CMLOGSETUP=$FACET_ROOT/package/cmlog/config
-#if [ -r $CMLOGSETUP/cmlogSetup.bash ]; then
-#  . $CMLOGSETUP/cmlogSetup.bash > /dev/null
-#fi
