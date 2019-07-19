@@ -7,8 +7,9 @@
 #           This file sets up all EPICS clients side paths etc.     #
 #           See also envSet*.bash for the runtime connection conf.  #
 #                                                                   #
-#  History:                                                         #   
-#  21Jun2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS/facility  #                                                   
+#  History:                                                         # 
+#  19Jul2019 K.Luchini     Add FACILITY and FACIILTY_DATA           #   
+#  21Jun2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS/facility  #
 #  30Mar2017 K.Luchini     Add EPICS_CPU,CPU, TFTPBOOT              # 
 #  24Feb2017 M Gibbs       Change V4 to 4.6.0, and add pvaPy        #
 #                          module to the PYTHONPATH                 #
@@ -79,23 +80,25 @@
 umask 002      
 HOSTNAME=`hostname`
 #
-# Set up LCLS_ROOT
+# Set up ROOT directory
 #
 if [ -d /afs/slac/g/lcls ]; then
+   export FACILITY=dev
    export LCLS_ROOT=/afs/slac/g/lcls
    export IOCCONSOLE_ENV=Dev
    export TFTPBOOT=$LCLS_ROOT/tftpboot
 else 
+   export FACILITY=lcls
    export LCLS_ROOT=/usr/local/lcls 
    export IOCCONSOLE_ENV=Prod
    export TFTPBOOT=/usr/local/common/tftpboot
 fi
 export FACILITY_ROOT=$LCLS_ROOT
 #
-# Set up LCLS_DATA
+# Set up DATA directory
 #
 if [ -d /nfs/slac/g/lcls ]; then
-   export LCLS_DATA=/nfs/slac/g/lcls  
+   export LCLS_DATA=/nfs/slac/g/lcls
 elif [ -d /u1/lcls ]; then
    export LCLS_DATA=/u1/lcls
 else
@@ -103,6 +106,8 @@ else
 #   echo "ERROR: this ${HOSTNAME} is not supported for LCLS dev/prod" 
 #   exit 1		
 fi
+export FACILITY_DATA=$LCLS_DATA
+
 #
 # Set up WWW_ROOT
 #
@@ -115,20 +120,19 @@ fi
 #
 # Set up the rest of environment variables based on above root variables 
 #
-export FACILITY_ROOT=$LCLS_ROOT
-export RTEMS=$LCLS_ROOT/rtems
-export TOOLS=$LCLS_ROOT/tools
-export TOOLS_DATA=$LCLS_DATA/tools
+export RTEMS=$FACILITY_ROOT/rtems
+export TOOLS=$FACILITY_ROOT/tools
+export TOOLS_DATA=$FACILITY_DATA/tools
 export LCLS_WWW=$WWW_ROOT/grp/lcls/controls
 
-export JAVA_HOME=$LCLS_ROOT/package/java/jdk${JAVAVER}
-export ANT_HOME=$LCLS_ROOT/package/ant/apache-ant-1.7.0
-export PHYSDATA=$LCLS_DATA/physics
+export JAVA_HOME=$FACILITY_ROOT/package/java/jdk${JAVAVER}
+export ANT_HOME=$FACILITY_ROOT/package/ant/apache-ant-1.7.0
+export PHYSDATA=$FACILITY_DATA/physics
 
-export EPICS_SETUP=$LCLS_ROOT/epics/setup
+export EPICS_SETUP=$FACILITY_ROOT/epics/setup
 export HOST_ARCH=`$EPICS_SETUP/HostArch`
 
-export EPICS_TOP=$LCLS_ROOT/epics
+export EPICS_TOP=$FACILITY_ROOT/epics
 
 # Base
 export EPICS_BASE_TOP=$EPICS_TOP/base
@@ -158,7 +162,7 @@ if [ -d $EPICS_TOP/cpuBoot ]; then
   export CPU=$EPICS_CPUS
 fi
 
-export EPICS_DATA=$LCLS_DATA/epics
+export EPICS_DATA=$FACILITY_DATA/epics
 export EPICS_WWW=$WWW_ROOT/comp/unix/package/epics
 # temporary set EPICS_HOST_ARCH=linux-x86 during the transition to 64 bit
 #export EPICS_HOST_ARCH=`$EPICS_BASE_RELEASE/startup/EpicsHostArch`
@@ -169,6 +173,7 @@ export EPICS_HOST_ARCH=linux-x86
 if [ -z `echo $HOSTNAME | grep tftp` ]; then
   export IOC=$EPICS_IOCS
 else
+  export FACILITY_TFTP=/tftpboot/g/lcls
   export LCLS_TFTP=/tftpboot/g/lcls
   export IOC=$LCLS_TFTP/ioc/iocBoot
 fi
@@ -229,10 +234,10 @@ if [ -z `echo $PATH | grep $TOOLS/AlarmConfigsTop/SCRIPT` ]; then
 fi
 
 #
-# Add $LCLS_ROOT/bin to PATH
+# Add $FACILITY_ROOT/bin to PATH
 #
-if [ -z `echo $PATH | grep $LCLS_ROOT/bin` ]; then
-  export PATH=$PATH:$LCLS_ROOT/bin
+if [ -z `echo $PATH | grep $FACILITY_ROOT/bin` ]; then
+  export PATH=$PATH:$FACILITY_ROOT/bin
 fi
 #
 # Add X to PATH
@@ -250,7 +255,7 @@ fi
 # Add procServ
 export PATH=$TOOLS/procServ:$PATH
 
-# Add our LCLS Java Package to the path.
+# Add our Java Package to the path.
 # Do not use the java provided by SCCS!!
 if [ -z `echo $PATH | grep $JAVA_HOME/bin` ]; then
   export PATH=$JAVA_HOME/bin:$PATH
@@ -279,8 +284,8 @@ if [ $HOST_ARCH=="Linux" ]; then
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/i386/server
   fi
   # to find libtcl8.5.so and libtk8.5.so
-  if [ -z `echo $LD_LIBRARY_PATH | grep $LCLS_ROOT/package/python/tcltk/lib` ]; then
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$LCLS_ROOT/package/python/tcltk/lib
+  if [ -z `echo $LD_LIBRARY_PATH | grep $FACILITY_ROOT/package/python/tcltk/lib` ]; then
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$FACILITY_ROOT/package/python/tcltk/lib
   fi
 else
   if [ $HOST_ARCH=="solaris" ]; then
@@ -396,14 +401,6 @@ export ALHCONFIGFILES=$TOOLS/alh/config
 export ALARMHANDLER=$ALHCONFIGFILES
 export ALHLOGFILES=$TOOLS_DATA/alh/log
 export NETSCAPEPATH=firefox
-
-########################################################################
-# For cmlog
-########################################################################
-#export CMLOGSETUP=$LCLS_ROOT/package/cmlog/config
-#if [ -r $CMLOGSETUP/cmlogSetup.bash ]; then
-#  . $CMLOGSETUP/cmlogSetup.bash > /dev/null
-#fi
 
 ###############################################	 
 # Add EPICS V4 pvaPy to PYTHONPATH	 
