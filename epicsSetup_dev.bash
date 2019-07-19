@@ -6,6 +6,7 @@
 #           This file sets up edm, vdct and cmlog                   #
 #                                                                   #
 #  History:                                                         #
+#  19Jul2019 K.Luchini     Add FACILITY and FACIILTY_DATA           # 
 #  14Mar2018 B. Hill       comment typo fix                         #
 #  22Sep2017 K. Luchini    Revert to 1.9 due to conflicts in 1.10   #
 #  18Aug2015 Greg White    Added EPICS Version 4 (specifically      #
@@ -66,17 +67,22 @@
 umask 002      
 HOSTNAME=`hostname`
 #
-# Set up LCLS_ROOT
+# Set up ROOT directory
 #
 if [ -d /afs/slac/g/lcls ]; then
+   export FACILITY=dev  
    export LCLS_ROOT=/afs/slac/g/lcls
    export IOCCONSOLE_ENV=Dev
+   export TFTPBOOT=$LCLS_ROOT/tftpboot
 else 
+   export FACILITY=lcls
    export LCLS_ROOT=/usr/local/lcls 
    export IOCCONSOLE_ENV=Prod
+   export TFTPBOOT=/usr/local/common/tftpboot
 fi
+export FACILITY_ROOT=$LCLS_ROOT
 #
-# Set up LCLS_DATA
+# Set up DATA directory
 #
 if [ -d /nfs/slac/g/lcls ]; then
    export LCLS_DATA=/nfs/slac/g/lcls  
@@ -87,6 +93,7 @@ else
 #   echo "ERROR: this ${HOSTNAME} is not supported for LCLS dev/prod" 
 #   exit 1		
 fi
+export FACILITY_DATA=$LCLS_DATA
 #
 # Set up WWW_ROOT
 #
@@ -99,20 +106,20 @@ fi
 #
 # Set up the rest of environment variables based on above root variables 
 #
-export RTEMS=$LCLS_ROOT/rtems
-export TOOLS=$LCLS_ROOT/tools
-export TOOLS_DATA=$LCLS_DATA/tools
+export RTEMS=$FACILITY_ROOT/rtems
+export TOOLS=$FACILITY_ROOT/tools
+export TOOLS_DATA=$FACILITY_DATA/tools
 export LCLS_WWW=$WWW_ROOT/grp/lcls/controls
 
-export JAVA_HOME=$LCLS_ROOT/package/java/jdk${JAVAVER}
-export ANT_HOME=$LCLS_ROOT/package/ant/apache-ant-1.7.0
-export PHYSDATA=$LCLS_DATA/physics
+export JAVA_HOME=$FACILITY_ROOT/package/java/jdk${JAVAVER}
+export ANT_HOME=$FACILITY_ROOT/package/ant/apache-ant-1.7.0
+export PHYSDATA=$FACILITY_DATA/physics
 
-export EPICS_SETUP=$LCLS_ROOT/epics/setup
+export EPICS_SETUP=$FACILITY_ROOT/epics/setup
 export HOST_ARCH=`$EPICS_SETUP/HostArch`
 
 if [ -z $EPICS_TOP ]; then
-   export EPICS_TOP=$LCLS_ROOT/epics
+   export EPICS_TOP=$FACILITY_ROOT/epics
 fi
 
 # Base
@@ -139,7 +146,7 @@ fi
 # Data
 export APP=$EPICS_IOC_TOP
 export EPICS_IOCS=$EPICS_TOP/iocCommon
-export EPICS_DATA=$LCLS_DATA/epics
+export EPICS_DATA=$FACILITY_DATA/epics
 export EPICS_WWW=$WWW_ROOT/comp/unix/package/epics
 
 # temporary set EPICS_HOST_ARCH=linux-x86 during the transition to 64 bit
@@ -152,6 +159,7 @@ export EPICS_HOST_ARCH=linux-x86
 if [ -z `echo $HOSTNAME | grep tftp` ]; then
   export IOC=$EPICS_IOCS
 else
+  export FACILITY_TFTP=/tftpboot/g/lcls
   export LCLS_TFTP=/tftpboot/g/lcls
   export IOC=$LCLS_TFTP/ioc/iocBoot
 fi
@@ -212,9 +220,9 @@ if [ -z `echo $PATH | grep $TOOLS/AlarmConfigsTop/SCRIPT` ]; then
   export PATH=$PATH:$TOOLS/AlarmConfigsTop/SCRIPT 
 fi 
 
-# Add $LCLS_ROOT/bin to PATH
-if [ -z `echo $PATH | grep $LCLS_ROOT/bin` ]; then
-  export PATH=$PATH:$LCLS_ROOT/bin
+# Add $FACILITY_ROOT/bin to PATH
+if [ -z `echo $PATH | grep $FACILITY_ROOT/bin` ]; then
+  export PATH=$PATH:$FACILITY_ROOT/bin
 fi
 
 # Add X to PATH
@@ -260,8 +268,8 @@ if [ $HOST_ARCH=="Linux" ]; then
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/i386/server
   fi
   # to find libtcl8.5.so and libtk8.5.so
-  if [ -z `echo $LD_LIBRARY_PATH | grep $LCLS_ROOT/package/python/tcltk/lib` ]; then
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$LCLS_ROOT/package/python/tcltk/lib
+  if [ -z `echo $LD_LIBRARY_PATH | grep $FACILITY_ROOT/package/python/tcltk/lib` ]; then
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$FACILITY_ROOT/package/python/tcltk/lib
   fi
 else
   if [ $HOST_ARCH=="solaris" ]; then
@@ -396,10 +404,3 @@ export ALARMHANDLER=$ALHCONFIGFILES
 export ALHLOGFILES=$TOOLS_DATA/alh/log
 export NETSCAPEPATH=firefox
 
-########################################################################
-# For cmlog
-########################################################################
-#export CMLOGSETUP=$LCLS_ROOT/package/cmlog/config
-#if [ -r $CMLOGSETUP/cmlogSetup.bash ]; then
-#  . $CMLOGSETUP/cmlogSetup.bash > /dev/null
-#fi
