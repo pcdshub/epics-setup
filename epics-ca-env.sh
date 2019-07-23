@@ -32,7 +32,8 @@ HOSTNAME=`hostname`
 case $HOSTNAME in
 	ioc-fee-rec* )
 		EPICS_CA_AUTO_ADDR_LIST=NO
-		EPICS_CA_ADDR_LIST=172.21.36.255
+		#EPICS_CA_ADDR_LIST=172.21.36.255
+		EPICS_CA_ADDR_LIST=172.21.91.255
 		;;
 	amo-console | amo-daq | amo-monitor | amo-control )
 		EPICS_CA_AUTO_ADDR_LIST=NO
@@ -40,15 +41,18 @@ case $HOSTNAME in
 		;;
 	sxr-console | sxr-daq | sxr-monitor | sxr-control | sxr-elog )
 		EPICS_CA_AUTO_ADDR_LIST=NO
-		EPICS_CA_ADDR_LIST=172.21.39.255
+		#EPICS_CA_ADDR_LIST=172.21.39.255
+		EPICS_CA_ADDR_LIST=172.21.95.255
 		;;
 	xpp-daq | xpp-daq2 | xpp-control )
 		EPICS_CA_AUTO_ADDR_LIST=NO
-		EPICS_CA_ADDR_LIST=172.21.38.255
+		#EPICS_CA_ADDR_LIST=172.21.38.255
+		EPICS_CA_ADDR_LIST=172.21.87.255
 		;;
 	xcs-console | xcs-daq | xcs-control | ioc-xcs-misc1 )
 		EPICS_CA_AUTO_ADDR_LIST=NO
-		EPICS_CA_ADDR_LIST=172.21.43.255
+		#EPICS_CA_ADDR_LIST=172.21.43.255
+		EPICS_CA_ADDR_LIST=172.21.83.255
 		;;
 	cxi-console | cxi-daq | cxi-monitor | cxi-control )
 		EPICS_CA_AUTO_ADDR_LIST=NO
@@ -57,11 +61,13 @@ case $HOSTNAME in
 		;;
 	mec-console | mec-daq | mec-monitor | mec-control )
 		EPICS_CA_AUTO_ADDR_LIST=NO
-		EPICS_CA_ADDR_LIST=172.21.45.255
+		#EPICS_CA_ADDR_LIST=172.21.45.255
+		EPICS_CA_ADDR_LIST=172.21.79.255
 		;;
 	mfx-console | mfx-daq | mfx-monitor | mfx-control | mfx-hutch01 )
 		EPICS_CA_AUTO_ADDR_LIST=NO
-		EPICS_CA_ADDR_LIST=172.21.62.255
+		#EPICS_CA_ADDR_LIST=172.21.62.255
+		EPICS_CA_ADDR_LIST=172.21.75.255
 		;;
 	pscaa0* | pscaesrv | pscaasrv )
 		EPICS_CA_AUTO_ADDR_LIST=NO

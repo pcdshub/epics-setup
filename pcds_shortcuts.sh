@@ -218,6 +218,7 @@ function find_pv( )
 }
 export find_pv
 
+export MASK=255.255.255.0
 # Handy way to get host IP addr into a shell variable
 if [ -e /usr/bin/gethostip -a -e /sbin/ifconfig -a -e /bin/grep ]; then
 dns_addr=`/usr/bin/gethostip -d "$HOSTNAME"`
@@ -226,6 +227,7 @@ for ip in $ip_list;
 do
 if [ "$ip" == "$dns_addr" ]; then
 	export IP="$dns_addr"
+	export MASK=`/sbin/ifconfig | /bin/grep $dns_addr | head -n1 | sed -e 's/.*Mask:[^0-9]*\([0-9.]*\).*/\1/'`
 fi
 done
 unset dns_addr
@@ -235,23 +237,32 @@ fi
 # if we don't have gethostip use the older less reliable way this fails if the CDS interface is not the first
 if [ -z "$IP" -a -e /sbin/ifconfig -a -e /bin/grep ]; then
 	export IP=`/sbin/ifconfig | /bin/grep -w inet | head -n1 | sed -e 's/ *inet[^0-9]*\([0-9.]*\) .*/\1/'`
+	export MASK=`/sbin/ifconfig | /bin/grep -w inet | head -n1 | sed -e 's/.*Mask:[^0-9]*\([0-9.]*\).*/\1/'`
 fi
 export SUBNET=`echo $IP | cut -d. -f3`
+
+# Now supporting 10 bit subnets
+# As prior SUBNET was just the 3rd field of IP addr,
+# for 10 bit support I'm setting extra 2 bits to make it
+# easier to create the broadcast addr via 172.21.$SUBNET.255
+if [ "$MASK" == "255.255.252.0" ]; then
+	export SUBNET=$(($SUBNET | 3))
+fi
 export MGT_SUBNET=24
 export SRV_SUBNET=32
 export DMZ_SUBNET=33
 export CDS_SUBNET=35
 export DET_SUBNET=58
-export FEE_SUBNET=36
+export FEE_SUBNET=91
 export AMO_SUBNET=37
-export XPP_SUBNET=38
-export SXR_SUBNET=39
-export TST_SUBNET=42
-export XCS_SUBNET=43
-export CXI_SUBNET=68
-export MEC_SUBNET=45
+export XPP_SUBNET=87
+export SXR_SUBNET=95
+export TST_SUBNET=151
+export XCS_SUBNET=83
+export CXI_SUBNET=71
+export MEC_SUBNET=79
 export THZ_SUBNET=57
-export MFX_SUBNET=62
+export MFX_SUBNET=75
 export HPL_SUBNET=64
 export DEV_SUBNET=165
 export DEV_BC=134.79.${DEV_SUBNET}.255
@@ -433,7 +444,6 @@ function hpl()
 	./hplhome
 }
 export hpl
-
 function gw()
 {
 	pushd $PKGS/epics/3.14-dev/screens/edm/gateway/current
