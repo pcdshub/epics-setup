@@ -56,10 +56,9 @@ case $HOSTNAME in
 		;;
 	cxi-console | cxi-daq | cxi-monitor | cxi-control )
 		EPICS_CA_AUTO_ADDR_LIST=NO
-		# 10 bit subnet, so bc is 172.21.68.0 + 3.255
 		EPICS_CA_ADDR_LIST=172.21.71.255
 		;;
-	mec-console | mec-daq | mec-monitor | mec-control )
+	mec-console | mec-daq | mec-monitor | mec-control | ioc-mec-rec01 )
 		EPICS_CA_AUTO_ADDR_LIST=NO
 		#EPICS_CA_ADDR_LIST=172.21.45.255
 		EPICS_CA_ADDR_LIST=172.21.79.255
