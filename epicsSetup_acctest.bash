@@ -73,13 +73,13 @@ HOSTNAME=`hostname`
 if [ -d /afs/slac/g/acctest ]; then
    export FACILITY=acctest
    export ACCTEST_ROOT=/afs/slac/g/acctest
-   export IOCCONSOLE_ENV=Acctest
    export TFTPBOOT=$ACCTEST_ROOT/tftpboot
 else
    export ACCTEST_ROOT=/usr/local/acctest 
    export IOCCONSOLE_ENV=Prod
 fi
 export FACILITY_ROOT=$ACCTEST_ROOT
+export IOCCONSOLE_ENV=${FACILITY}
 
 #
 # Set up DATA directory
