@@ -88,7 +88,7 @@ if [ -d "$PVAPY" ]; then
 fi
 
 # The following setup is for EDM
-if [ -z "$EDMDATAFILES" ]; then
+if [ -z "$EDMDATAFILES" -o -z "$EDMOBJECTS" -o -z "$EDMPVOBJECTS" ]; then
 	if [  -f  "$TOOLS_SITE_TOP/edm/config/setup.sh" ]; then
 		source $TOOLS_SITE_TOP/edm/config/setup.sh
 	fi
