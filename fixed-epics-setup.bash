@@ -19,17 +19,30 @@ HOSTNAME=`hostname`
 # Set up ROOT directory
 #
 if [ -d /afs/slac/g/lcls ]; then
-   export FACILITY=dev
    export LCLS_ROOT=/afs/slac/g/lcls
    export IOCCONSOLE_ENV=Dev
    export TFTPBOOT=$LCLS_ROOT/tftpboot
 else 
-   export FACILITY=lcls
    export LCLS_ROOT=/usr/local/lcls 
    export IOCCONSOLE_ENV=Prod
    export TFTPBOOT=/usr/local/common/tftpboot
 fi
-export FACILITY_ROOT=$LCLS_ROOT
+
+# FACILITY_ROOT should be set by users .bashrc
+# If unset, we default to LCLS_ROOT
+if [ -z "$FACILITY_ROOT" ]; then
+	export FACILITY_ROOT=$LCLS_ROOT
+fi
+
+# Setting FACILITY as epicsSetup* scripts did.
+# Not sure if any scripts actually use FACILITY.
+if   [ "$FACILITY_ROOT" == "/usr/local/facet" ]; then
+   export FACILITY=facet
+elif [ "$FACILITY_ROOT" == "/usr/local/lcls" ]; then 
+   export FACILITY=lcls
+else
+   export FACILITY=dev
+fi
 
 #
 # Set up DATA directory
