@@ -1,18 +1,16 @@
 EPICS Environment Setup Files
 -----------------------------
-epicsReset.bash, .csh - Resets PATHs and key env vars and sources epicsSetup
-                        (Use especially if env has been set already for
-                         another project like PEPII or SPEAR)
-epicsSetup.bash, .csh - Sets PATHs and other env vars, sources envSet
-envSet.sh,       .csh - Sets EPICS base env vars
-envSetLocal.sh,  .csh - Overrides envSet env vars for users that want to
-                        use ONLY a CA server running locally
-jcaSetup.bash,   .csh - Copies the appropriate JCALibrary.properties to
-                        the user's ~/.JCALibrary area (see note below)
-epicsEnvSetDev,Dmz,Prod  - Script to invoke from a RTEMS or soft IOC startup 
-                        file to set common non-default environment variables 
-			for development IOCs, production IOCs on the DMZ
-			subnet, or production IOCs on the private network. 
+epicsReset.bash   - Resets PATHs and key env vars and sources epicsSetup
+                    (Use especially if env has been set already for
+                    another project like PEPII or SPEAR)
+epicsSetup.bash,  - Sets PATHs and other env vars, sources envSet
+envSet.bash,      - Sets EPICS base env vars
+jcaSetup.bash,    - Copies the appropriate JCALibrary.properties to
+                    the user's ~/.JCALibrary area (see note below)
+envSet.bash       - Script to invoke from a RTEMS or soft IOC startup 
+                    file to set common non-default environment variables 
+	            for development IOCs, production IOCs on the DMZ
+	            subnet, or production IOCs on the private network. 
 
 If you change any EPICS environment variables in envSet.*, also make the 
 same change to the appropriate epicsEnvSet file.
