@@ -6,6 +6,7 @@
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
 #  History:                                                         #
+#  14Aug2019 K.Luchini     Chg EPICS_CPUS to use cpuCommon          # 
 #  19Jul2019 K.Luchini     Add FACILITY and FACIILTY_DATA           #
 #  18Sep2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS           # 
 #  21Jun2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS/facility  #   
@@ -134,8 +135,8 @@ fi
 export APP=$EPICS_IOC_TOP
 
 export EPICS_IOCS=$EPICS_TOP/iocCommon
-if [ -d $FACILITY_ROOT/epics/cpuBoot ]; then
-  export EPICS_CPUS=$FACILITY_ROOT/epics/cpuBoot
+if [ -d $FACILITY_ROOT/epics/cpuCommon ]; then
+  export EPICS_CPUS=$FACILITY_ROOT/epics/cpuCommon
   export CPU=$EPICS_CPUS
 fi
 export EPICS_DATA=$FACILITY_DATA/epics
