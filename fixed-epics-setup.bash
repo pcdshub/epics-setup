@@ -12,6 +12,10 @@
 #
 #   Derived from epicsSetup.bash
 #   Use git log for history.
+#
+#  History:
+#  14Aug2019 K.Luchini     Chg EPICS_CPUS to use cpuCommon       
+#
 umask 002
 HOSTNAME=`hostname`
 
@@ -86,8 +90,8 @@ export EPICS_IOC_TOP=$EPICS_TOP/iocTop
 # Data
 export APP=$EPICS_IOC_TOP
 export EPICS_IOCS=$EPICS_TOP/iocCommon
-if [ -d $EPICS_TOP/cpuBoot ]; then 
-  export EPICS_CPUS=$EPICS_TOP/cpuBoot
+if [ -d $EPICS_TOP/cpuCommon ]; then 
+  export EPICS_CPUS=$EPICS_TOP/cpuCommon
   export CPU=$EPICS_CPUS
 fi
 
