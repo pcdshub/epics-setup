@@ -6,6 +6,7 @@
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
 #  History:                                                         #
+#  14Aug2019 K.Luchini     Chg EPICS_CPUS to use cpuCommon          #
 #  19Jul2019 K.Luchini     Add FACILITY and FACIILTY_DATA           #
 #  25Sep2017 H.Slepicka    Add logic to call EpicsHostArch for      #
 #                          R3.15.5-1.0                              #
@@ -134,10 +135,9 @@ if [ -z $EPICS_IOC_TOP ]; then
 fi
 
 export APP=$EPICS_IOC_TOP
-
 export EPICS_IOCS=$EPICS_TOP/iocCommon
-if [ -d $EPICS_TOP/cpupBoot ]; then 
-  export EPICS_CPUS=$EPICS_TOP/cpuBoot
+if [ -d $EPICS_TOP/cpupCommon ]; then 
+  export EPICS_CPUS=$EPICS_TOP/cpuCommon
   export CPU=$EPICS_CPUS
 fi
 export EPICS_DATA=$FACILITY_DATA/epics
