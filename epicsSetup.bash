@@ -7,7 +7,8 @@
 #           This file sets up all EPICS clients side paths etc.     #
 #           See also envSet*.bash for the runtime connection conf.  #
 #                                                                   #
-#  History:                                                         # 
+#  History:                                                         #
+#  14Aug2019 K.Luchini     Chg EPICS_CPUS to use cpuCommon          # 
 #  19Jul2019 K.Luchini     Add FACILITY and FACIILTY_DATA           #   
 #  21Jun2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS/facility  #
 #  30Mar2017 K.Luchini     Add EPICS_CPU,CPU, TFTPBOOT              # 
@@ -64,18 +65,18 @@
 #  08dec2005 Dayle Kotturi Change CLASSPATH to point to TOOLS/javalib#
 #  09Mar2006 Mike Zelazny  Added core* to CVSIGNORE                 #
 #  23aug2006 K. Luchini    Added $TOOLS/edm/script to path          #
-#  05Oct2006 Mike Zelazny  Set LCLS_DATA based on dir availability     #
+#  05Oct2006 Mike Zelazny  Set LCLS_DATA based on dir availability  #
 #                          instead of node name.                    #
-#  16Apr2007 Jingchen Zhou Set LCLS_DATA based on HOSTNAME             #
+#  16Apr2007 Jingchen Zhou Set LCLS_DATA based on HOSTNAME          #
 #                          Remove the conditional check for         # 
 #                          ALHLOGFILES and just set it.             #
 # 24Apr2007 Jingchen Zhou  Removed STRIPCONFIGFILES STRIPDATAFILES  #
 #                          Defined STRIP_FILE_SEARCH_PATH and       #
 #                          STRIP_FILE_SEARCH_PATH                   #
-# 22May2007 Jingchen Zhou Added PHYSDATA, a data area for physicists #
-# 30Oct2007 Jingchen Zhou updated to support standalone production #
-#            environment     
-# 07Dec2007 Jingchen Zhou Added $LCLS_ROOT/bin to PATH             #
+# 22May2007 Jingchen Zhou Added PHYSDATA, a data area for physicists#
+# 30Oct2007 Jingchen Zhou updated to support standalone production  #
+#            environment                                            #
+# 07Dec2007 Jingchen Zhou Added $LCLS_ROOT/bin to PATH              #
 #####################################################################
 umask 002      
 HOSTNAME=`hostname`
@@ -157,8 +158,8 @@ fi
 # Data
 export APP=$EPICS_IOC_TOP
 export EPICS_IOCS=$EPICS_TOP/iocCommon
-if [ -d $EPICS_TOP/cpuBoot ]; then 
-  export EPICS_CPUS=$EPICS_TOP/cpuBoot
+if [ -d $EPICS_TOP/cpuCommon ]; then 
+  export EPICS_CPUS=$EPICS_TOP/cpuCommon
   export CPU=$EPICS_CPUS
 fi
 
