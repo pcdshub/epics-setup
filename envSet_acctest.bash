@@ -17,14 +17,17 @@
 #        Added NLCTA PV gateway to EPICS_CA_ADDR_LIST
 #	 26-Nov-2013, Brobeck
 #	 Added ar-grover:5063 (172.27.244.15:5063) to ca_addr
-#        12-Aug-2019, K. Luchini (LUCHINI):
-#        remove env var ACCTEST_ROOT
-#        set env var FACILITY
-#
 #==============================================================
-#
-
-# Setup Channel Access
+ACCTEST_ROOT=/afs/slac/g/acctest
+if [ ! -d $ACCTEST_ROOT ]; then
+	echo "ERROR: $ACCTEST_ROOT not available"
+	exit 1	
+fi
+#if [ -z `echo $HOSTNAME | grep testfac-` ]; then
+#        echo "ERROR: $HOSTNAME is not supported for Test Facilities" 
+#        exit 1	 
+#fi
+# set up Channel Access
 export EPICS_CA_AUTO_ADDR_LIST=NO
 export EPICS_CA_ADDR_LIST="172.27.99.255 134.79.51.43:5068 172.27.244.15:5063"
 export EPICS_CA_REPEATER_PORT="5059"
