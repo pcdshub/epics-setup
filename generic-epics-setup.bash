@@ -41,9 +41,9 @@ if [ ! -d ${EPICS_BASE}/bin/${EPICS_HOST_ARCH} ]; then
 fi
 
 # Clear out old EPICS paths
-OLD_EPICS_PATHS=$(printenv PATH | sed -e "s/:/\n/g" | fgrep ${EPICS_SITE_TOP})
-OLD_EPICS_LD_PATHS=$(printenv LD_LIBRARY_PATH | sed -e "s/:/\n/g" | fgrep ${EPICS_SITE_TOP})
-OLD_MATLAB_PATHS=$(printenv MATLABPATH | sed -e "s/:/\n/g" | fgrep ${EPICS_SITE_TOP})
+OLD_EPICS_PATHS=$(echo $PATH | sed -e "s/:/\n/g" | fgrep ${EPICS_SITE_TOP})
+OLD_EPICS_LD_PATHS=$(echo $LD_LIBRARY_PATH | sed -e "s/:/\n/g" | fgrep ${EPICS_SITE_TOP})
+OLD_MATLAB_PATHS=$(echo $MATLABPATH | sed -e "s/:/\n/g" | fgrep ${EPICS_SITE_TOP})
 if [ -n "$OLD_EPICS_PATHS" ]; then
 	pathpurge   $OLD_EPICS_PATHS
 fi
