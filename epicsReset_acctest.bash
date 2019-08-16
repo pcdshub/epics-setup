@@ -14,12 +14,11 @@
 #  17Nov2009 Jingchen Zhou removed /usr/local/bin/environ provided  #
 #                          SCCS                                     #
 #  14Dec2009 Jingchen Zhou removed reset LD_LIBRARY_PATH            #
-#  01Nov2011 Jingchen Zhou updated for ACCTEST                      #
-#  05Nov2011 Jingchen Zhou added EPICS_VER to build up any EPICS    #
-#                          version related environment variable     #
-#  11Mar2013 Jingchen Zhou upgraded java to 1.7                     #
-#  06Nov2013 Jingchen Zhou remove CMLOG                             #
-#                                                                   #
+#  01Nov2011 Jingchen Zhou updated for ACCTEST
+#  05Nov2011 Jingchen Zhou added EPICS_VER to build up any EPICS 
+#                          version related environment variable
+#  11Mar2013 Jingchen Zhou upgraded java to 1.7  
+#  06Nov2013 Jingchen Zhou remove CMLOG
 #####################################################################
 #
 # Nullify old EPICS environment and export environment for LCLS EPICS.  
