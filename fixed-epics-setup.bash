@@ -14,6 +14,7 @@
 #   Use git log for history.
 #
 #  History:
+#  20Aug2019 K.Luchini     Chg IOC_SCREEN to $EPICS_IOCS
 #  14Aug2019 K.Luchini     Chg EPICS_CPUS to use cpuCommon       
 #
 umask 002
@@ -112,7 +113,7 @@ export IOC_DATA=$EPICS_DATA/ioc/data
 export IOC_OWNER=laci
 export IOC_OWNER_OS=Linux
 export IOC_OWNER_SHELL=bash
-export IOC_SCREEN=$EPICS_IOCS/facility
+export IOC_SCREEN=$EPICS_IOCS
 export IOC_PRIM_MAP=slc/primary.map
 
 #
