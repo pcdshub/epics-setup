@@ -20,10 +20,10 @@
 #        20-Aug-2019, K. Luchini
 #        remove commented out if statement
 #==============================================================
-ACCTEST_ROOT=/afs/slac/g/acctest
-if [ ! -d $ACCTEST_ROOT ]; then
-	echo "ERROR: $ACCTEST_ROOT not available"
-	exit 1	
+#
+if [ ! -d /afs/slac/g/acctest ]; then
+   echo "ERROR: $ACCTEST_ROOT not available"
+   exit 1	
 fi
 
 # set up Channel Access
