@@ -83,11 +83,11 @@ function ssh_show_procServ( )
 					 -e "s/-k\s\+\S\+//"             \
 					 -e "s/--noautorestart//"        \
 					 -e "s/--foreground//"           \
-					 -e "s/-f//"                     \
+					 -e "s/\s-f\s/\s/"               \
 					 -e "s/--timefmt\s\+\S\+//"      \
 					 -e "s/--logstamp//"             \
 					 -e "s/--name//"                 \
-					 -e "s/-n//"                     \
+					 -e "s/\s-n\s/\s/"               \
 					 -e "s/^/$PROCSERV_HOST\t/"      \
 					 -e "s/  */\t/g"                 \
 					 -e "/PID\tUSER\tCOMMAND/d"     |\
