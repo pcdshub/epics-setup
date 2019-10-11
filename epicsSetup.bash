@@ -8,6 +8,7 @@
 #           See also envSet*.bash for the runtime connection conf.  #
 #                                                                   #
 #  History:                                                         #
+#  11Oct2019 K.Luchini     Chg IOC_SCREENS to EPICS_IOCS            #
 #  14Aug2019 K.Luchini     Chg EPICS_CPUS to use cpuCommon          # 
 #  19Jul2019 K.Luchini     Add FACILITY and FACIILTY_DATA           #   
 #  21Jun2017 K.Luchini     Chg IOC_SCREENS to $EPICS_IOCS/facility  #
@@ -182,7 +183,7 @@ export IOC_DATA=$EPICS_DATA/ioc/data
 export IOC_OWNER=laci
 export IOC_OWNER_OS=Linux
 export IOC_OWNER_SHELL=bash
-export IOC_SCREEN=$EPICS_IOCS/facility
+export IOC_SCREEN=$EPICS_IOCS
 export IOC_PRIM_MAP=slc/primary.map
 #
 # Setup remaining EPICS CA environment variables
