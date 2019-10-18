@@ -23,7 +23,7 @@ export EPICS_EXTENSIONS=${EPICS_SITE_TOP}/extensions/extensions-R3-14-12
 # Select EPICS V4 support modules (Not needed for BASE R7.0.0 or greater)
 
 export EPICS_BASE=${EPICS_SITE_TOP}/base/${BASE_MODULE_VERSION}
-export EPICS_MODULES=${EPICS_SITE_TOP}/R3-14-12/modules
+export EPICS_MODULES=${EPICS_SITE_TOP}/R3-14-12-4_1-1/modules
 
 # Backward compatibility
 export EPICS_BASE_VER=${BASE_MODULE_VERSION}
