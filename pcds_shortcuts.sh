@@ -82,8 +82,10 @@ function ssh_show_procServ( )
 					 -e "s/--killsig\s\+\S\+//"      \
 					 -e "s/-k\s\+\S\+//"             \
 					 -e "s/--noautorestart//"        \
+					 -e "s/--oneshot//"              \
 					 -e "s/--foreground//"           \
-					 -e "s/\s-f\s/\s/"               \
+					 -e "s/\s-f\s/ /"                \
+					 -e "s/\s-o\s/ /"                \
 					 -e "s/--timefmt\s\+\S\+//"      \
 					 -e "s/--logstamp//"             \
 					 -e "s/--name//"                 \
