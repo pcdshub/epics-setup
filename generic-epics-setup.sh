@@ -1,4 +1,19 @@
 # generic-epics-setup.sh
+#
+#   Title: generic-epics-setup.bash
+# generic-epics-setup.bash
+#
+#  Purpose:
+#   Source this file after setting or changing EPICS
+#   versions via any of the following EPICS environment variables:
+#       EPICS_BASE          - Path to top of base release
+#       EPICS_EXTENSIONS    - Path to top of extensions release
+#   These are needed for PVA prior to Base R7.* only
+#       NORMATIVETYPES      - Path to top of PVA NormativeTypesCPP
+#       PVACCESS            - Path to top of PVA PvAccessCPP release
+#       PVDATA              - Path to top of PVA PvDataCPP release
+#       PVAPY               - Path to top of PVA pvaPy release
+#
 if [ -z "$EPICS_SITE_TOP" ]; then
 	echo "generic-epics-setup Error: EPICS_SITE_TOP undefined."
 	return -1
@@ -42,8 +57,18 @@ if [ ! -d ${EPICS_BASE}/bin/${EPICS_HOST_ARCH} ]; then
 fi
 
 # Clear out old EPICS paths
-pathpurge "${EPICS_SITE_TOP}/base/*/bin/*"
-pathpurge "${EPICS_SITE_TOP}/extensions/*/bin/*"
+OLD_EPICS_PATHS=$(echo $PATH | sed -e "s/:/\n/g" | fgrep ${EPICS_SITE_TOP})
+OLD_EPICS_LD_PATHS=$(echo $LD_LIBRARY_PATH | sed -e "s/:/\n/g" | fgrep ${EPICS_SITE_TOP})
+OLD_MATLAB_PATHS=$(echo $MATLABPATH | sed -e "s/:/\n/g" | fgrep ${EPICS_SITE_TOP})
+if [ -n "$OLD_EPICS_PATHS" ]; then
+	pathpurge   $OLD_EPICS_PATHS
+fi
+if [ -n "$OLD_EPICS_LD_PATHS" ]; then
+	ldpathpurge   $OLD_EPICS_LD_PATHS
+fi
+if [ -n "$OLD_MATLAB_PATHS" ]; then
+	matlabpathpurge $OLD_MATLAB_PATHS
+fi
 
 # Set path to utilities provided by EPICS and its extensions
 pathmunge ${EPICS_BASE}/bin/${EPICS_HOST_ARCH}
