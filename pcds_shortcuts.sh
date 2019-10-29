@@ -258,6 +258,7 @@ export MGT_SUBNET=24
 export SRV_SUBNET=32
 export DMZ_SUBNET=33
 export CDS_SUBNET=35
+<<<<<<< HEAD
 export DET_SUBNET=58
 <<<<<<< HEAD
 export FEE_SUBNET=91
@@ -274,17 +275,23 @@ export HPL_SUBNET=64
 export DEV_SUBNET=165
 export DEV_BC=134.79.${DEV_SUBNET}.255
 =======
+=======
+export DET_SUBNET=(58 59)
+>>>>>>> 5841f6f... Fixed XPP FEZ and made ICS_SUBNET var.  Added DET FEZ.
 export FEE_SUBNET=(88 89 90 91)
-export XPP_SUBNET=(84 85 86 87 46)
+export XPP_SUBNET=(22 84 85 86 87)
 export TST_SUBNET=(148 149 150 151)
-export DRP_SUBNETS=(152 153 154 155)
+export DRP_SUBNET=(152 153 154 155)
 export XCS_SUBNET=(25 80 81 82 83)
 export CXI_SUBNET=(26 68 69 70 71)
 export MEC_SUBNET=(27 76 77 78 79)
 export THZ_SUBNET=57
 export MFX_SUBNET=(24 72 73 74 75)
+export ANA_SUBNET=(48 49 50 51)
 export HPL_SUBNET=64
 export DEV_SUBNET=165
+export ICS_SUBNET=46
+
 export DEV_BC=134.79.${DEV_SUBNET}.255
 #export MGT_SUBNET=24 #not sure what this is and it conflicts with MFX FEZ. 
 >>>>>>> 3d492ac... Moved pcds_shortcuts.sh to rc directory.  <HUTCH>_SUBNET env vars are now arrays for networks that range over several octets.
@@ -471,7 +478,7 @@ function mec()
 }
 export mec
 
-function mfx()
+afunction mfx()
 {
 <<<<<<< HEAD
 	if [ $SUBNET == $MFX_SUBNET ]; then
