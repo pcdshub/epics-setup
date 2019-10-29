@@ -250,11 +250,16 @@ export SUBNET=`echo $IP | cut -d. -f3`
 if [ "$MASK" == "255.255.252.0" ]; then
 	export SUBNET=$(($SUBNET | 3))
 fi
+<<<<<<< HEAD
 export MGT_SUBNET=24
+=======
+
+>>>>>>> 3d492ac... Moved pcds_shortcuts.sh to rc directory.  <HUTCH>_SUBNET env vars are now arrays for networks that range over several octets.
 export SRV_SUBNET=32
 export DMZ_SUBNET=33
 export CDS_SUBNET=35
 export DET_SUBNET=58
+<<<<<<< HEAD
 export FEE_SUBNET=91
 export AMO_SUBNET=37
 export XPP_SUBNET=87
@@ -268,11 +273,27 @@ export MFX_SUBNET=75
 export HPL_SUBNET=64
 export DEV_SUBNET=165
 export DEV_BC=134.79.${DEV_SUBNET}.255
+=======
+export FEE_SUBNET=(88 89 90 91)
+export XPP_SUBNET=(84 85 86 87 46)
+export TST_SUBNET=(148 149 150 151)
+export DRP_SUBNETS=(152 153 154 155)
+export XCS_SUBNET=(25 80 81 82 83)
+export CXI_SUBNET=(26 68 69 70 71)
+export MEC_SUBNET=(27 76 77 78 79)
+export THZ_SUBNET=57
+export MFX_SUBNET=(24 72 73 74 75)
+export HPL_SUBNET=64
+export DEV_SUBNET=165
+export DEV_BC=134.79.${DEV_SUBNET}.255
+#export MGT_SUBNET=24 #not sure what this is and it conflicts with MFX FEZ. 
+>>>>>>> 3d492ac... Moved pcds_shortcuts.sh to rc directory.  <HUTCH>_SUBNET env vars are now arrays for networks that range over several octets.
 
 #
 # Functions for launching various control room home screens
 #
 
+<<<<<<< HEAD
 function amo()
 {
 	if [ $SUBNET == $AMO_SUBNET ]; then
@@ -302,6 +323,11 @@ export sxr
 function tst()
 {
 	if [ $SUBNET == $TST_SUBNET ]; then
+=======
+function tst()
+{
+	if [ ${TST_SUBNET[*]} =~ $SUBNET ]; then
+>>>>>>> 3d492ac... Moved pcds_shortcuts.sh to rc directory.  <HUTCH>_SUBNET env vars are now arrays for networks that range over several octets.
 		echo "Warning: Launching live TST screen ..."
 	else
 		echo "Launching read-only TST screen ..."
@@ -319,7 +345,11 @@ function afs()
 
 function fee()
 {
+<<<<<<< HEAD
 	if [ $SUBNET == $FEE_SUBNET ]; then
+=======
+	if [ ${FEE_SUBNET[*]} =~ $SUBNET ]; then
+>>>>>>> 3d492ac... Moved pcds_shortcuts.sh to rc directory.  <HUTCH>_SUBNET env vars are now arrays for networks that range over several octets.
 		echo "Warning: Launching live FEE screen ..."
 	else
 		echo "Launching read-only FEE screen ..."
@@ -339,6 +369,7 @@ function pcds()
 }
 export pcds
 
+<<<<<<< HEAD
 function amolas()
 {
 	if [ $SUBNET == $CDS_SUBNET ]; then
@@ -366,6 +397,11 @@ export sxrlas
 function xpp()
 {
 	if [ $SUBNET == $XPP_SUBNET ]; then
+=======
+function xpp()
+{
+	if [[ ${XPP_SUBNET[*]} =~ $SUBNET ]]; then
+>>>>>>> 3d492ac... Moved pcds_shortcuts.sh to rc directory.  <HUTCH>_SUBNET env vars are now arrays for networks that range over several octets.
 		echo "Warning: Launching live XPP screen ..."
 	else
 		echo "Launching read-only XPP screen ..."
@@ -389,7 +425,11 @@ export las
 
 function xcs()
 {
+<<<<<<< HEAD
 	if [ $SUBNET == $XCS_SUBNET ]; then
+=======
+	if [[ ${XCS_SUBNET[*]} =~ $SUBNET ]]; then
+>>>>>>> 3d492ac... Moved pcds_shortcuts.sh to rc directory.  <HUTCH>_SUBNET env vars are now arrays for networks that range over several octets.
 		echo "Warning: Launching live XCS screen ..."
 	else
 		echo "Launching read-only XCS screen ..."
@@ -401,7 +441,11 @@ export xcs
 
 function cxi()
 {
+<<<<<<< HEAD
 	if [ $SUBNET == $CXI_SUBNET ]; then
+=======
+	if [[ ${CXI_SUBNET[*]} =~ $SUBNET  ]]; then
+>>>>>>> 3d492ac... Moved pcds_shortcuts.sh to rc directory.  <HUTCH>_SUBNET env vars are now arrays for networks that range over several octets.
 		echo "Warning: Launching live CXI screen ..."
 	else
 		echo "Launching read-only CXI screen ..."
@@ -413,7 +457,11 @@ export cxi
 
 function mec()
 {
+<<<<<<< HEAD
 	if [ $SUBNET == $MEC_SUBNET ]; then
+=======
+	if [[ ${MEC_SUBNET[*]} =~ $SUBNET ]]; then
+>>>>>>> 3d492ac... Moved pcds_shortcuts.sh to rc directory.  <HUTCH>_SUBNET env vars are now arrays for networks that range over several octets.
 		echo "Warning: Launching live MEC screen ..."
 	else
 		echo "Launching read-only MEC screen ..."
@@ -425,7 +473,11 @@ export mec
 
 function mfx()
 {
+<<<<<<< HEAD
 	if [ $SUBNET == $MFX_SUBNET ]; then
+=======
+	if [[ ${MFX_SUBNET[*]} =~ $SUBNET ]]; then
+>>>>>>> 3d492ac... Moved pcds_shortcuts.sh to rc directory.  <HUTCH>_SUBNET env vars are now arrays for networks that range over several octets.
 		echo "Warning: Launching live MFX screen ..."
 	else
 		echo "Launching read-only MFX screen ..."
