@@ -24,9 +24,26 @@
 #
 # Set LCLS CA and PVA environment variables to access production PVs
 #
-export EPICS_PVA_ADDR_LIST="mccas0.slac.stanford.edu"
-export EPICS_PVA_BROADCAST_PORT=5056
+
+# Use Default PVA PORT numbers
+export EPICS_PVA_SERVER_PORT=5075
+export EPICS_PVA_BROADCAST_PORT=5076
+
+# Use explicit EPICS_PVA_ADDR_LIST
 export EPICS_PVA_AUTO_ADDR_LIST=FALSE
+# LCLSDEV subnet
+export EPICS_PVA_ADDR_LIST="172.27.3.255"
+# LCLS2IOC subnet
+export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} 172.27.131.255"
+# facet-daemon1
+#export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} 172.27.72.24"
+# CRYOSRV subnet
+export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} 172.27.43.255"
+# Broadcast addr for PCDS MCC-EPICS/26 subnet
+export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} 172.21.40.63"
+# Add mcc-dmz and mccas0
+export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} mcc-dmz mccas0.slac.stanford.edu"
+
 export EPICS_CA_AUTO_ADDR_LIST=NO
 export EPICS_CA_ADDR_LIST="172.27.3.255:5068 mcc-dmz 172.21.40.63:5064 172.27.72.24:5070 172.27.131.255:5068 172.27.43.255:5068"
 export EPICS_CA_REPEATER_PORT="5069"

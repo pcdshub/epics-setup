@@ -20,9 +20,23 @@
 # both production PVs and development PVs
 # Note: Only works from dev hosts
 #
-export EPICS_PVA_ADDR_LIST="mccas0.slac.stanford.edu lcls-dev1.slac.stanford.edu"
-export EPICS_PVA_BROADCAST_PORT=5056
+
+# Use Default PVA PORT numbers
+export EPICS_PVA_SERVER_PORT=5075
+export EPICS_PVA_BROADCAST_PORT=5076
+
+# Use explicit EPICS_PVA_ADDR_LIST
 export EPICS_PVA_AUTO_ADDR_LIST=FALSE
+# NOTE: PVA Gateway not setup as of 11/1/2019.  Recheck settings on PVA gateway deployment
+# Gateway to PROD, st.gwLCLSPUB
+export EPICS_PVA_ADDR_LIST="lcls-prod01:5068"
+# Gateway st.gwEXP2FACET
+export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} $lcls-prod01:5063"
+# LCLSDEV subnet
+export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} 134.79.219.255"
+# Add mcc-dmz and mccas0
+export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} mcc-dmz mccas0.slac.stanford.edu"
+
 export EPICS_CA_ADDR_LIST="134.79.219.255 172.26.97.63 lcls-prod01:5068 lcls-prod01:5063 mcc-dmz:5068"
 export EPICS_CA_AUTO_ADDR_LIST=NO
 export EPICS_CA_REPEATER_PORT="5067"
