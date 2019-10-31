@@ -478,7 +478,7 @@ function mec()
 }
 export mec
 
-afunction mfx()
+function mfx()
 {
 <<<<<<< HEAD
 	if [ $SUBNET == $MFX_SUBNET ]; then
