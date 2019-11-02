@@ -154,7 +154,7 @@ export IOC_PRIM_MAP=slc/primary.map
 if [ -e $EPICS_SETUP/envSet_acctest.bash ]; then
   . $EPICS_SETUP/envSet_acctest.bash
 else
-  echo $EPICS_SETUP/envSet.bash does not exist
+  echo $EPICS_SETUP/envSet_acctest.bash does not exist
 fi
 #
 # Add EPICS base and extensions to PATH

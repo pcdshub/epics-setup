@@ -26,6 +26,19 @@ if [ ! -d /afs/slac/g/acctest ]; then
    exit 1	
 fi
 
+export EPICS_PVA_AUTO_ADDR_LIST=FALSE
+
+# ACCTESTFAC subnet
+export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} 172.27.99.255"
+# ?
+export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} 134.79.51.43"
+# NLCTA ar-grover host
+export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} 172.27.244.15"
+
+# Use Default PVA PORT numbers
+export EPICS_PVA_SERVER_PORT=5075
+export EPICS_PVA_BROADCAST_PORT=5076
+
 # set up Channel Access
 export EPICS_CA_AUTO_ADDR_LIST=NO
 export EPICS_CA_ADDR_LIST="172.27.99.255 134.79.51.43:5068 172.27.244.15:5063"
