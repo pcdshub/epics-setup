@@ -31,7 +31,7 @@ export EPICS_PVA_AUTO_ADDR_LIST=FALSE
 # Gateway to PROD, st.gwLCLSPUB
 export EPICS_PVA_ADDR_LIST="lcls-prod01:5068"
 # Gateway st.gwEXP2FACET
-export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} $lcls-prod01:5063"
+export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} lcls-prod01:5063"
 # LCLSDEV subnet
 export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} 134.79.219.255"
 # Add mcc-dmz and mccas0

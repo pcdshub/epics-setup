@@ -29,7 +29,7 @@ export EPICS_PVA_AUTO_ADDR_LIST=FALSE
 # Gateway to PROD, st.gwLCLSPUB
 export EPICS_PVA_ADDR_LIST="lcls-prod01:5068"
 # Gateway st.gwEXP2FACET
-export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} $lcls-prod01:5063"
+export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} lcls-prod01:5063"
 # Add mcc-dmz and mccas0
 export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} mcc-dmz mccas0.slac.stanford.edu"
 
