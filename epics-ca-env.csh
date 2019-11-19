@@ -22,7 +22,7 @@ if ( ! -d /reg/neh ) source /afs/slac/g/pcds/setup/lcls-ca-env.csh
 
 # URL and firefox launcher for the PCDS Archiver Appliance Management web U/I
 # Recommend firefox version 43 or newer or google-chrome version 44 or newer
-setenv ARCHIVER_URL http://pscaa02.slac.stanford.edu:17665/mgmt/ui/index.html
+setenv ARCHIVER_URL http://pscaa01:17665/mgmt/ui/index.html
 alias Archiver "firefox --no-remote $ARCHIVER_URL 2>1 > /dev/null&"
 alias ArchiveManager "firefox  --no-remote $ARCHIVER_URL 2>1 > /dev/null&"
 
