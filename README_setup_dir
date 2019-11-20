@@ -1,12 +1,11 @@
-We're moving the setup directory under svn version control.
-Repo path is 
+We're moving the setup directory under git version control.
+Repo path changed from:
 file:///afs/slac/g/pcds/svn/netconfig/setup
+to:
+/afs/slac.stanford.edu/g/cd/swe/git/repos/slac/epicstools/epics-setup.git
 
 If you make any changes to files in this setup directory,
-please commit your changes to svn so we know who made
+please commit your changes to git so we know who made
 the change and why.
 
 Thanks!
-
-Prior /reg/g/pcds/setup  directory has been moved
-to    /reg/g/pcds/setup/old_setup_dir
