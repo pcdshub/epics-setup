@@ -49,7 +49,7 @@ function ssh_show_procServ( )
 {
 	PROCSERV_HOST=`hostname -s`
 	if [ -e /usr/bin/expand ]; then
-		EXPAND_TABS='/usr/bin/expand --tabs=6,16,42,52,72'
+		EXPAND_TABS='/usr/bin/expand --tabs=7,17,43,53,73'
 	else
 		EXPAND_TABS='cat'
 	fi
@@ -102,7 +102,7 @@ export ssh_show_procServ
 function show_epics_sioc( )
 {
 	if [ -e /usr/bin/expand ]; then
-		EXPAND_TABS='/usr/bin/expand --tabs=6,16,42,52,72'
+		EXPAND_TABS='/usr/bin/expand --tabs=7,17,43,53,73'
 	else
 		EXPAND_TABS='cat'
 	fi
