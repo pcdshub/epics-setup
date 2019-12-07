@@ -15,9 +15,8 @@ else
 	PYCA_LIB=$PSPKG_ROOT/release/pyca/2.1.0-python2.7/x86_64-rhel5-gcc41-opt/lib
 fi
 pythonpathmunge $PYCA_LIB/python2.7/site-packages
-
-#pythonpathmunge /reg/g/pcds/pds/pyca
-#pythonpathmunge /reg/g/pcds/controls
+ldpathmunge $PSPKG_ROOT/release/python/2.7.5/rhel6-x86_64/lib
+source $PSPKG_ROOT/etc/add_env_pkg.sh psp/2.0.0
 
 if [ -z "$EPICS_CA_MAX_ARRAY_BYTES" ]; then
 	export EPICS_CA_MAX_ARRAY_BYTES=8000000
