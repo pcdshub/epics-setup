@@ -149,7 +149,6 @@ function find_pv( )
 		echo "  ${IOC_DATA}/ioc*/iocInfo/IOC.pvlist"
 		echo ""
 		echo Then it looks for the linux host or hard IOC hostname in:
-		echo "  ${IOC_COMMON}/hosts/ioc*/startup.cmd"
 		echo "  ${IOC_COMMON}/hioc/ioc*/startup.cmd"
 		echo "If no host is found, the IOC will not autoboot after a power cycle!"
 		echo ""
@@ -166,23 +165,16 @@ function find_pv( )
 		ioc_list=`/bin/egrep -l -e "$pv" ${IOC_DATA}/ioc*/iocInfo/IOC.pvlist | /bin/cut -d / -f5`
 		for ioc in $ioc_list;
 		do
-			echo "  IOC: $ioc"
+			echo "	IOC:		$ioc"
 
 			# Look for IOC PV root
 			ioc_pv=`/bin/egrep UPTIME ${IOC_DATA}/$ioc/iocInfo/IOC.pvlist | /bin/sed -e "s/:UPTIME.*//"`
 			if (( ${#ioc_pv} == 0 ));
 			then
-				echo "  IOC_PV: Not found!"
+				echo "	IOC_PV:		Not found!"
 			else
-				echo "  IOC_PV: $ioc_pv"
+				echo "	IOC_PV:		$ioc_pv"
 			fi
-
-			# Look for linux hosts
-			host_list=`/bin/egrep -l -e "$ioc" ${IOC_COMMON}/hosts/ioc*/startup.cmd | /bin/cut -d / -f6`
-			for h in $host_list;
-			do
-				echo "  HOST: $h"
-			done
 
 			# Look for hard ioc
 			hioc_list=`/bin/egrep -l -e "$ioc" ${IOC_COMMON}/hioc/ioc*/startup.cmd | /bin/cut -d / -f6`
@@ -190,30 +182,17 @@ function find_pv( )
 			then
 				for hioc in $hioc_list;
 				do
-					echo "  HIOC: $hioc"
-					echo "  STARTUP: ${IOC_COMMON}/hioc/$hioc/startup.cmd"
+					echo "	HIOC:		$hioc"
+					echo "	STARTUP:	${IOC_COMMON}/hioc/$hioc/startup.cmd"
 					boot_list=`/bin/egrep -w -e "^chdir" ${IOC_COMMON}/hioc/$hioc/startup.cmd | /bin/cut -d \" -f2`
 					for d in $boot_list;
 					do
-						echo "  BOOT_DIR: $d"
+						echo "	BOOT_DIR:	$d"
 					done
 				done
 			fi
 
-			if (( ${#host_list} == 0 && ${#hioc_list} == 0 ));
-			then
-				echo "  HOST: Not found!"
-				echo "  HIOC: Not found!"
-			fi
-
-			# Show boot directory for this PV
-			if (( ${#boot_list} == 0 ));
-			then
-				echo "  BOOT_DIR: Not found!"
-			fi
-
-                        # Look for IocManager Configs
-			echo "  IocManager Configs:"
+			# Look for IocManager Configs
 			${PYPS_SITE_TOP}/apps/ioc/latest/find_ioc --name $ioc
 		done
 	done
