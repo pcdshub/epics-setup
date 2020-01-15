@@ -349,7 +349,8 @@ function mec()
 	else
 		echo "Launching read-only MEC screen ..."
 	fi
-	pushd /reg/g/pcds/epics-dev/screens/edm/mec/current
+	#pushd /reg/g/pcds/epics-dev/screens/edm/mec/current
+	pushd /reg/g/pcds/epics/screens/edm/mec/R1.1.0
 	./mechome
 }
 export mec
@@ -379,7 +380,7 @@ function hpl()
 export hpl
 function gw()
 {
-	pushd $PKGS/epics/3.14-dev/screens/edm/gateway/current
+	pushd $PKGS/epics-dev/screens/edm/gateway/current
 	./gwhome
 }
 export gw
