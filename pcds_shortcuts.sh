@@ -296,13 +296,15 @@ export pcds
 
 function xpp()
 {
+	#pushd $PKGS/epics/3.14-dev/screens/edm/xpp/current
+	pushd /reg/g/pcds/epics-dev/screens/edm/xpp/current
 	if [[ ${XPP_SUBNET[*]} =~ $SUBNET ]]; then
 		echo "Warning: Launching live XPP screen ..."
+		./xpphome_forxpp
 	else
 		echo "Launching read-only XPP screen ..."
+		./xpphome
 	fi
-	pushd $PKGS/epics/3.14-dev/screens/edm/xpp/current
-	./xpphome
 }
 export xpp
 
@@ -325,7 +327,8 @@ function xcs()
 	else
 		echo "Launching read-only XCS screen ..."
 	fi
-	pushd $PKGS/epics/3.14-dev/screens/edm/xcs/current
+	#pushd $PKGS/epics/3.14-dev/screens/edm/xcs/current
+	pushd /reg/g/pcds/epics-dev/screens/edm/xcs/current
 	./xcshome
 }
 export xcs
@@ -337,7 +340,8 @@ function cxi()
 	else
 		echo "Launching read-only CXI screen ..."
 	fi
-	pushd $PKGS/epics/3.14-dev/screens/edm/cxi/current
+	#pushd $PKGS/epics/3.14-dev/screens/edm/cxi/current
+	pushd /reg/g/pcds/epics-dev/screens/edm/cxi/current
 	./cxihome
 }
 export cxi
@@ -349,8 +353,8 @@ function mec()
 	else
 		echo "Launching read-only MEC screen ..."
 	fi
-	#pushd /reg/g/pcds/epics-dev/screens/edm/mec/current
-	pushd /reg/g/pcds/epics/screens/edm/mec/R1.1.0
+	pushd /reg/g/pcds/epics-dev/screens/edm/mec/current
+	#pushd /reg/g/pcds/epics/screens/edm/mec/R1.1.0
 	./mechome
 }
 export mec
@@ -362,7 +366,8 @@ function mfx()
 	else
 		echo "Launching read-only MFX screen ..."
 	fi
-	pushd $PKGS/epics/3.14-dev/screens/edm/mfx/current
+	#pushd $PKGS/epics/3.14-dev/screens/edm/mfx/current
+	pushd /reg/g/pcds/epics-dev/screens/edm/mfx/current
 	./mfxhome
 }
 export mfx
