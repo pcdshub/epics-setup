@@ -261,14 +261,14 @@ function tst()
 	else
 		echo "Launching read-only TST screen ..."
 	fi
-	pushd $PKGS/epics/3.14-dev/screens/edm/tst/current
+	pushd /reg/g/pcds/epics-dev/screens/edm/tst/current
 	./tsthome
 }
 export tst
 
 function afs()
 {
-	pushd $PKGS/epics/3.14-dev/screens/edm/afs/current
+	pushd /reg/g/pcds/epics-dev/screens/edm/afs/current
 	./afshome
 }
 
@@ -279,7 +279,7 @@ function fee()
 	else
 		echo "Launching read-only FEE screen ..."
 	fi
-	pushd $PKGS/epics/3.14-dev/screens/edm/fee/current
+	pushd /reg/g/pcds/epics-dev/screens/edm/fee/current
 	./feehome
 }
 export fee
@@ -289,14 +289,13 @@ alias xtod=fee
 function pcds()
 {
 	echo "Launching top level PCDS screen ..."
-	pushd $PKGS/epics/3.14-dev/screens/edm/pcds/current
+	pushd /reg/g/pcds/epics-dev/screens/edm/pcds/current
 	./pcdshome
 }
 export pcds
 
 function xpp()
 {
-	#pushd $PKGS/epics/3.14-dev/screens/edm/xpp/current
 	pushd /reg/g/pcds/epics-dev/screens/edm/xpp/current
 	if [[ ${XPP_SUBNET[*]} =~ $SUBNET ]]; then
 		echo "Warning: Launching live XPP screen ..."
@@ -315,7 +314,7 @@ function las()
 	else
 		echo "Launching read-only Laser screen ..."
 	fi
-	pushd $PKGS/epics/3.14-dev/screens/edm/las/current
+	pushd /reg/g/pcds/epics-dev/screens/edm/las/current
 	./laserhome
 }
 export las
@@ -327,7 +326,6 @@ function xcs()
 	else
 		echo "Launching read-only XCS screen ..."
 	fi
-	#pushd $PKGS/epics/3.14-dev/screens/edm/xcs/current
 	pushd /reg/g/pcds/epics-dev/screens/edm/xcs/current
 	./xcshome
 }
@@ -340,7 +338,6 @@ function cxi()
 	else
 		echo "Launching read-only CXI screen ..."
 	fi
-	#pushd $PKGS/epics/3.14-dev/screens/edm/cxi/current
 	pushd /reg/g/pcds/epics-dev/screens/edm/cxi/current
 	./cxihome
 }
@@ -366,7 +363,6 @@ function mfx()
 	else
 		echo "Launching read-only MFX screen ..."
 	fi
-	#pushd $PKGS/epics/3.14-dev/screens/edm/mfx/current
 	pushd /reg/g/pcds/epics-dev/screens/edm/mfx/current
 	./mfxhome
 }
@@ -379,13 +375,13 @@ function hpl()
 	else
 		echo "Launching read-only HPL screen ..."
 	fi
-	pushd $PKGS/epics/3.14-dev/screens/edm/hpl/current
+	pushd /reg/g/pcds/epics-dev/screens/edm/hpl/current
 	./hplhome
 }
 export hpl
 function gw()
 {
-	pushd $PKGS/epics-dev/screens/edm/gateway/current
+	pushd /reg/g/pcds/epics-dev/screens/edm/gateway/current
 	./gwhome
 }
 export gw
@@ -393,8 +389,8 @@ export gw
 
 function updateScreenLinks
 {
-	EPICS_SITE_TOP=${PACKAGE_SITE_TOP}/epics/3.14
-	EPICS_DEV_AREA=${PACKAGE_SITE_TOP}/epics/3.14-dev
+	EPICS_SITE_TOP=/reg/g/pcds/epics
+	EPICS_DEV_AREA=/reg/g/pcds/epics-dev
 	areas="amo sxr xpp xcs cxi mec mfx fee las thz";
 	relpath="$1";
 	if [ "$relpath" != "" -a ! -e "$relpath" ]; then
@@ -412,7 +408,7 @@ function updateScreenLinks
 			echo ""
 			echo "updateScreenLinks usage: updateScreenLinks <pathToScreenRelease>"
 			echo "Creates a soft link to the specified directory in the"
-			echo "3.14-dev version of each hutch's edm home directory."
+			echo "epics-dev version of each hutch's edm home directory."
 			echo "The soft link name is derived from the basename of the"
 			echo "provided path."
 			echo ""
