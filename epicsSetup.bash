@@ -87,7 +87,7 @@ HOSTNAME=`hostname`
 if [ -d /afs/slac/g/lcls ]; then
    export FACILITY=dev
    export LCLS_ROOT=/afs/slac/g/lcls
-   export IOCCONSOLE_ENV=Dev
+   export IOCCONSOLE_ENV=.
    export TFTPBOOT=$LCLS_ROOT/tftpboot
 else 
    export FACILITY=lcls
