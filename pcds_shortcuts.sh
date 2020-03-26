@@ -368,6 +368,18 @@ function mfx()
 }
 export mfx
 
+function lfe()
+{
+	${EPICS_SETUP}/lucid-launcher.sh LFE
+}
+export lfe
+
+function kfe()
+{
+	${EPICS_SETUP}/lucid-launcher.sh KFE
+}
+export kfe
+
 function hpl()
 {
 	if [ $SUBNET == $HPL_SUBNET ]; then
