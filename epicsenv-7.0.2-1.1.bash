@@ -18,7 +18,7 @@ fi
 
 # Select the EPICS base version and EPICS extensions version
 export BASE_MODULE_VERSION=R7.0.2-1.1
-export EPICS_EXTENSIONS=${EPICS_SITE_TOP}/extensions/R0.5.0
+export EPICS_EXTENSIONS=${EPICS_SITE_TOP}/extensions/R0.8.0
 
 export EPICS_BASE=${EPICS_SITE_TOP}/base/${BASE_MODULE_VERSION}
 export EPICS_MODULES=${EPICS_SITE_TOP}/${BASE_MODULE_VERSION}/modules
