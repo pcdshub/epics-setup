@@ -8,6 +8,7 @@
 #           See also envSet*.bash for the runtime connection conf.  #
 #                                                                   #
 #  History:                                                         #
+#  20May2020 K.Luchini     Add PYDM env var                         #
 #  11Oct2019 K.Luchini     Chg IOC_SCREENS to EPICS_IOCS            #
 #  14Aug2019 K.Luchini     Chg EPICS_CPUS to use cpuCommon          # 
 #  19Jul2019 K.Luchini     Add FACILITY and FACIILTY_DATA           #   
@@ -126,6 +127,9 @@ export RTEMS=$FACILITY_ROOT/rtems
 export TOOLS=$FACILITY_ROOT/tools
 export TOOLS_DATA=$FACILITY_DATA/tools
 export LCLS_WWW=$WWW_ROOT/grp/lcls/controls
+if [ -d $TOOLS/pydm/display ]; then
+ export PYDM=$TOOLS/pydm/display
+fi
 
 export JAVA_HOME=$FACILITY_ROOT/package/java/jdk${JAVAVER}
 export ANT_HOME=$FACILITY_ROOT/package/ant/apache-ant-1.7.0
