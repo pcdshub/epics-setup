@@ -79,8 +79,10 @@ export TOOLS=$FACILITY_ROOT/tools
 export TOOLS_DATA=$FACILITY_DATA/tools
 export LCLS_WWW=$WWW_ROOT/grp/lcls/controls
 
-For pydm displays
-export PYDM=$TOOLS/pydm/display
+# For pydm displays
+if [ -d $TOOLS/pydm/display ]; then
+  export PYDM=$TOOLS/pydm/display
+fi
 
 #export JAVA_HOME=$FACILITY_ROOT/package/java/jdk${JAVAVER}
 #export ANT_HOME=$FACILITY_ROOT/package/ant/apache-ant-1.7.0
