@@ -14,6 +14,7 @@
 #   Use git log for history.
 #
 #  History:
+#  21May2020 K. Luchini    Add PYDM to point to pdm display dir
 #  20Aug2019 K.Luchini     Chg IOC_SCREEN to $EPICS_IOCS
 #  14Aug2019 K.Luchini     Chg EPICS_CPUS to use cpuCommon       
 #
@@ -77,6 +78,9 @@ export RTEMS=$FACILITY_ROOT/rtems
 export TOOLS=$FACILITY_ROOT/tools
 export TOOLS_DATA=$FACILITY_DATA/tools
 export LCLS_WWW=$WWW_ROOT/grp/lcls/controls
+
+For pydm displays
+export PYDM=$TOOLS/pydm/display
 
 #export JAVA_HOME=$FACILITY_ROOT/package/java/jdk${JAVAVER}
 #export ANT_HOME=$FACILITY_ROOT/package/ant/apache-ant-1.7.0
