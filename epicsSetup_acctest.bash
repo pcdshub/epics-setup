@@ -6,6 +6,7 @@
 #        This file sets up edm, vdct and cmlog as part of the deal  #
 #                                                                   #
 #  History:                                                         #
+#  21May2020 K.Luchini     Add PYDM env var                         #
 #  19Jul2019 K.Luchini     Add FACILITY and FACIILTY_DATA           #
 #  18Sep2017,K. Luchini    Chg IOC_SCREEN                           #
 #  21Jun2017 K. Luchini    Add FACILITY_ROOT  and FACILITY_DATA     #
@@ -108,6 +109,9 @@ export RTEMS=$FACILITY_ROOT/rtems
 export TOOLS=$FACILITY_ROOT/tools
 export TOOLS_DATA=$FACILITY_DATA/tools
 export ACCTEST_WWW=$WWW_ROOT/grp/acctest/controls
+if [ -d $TOOLS/pydm/display ]; then
+  export PYDM=$TOOLS/pydm/display
+fi
 
 export JAVA_HOME=$FACILITY_ROOT/package/java/jdk${JAVAVER}
 export ANT_HOME=$FACILITY_ROOT/package/ant/apache-ant-1.7.0
