@@ -6,6 +6,7 @@
 #           This file sets up edm, vdct and cmlog as part of the deal
 #                                                                   #
 #  History:                                                         #
+#  20May2020 K.Luchini     Add PYDM env var                         #
 #  14Aug2019 K.Luchini     Chg EPICS_CPUS to use cpuCommon          #
 #  19Jul2019 K.Luchini     Add FACILITY and FACIILTY_DATA           #
 #  25Sep2017 H.Slepicka    Add logic to call EpicsHostArch for      #
@@ -114,6 +115,9 @@ export RTEMS=$FACET_ROOT/rtems
 export TOOLS=$FACET_ROOT/tools
 export TOOLS_DATA=$FACILITY_DATA/tools
 export FACET_WWW=$WWW_ROOT/grp/facet/controls
+if [ -d $TOOLS/pydm/display ]; then
+  export PYDM=$TOOLS/pydm/display
+fi
 
 export JAVA_HOME=$FACET_ROOT/package/java/jdk${JAVAVER}
 export ANT_HOME=$FACET_ROOT/package/ant/apache-ant-1.7.0
