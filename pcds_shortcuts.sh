@@ -73,14 +73,20 @@ function ssh_show_procServ( )
 	# and uninteresting procServ parameters and keywords
 	$SSH_CMD ps -C procServ -o pid,user,command     |\
 				sed	 -e "s/\S*procServ /procServ /"  \
+					 -e "s/--restrict//"             \
 					 -e "s/--savelog//"              \
 					 -e "s/--allow//g"               \
+					 -e "s/-i\s\+\S\+//"             \
 					 -e "s/--ignore\s\+\S\+//"       \
 					 -e "s/--coresize\s\+\S\+//"     \
 					 -e "s/--logfile\s\+\S\+//"      \
 					 -e "s/--killcmd\s\+\S\+//"      \
 					 -e "s/--killsig\s\+\S\+//"      \
 					 -e "s/-k\s\+\S\+//"             \
+					 -e "s/--logport\s\+\S\+//"      \
+					 -e "s/-l\s\+\S\+//"             \
+					 -e "s/--pidfile\s\+\S\+//"      \
+					 -e "s/-p\s\+\S\+//"             \
 					 -e "s/--noautorestart//"        \
 					 -e "s/--oneshot//"              \
 					 -e "s/--foreground//"           \
