@@ -292,6 +292,14 @@ export fee
 alias xrt=fee
 alias xtod=fee
 
+function det()
+{
+	echo "Launching top level DET screen ..."
+	pushd /reg/g/pcds/epics-dev/screens/edm/det/current
+	./detHome.sh
+}
+export det
+
 function pcds()
 {
 	echo "Launching top level PCDS screen ..."
@@ -385,6 +393,12 @@ function kfe()
 	${EPICS_SETUP}/lucid-launcher.sh KFE
 }
 export kfe
+
+function tmo()
+{
+	${EPICS_SETUP}/lucid-launcher.sh TMO
+}
+export tmo
 
 function hpl()
 {
