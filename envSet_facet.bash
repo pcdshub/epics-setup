@@ -11,6 +11,10 @@
 #
 #--------------------------------------------------------------
 #  Mod:
+#      02-Jul-2020, K. Luchini     (luchini):
+#         add ip of ioc-sys0-pp01 to EPICS_CA_ADDR_LIST
+#         so ops can talk to facet-ii pps pvs that 
+#         reside in this lcls s20 vme ioc.
 #      19-Jul-2019, K. Luchini     (luchini)
 #         remove commented out fields
 #      13-Aug-2013, Jingchen Zhouo (Jingchen)
@@ -106,7 +110,7 @@ if [ -d /afs/slac/g/lcls ]; then
     fi
 elif [ -d /usr/local/facet ]; then
 	export EPICS_CA_AUTO_ADDR_LIST=NO
-	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="172.27.75.255:5068 mcc-dmz 172.27.1.11:5070"
+	export EPICS_CA_ADDR_LIST; EPICS_CA_ADDR_LIST="172.27.75.255:5068 mcc-dmz 172.27.1.11:5070 172.27.2.179"
 	export EPICS_CA_REPEATER_PORT; EPICS_CA_REPEATER_PORT="5069"
 	export EPICS_CA_SERVER_PORT; EPICS_CA_SERVER_PORT="5068"
 	export EPICS_TS_NTP_INET; EPICS_TS_NTP_INET="134.79.151.11"
