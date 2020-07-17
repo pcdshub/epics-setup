@@ -31,6 +31,7 @@ edmpathmunge $EDM/mps
 edmpathmunge $EDM/bcs
 edmpathmunge $EDM/pps
 edmpathmunge $EDM/lcls
+edmpathmunge $EDM/lcls2
 edmpathmunge $EDM/vac
 edmpathmunge $EDM/event
 edmpathmunge $EDM/slc
