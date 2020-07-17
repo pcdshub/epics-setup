@@ -382,6 +382,12 @@ function mfx()
 }
 export mfx
 
+function pydm_lclshome()
+{
+	${EPICS_SETUP}/pydm_lclshome.sh
+}
+export pydm_lclshome
+
 function lfe()
 {
 	${EPICS_SETUP}/lucid-launcher.sh LFE
