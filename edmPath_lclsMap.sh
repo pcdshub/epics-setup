@@ -1,8 +1,9 @@
 source $SETUP_SITE_TOP/pathmunge.sh
 
 # Setup EDMDATAFILES path for LCLS Maps
-export EDM=$EPICS_SITE_TOP/../lcls/tools/edm/display
+export EDM=/reg/g/pcds/package/epics/lcls/tools/edm/display
 export EDMFONTFILE=/reg/g/pcds/epics/extensions/R3.14.12/svn_templates/edm/fonts.list
+export TOOLS=/reg/g/pcds/package/epics/3.14-fee/tools
 
 export EDMDATAFILES=
 edmpathmunge $EDM/mps

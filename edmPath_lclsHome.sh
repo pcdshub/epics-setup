@@ -1,7 +1,8 @@
 source $SETUP_SITE_TOP/pathmunge.sh
 
 # Setup EDMDATAFILES path for LCLS Home
-export EDM=$EPICS_SITE_TOP/../lcls/tools/edm/display
+export EDM=/reg/g/pcds/package/epics/lcls/tools/edm/display
+export TOOLS=/reg/g/pcds/package/epics/3.14-fee/tools
 
 export EDMDATAFILES=
 edmpathmunge $EDM/klys

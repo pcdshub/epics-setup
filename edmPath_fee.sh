@@ -1,8 +1,8 @@
 source $SETUP_SITE_TOP/pathmunge.sh
 
 # Setup EDMDATAFILES path for fee
-export EDM=$EPICS_SITE_TOP/../lcls/tools/edm/display
-export TOOLS=$EPICS_SITE_TOP/../3.14-fee/tools
+export EDM=/reg/g/pcds/package/epics/lcls/tools/edm/display
+export TOOLS=/reg/g/pcds/package/epics/3.14-fee/tools
 #export XTOD=$TOOLS/edm/display
 #export EDMFILES=$TOOLS/edm/config
 
