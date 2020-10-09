@@ -10,15 +10,14 @@
 #		Shows all procServ info on local or specified host
 #	show_epics_versions [ base | module ] ...
 #		Shows the release versions for the specified modules
-#	amo
-#	sxr
+#	kfe
+#	lfe
 #	tst
 #	xtod
 #	amolas
 #	sxrlas
 #	xpp
-#		These functions all pushd to the edm screens home
-#		directory and launch the home screen
+#		These functions all launch the home screen for the specified hutch
 #
 
 if [ -z "$CONFIG_SITE_TOP" ]; then
@@ -241,6 +240,7 @@ export DMZ_SUBNET=33
 export CDS_SUBNET=35
 export DET_SUBNET=(58 59)
 export FEE_SUBNET=(88 89 90 91)
+export TMO_SUBNET=(28 132 133 134 135)
 export XPP_SUBNET=(22 84 85 86 87)
 export TST_SUBNET=(148 149 150 151)
 export DRP_SUBNET=(152 153 154 155)
@@ -262,31 +262,36 @@ export DEV_BC=134.79.${DEV_SUBNET}.255
 
 function tst()
 {
-	if [ ${TST_SUBNET[*]} =~ $SUBNET ]; then
+	case $SUBNET in
+	${TST_SUBNET[0]} |	\
+	${TST_SUBNET[1]} |	\
+	${TST_SUBNET[2]} |	\
+	${TST_SUBNET[3]} )
 		echo "Warning: Launching live TST screen ..."
-	else
+		;;
+	* )
 		echo "Launching read-only TST screen ..."
-	fi
-	pushd /reg/g/pcds/epics-dev/screens/edm/tst/current
-	./tsthome
+		;;
+	esac
+	/reg/g/pcds/epics-dev/screens/edm/tst/current/tsthome
 }
 export tst
 
-function afs()
-{
-	pushd /reg/g/pcds/epics-dev/screens/edm/afs/current
-	./afshome
-}
-
 function fee()
 {
-	if [ ${FEE_SUBNET[*]} =~ $SUBNET ]; then
+	case $SUBNET in
+	${FEE_SUBNET[0]} |	\
+	${FEE_SUBNET[1]} |	\
+	${FEE_SUBNET[2]} |	\
+	${FEE_SUBNET[3]} )
 		echo "Warning: Launching live FEE screen ..."
-	else
+		;;
+	* )
 		echo "Launching read-only FEE screen ..."
-	fi
-	pushd /reg/g/pcds/epics-dev/screens/edm/fee/current
-	./feehome
+		;;
+	esac
+	echo "FEE Home screen no longer supported."
+	#/reg/g/pcds/epics-dev/screens/edm/fee/current/feehome
 }
 export fee
 alias xrt=fee
@@ -295,29 +300,32 @@ alias xtod=fee
 function det()
 {
 	echo "Launching top level DET screen ..."
-	pushd /reg/g/pcds/epics-dev/screens/edm/det/current
-	./detHome.sh
+	/reg/g/pcds/epics-dev/screens/edm/det/current/detHome.sh
 }
 export det
 
 function pcds()
 {
 	echo "Launching top level PCDS screen ..."
-	pushd /reg/g/pcds/epics-dev/screens/edm/pcds/current
-	./pcdshome
+	/reg/g/pcds/epics-dev/screens/edm/pcds/current/pcdshome
 }
 export pcds
 
 function xpp()
 {
-	pushd /reg/g/pcds/epics-dev/screens/edm/xpp/current
-	if [[ ${XPP_SUBNET[*]} =~ $SUBNET ]]; then
+	case $SUBNET in
+	${XPP_SUBNET[0]} |	\
+	${XPP_SUBNET[1]} |	\
+	${XPP_SUBNET[2]} |	\
+	${XPP_SUBNET[3]} )
 		echo "Warning: Launching live XPP screen ..."
-		./xpphome_forxpp
-	else
+		/reg/g/pcds/epics-dev/screens/edm/xpp/current/xpphome_forxpp
+		;;
+	* )
 		echo "Launching read-only XPP screen ..."
-		./xpphome
-	fi
+		/reg/g/pcds/epics-dev/screens/edm/xpp/current/xpphome
+		;;
+	esac
 }
 export xpp
 
@@ -328,57 +336,75 @@ function las()
 	else
 		echo "Launching read-only Laser screen ..."
 	fi
-	pushd /reg/g/pcds/epics-dev/screens/edm/las/current
-	./laserhome
+	/reg/g/pcds/epics-dev/screens/edm/las/current/laserhome
 }
 export las
 
 function xcs()
 {
-	if [[ ${XCS_SUBNET[*]} =~ $SUBNET ]]; then
+	case $SUBNET in
+	${XCS_SUBNET[0]} |	\
+	${XCS_SUBNET[1]} |	\
+	${XCS_SUBNET[2]} |	\
+	${XCS_SUBNET[3]} )
 		echo "Warning: Launching live XCS screen ..."
-	else
+		;;
+	* )
 		echo "Launching read-only XCS screen ..."
-	fi
-	pushd /reg/g/pcds/epics-dev/screens/edm/xcs/current
-	./xcshome
+		;;
+	esac
+	/reg/g/pcds/epics-dev/screens/edm/xcs/current/xcshome
 }
 export xcs
 
 function cxi()
 {
-	if [[ ${CXI_SUBNET[*]} =~ $SUBNET  ]]; then
+	case $SUBNET in
+	${CXI_SUBNET[0]} |	\
+	${CXI_SUBNET[1]} |	\
+	${CXI_SUBNET[2]} |	\
+	${CXI_SUBNET[3]} )
 		echo "Warning: Launching live CXI screen ..."
-	else
+		;;
+	* )
 		echo "Launching read-only CXI screen ..."
-	fi
-	pushd /reg/g/pcds/epics-dev/screens/edm/cxi/current
-	./cxihome
+		;;
+	esac
+	/reg/g/pcds/epics-dev/screens/edm/cxi/current/cxihome
 }
 export cxi
 
 function mec()
 {
-	if [[ ${MEC_SUBNET[*]} =~ $SUBNET ]]; then
+	case $SUBNET in
+	${MEC_SUBNET[0]} |	\
+	${MEC_SUBNET[1]} |	\
+	${MEC_SUBNET[2]} |	\
+	${MEC_SUBNET[3]} )
 		echo "Warning: Launching live MEC screen ..."
-	else
+		;;
+	* )
 		echo "Launching read-only MEC screen ..."
-	fi
-	pushd /reg/g/pcds/epics-dev/screens/edm/mec/current
-	#pushd /reg/g/pcds/epics/screens/edm/mec/R1.1.0
-	./mechome
+		;;
+	esac
+	/reg/g/pcds/epics-dev/screens/edm/mec/current/mechome
 }
 export mec
 
 function mfx()
 {
-	if [[ ${MFX_SUBNET[*]} =~ $SUBNET ]]; then
+	case $SUBNET in
+	${MFX_SUBNET[0]} |	\
+	${MFX_SUBNET[1]} |	\
+	${MFX_SUBNET[2]} |	\
+	${MFX_SUBNET[3]} )
 		echo "Warning: Launching live MFX screen ..."
-	else
+		;;
+	* )
 		echo "Launching read-only MFX screen ..."
-	fi
-	pushd /reg/g/pcds/epics-dev/screens/edm/mfx/current
-	./mfxhome
+		;;
+	esac
+	/reg/g/pcds/epics-dev/screens/edm/mfx/current/mfxhome
 }
 export mfx
 
@@ -387,6 +413,18 @@ function pydm_lclshome()
 	${EPICS_SETUP}/pydm_lclshome.sh
 }
 export pydm_lclshome
+
+function lpmps()
+{
+	${EPICS_SETUP}/pmps-launcher.sh LFE
+}
+export lpmps
+
+function kpmps()
+{
+	${EPICS_SETUP}/pmps-launcher.sh KFE
+}
+export kpmps
 
 function lfe()
 {
@@ -413,14 +451,12 @@ function hpl()
 	else
 		echo "Launching read-only HPL screen ..."
 	fi
-	pushd /reg/g/pcds/epics-dev/screens/edm/hpl/current
-	./hplhome
+	/reg/g/pcds/epics-dev/screens/edm/hpl/current/hplhome
 }
 export hpl
 function gw()
 {
-	pushd /reg/g/pcds/epics-dev/screens/edm/gateway/current
-	./gwhome
+	/reg/g/pcds/epics-dev/screens/edm/gateway/current/gwhome
 }
 export gw
 
@@ -429,7 +465,7 @@ function updateScreenLinks
 {
 	EPICS_SITE_TOP=/reg/g/pcds/epics
 	EPICS_DEV_AREA=/reg/g/pcds/epics-dev
-	areas="amo sxr xpp xcs cxi mec mfx fee las thz";
+	areas="tmo kfe lfe xpp xcs cxi mec mfx fee las thz";
 	relpath="$1";
 	if [ "$relpath" != "" -a ! -e "$relpath" ]; then
 		relpath=$EPICS_SITE_TOP/$relpath
