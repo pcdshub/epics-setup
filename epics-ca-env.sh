@@ -39,6 +39,10 @@ case $HOSTNAME in
 		EPICS_CA_AUTO_ADDR_LIST=NO
 		EPICS_CA_ADDR_LIST=172.21.37.255
 		;;
+	tmo-console | tmo-daq | tmo-monitor | tmo-control )
+		EPICS_CA_AUTO_ADDR_LIST=NO
+		EPICS_CA_ADDR_LIST=172.21.135.255
+		;;
 	sxr-console | sxr-daq | sxr-monitor | sxr-control | sxr-elog )
 		EPICS_CA_AUTO_ADDR_LIST=NO
 		#EPICS_CA_ADDR_LIST=172.21.39.255
