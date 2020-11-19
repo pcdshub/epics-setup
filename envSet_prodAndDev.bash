@@ -34,6 +34,8 @@ export EPICS_PVA_ADDR_LIST="lcls-prod01:5068"
 export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} lcls-prod01:5063"
 # LCLSDEV subnet
 export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} 134.79.219.255"
+# Global broadcast is needed for hosts like lcls-dev3 w/ b/c set to 255.255.255.255
+export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} 255.255.255.255"
 # Add mcc-dmz and mccas0
 export EPICS_PVA_ADDR_LIST="${EPICS_PVA_ADDR_LIST} mcc-dmz mccas0.slac.stanford.edu"
 
