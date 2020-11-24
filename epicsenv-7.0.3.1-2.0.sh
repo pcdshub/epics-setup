@@ -8,12 +8,26 @@
 #
 
 # Setup the common directory env variables
-if [ -e /reg/g/pcds/pyps/config/common_dirs.sh ]; then
-	source /reg/g/pcds/pyps/config/common_dirs.sh
+if [ -e /cds/group/pcds/pyps/config/common_dirs.sh ]; then
+	source /cds/group/pcds/pyps/config/common_dirs.sh
 else
 	source /afs/slac/g/pcds/config/common_dirs.sh
 fi
-export EPICS_SITE_TOP=/reg/g/pcds/epics
+
+# Using new weka filesystem as of EPICS 7.0.3.1-2.0
+export CONFIG_SITE_TOP=/cds/group/pcds/pyps/config
+export DATA_SITE_TOP=/cds/data
+export EPICS_SITE_TOP=/cds/group/pcds/epics
+export FACILITY_ROOT=/cds/group/pcds
+export GW_SITE_TOP=/cds/group/pcds/gateway
+export IOC_COMMON=/cds/data/iocCommon
+export IOC_DATA=/cds/data/iocData
+export PACKAGE_SITE_TOP=/cds/group/pcds/package
+export PSPKG_ROOT=/cds/group/pcds/pkg_mgr
+export PYAPPS_SITE_TOP=/cds/group/pcds/controls
+export PYPS_SITE_TOP=/cds/group/pcds/pyps
+export SETUP_SITE_TOP=/cds/group/pcds/setup
+#export TOOLS_SITE_TOP=/cds/sw/tools
 
 # Select the EPICS base version and EPICS extensions version
 export BASE_MODULE_VERSION=R7.0.3.1-2.0
