@@ -242,6 +242,7 @@ export DET_SUBNET=(58 59)
 export FEE_SUBNET=(88 89 90 91)
 export TMO_SUBNET=(28 132 133 134 135)
 export XPP_SUBNET=(22 84 85 86 87)
+export RIX_SUBNET=(140 141 142 143)
 export TST_SUBNET=(148 149 150 151)
 export DRP_SUBNET=(152 153 154 155)
 export XCS_SUBNET=(25 80 81 82 83)
@@ -339,6 +340,24 @@ function las()
 	/reg/g/pcds/epics-dev/screens/edm/las/current/laserhome
 }
 export las
+
+#function rix()
+#{
+#	case $SUBNET in
+#	${RIX_SUBNET[0]} |	\
+#	${RIX_SUBNET[1]} |	\
+#	${RIX_SUBNET[2]} |	\
+#	${RIX_SUBNET[3]} )
+#		echo "Warning: Launching live RIX screen ..."
+#		/reg/g/pcds/epics-dev/screens/edm/rix/current/rixhome
+#		;;
+#	* )
+#		echo "Launching read-only RIX screen ..."
+#		/reg/g/pcds/epics-dev/screens/edm/rix/current/rixhome
+#		;;
+#	esac
+#}
+#export rix
 
 function xcs()
 {
