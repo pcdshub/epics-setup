@@ -463,6 +463,12 @@ function tmo()
 }
 export tmo
 
+function rix()
+{
+	${EPICS_SETUP}/lucid-launcher.sh RIX
+}
+export rix
+
 function hpl()
 {
 	if [ $SUBNET == $HPL_SUBNET ]; then
