@@ -330,14 +330,20 @@ function xpp()
 }
 export xpp
 
+#function las()
+#{
+#	if [ $SUBNET == $CDS_SUBNET ]; then
+#		echo "Warning: Launching live Laser screen ..."
+#	else
+#		echo "Launching read-only Laser screen ..."
+#	fi
+#	/reg/g/pcds/epics-dev/screens/edm/las/current/laserhome
+#}
+#export las
+
 function las()
 {
-	if [ $SUBNET == $CDS_SUBNET ]; then
-		echo "Warning: Launching live Laser screen ..."
-	else
-		echo "Launching read-only Laser screen ..."
-	fi
-	/reg/g/pcds/epics-dev/screens/edm/las/current/laserhome
+        ${EPICS_SETUP}/lucid-launcher.sh LAS
 }
 export las
 
