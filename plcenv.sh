@@ -38,3 +38,5 @@ alias oldplcpc4='$reg_plc_com plc-prg-04 &'
 alias oldbigplcpc4='$big_plc_com plc-prg-04 &'
 
 alias plcprog='xfreerdp -g ${PLCPROG_RESOLUTION:-60%} -u ${USER} --plugin cliprdr plcprog-console &'
+
+export PATH=$PATH:/reg/g/pcds/plc-common/InstallFiles/modpoll/linux/
