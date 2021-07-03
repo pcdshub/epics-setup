@@ -347,6 +347,18 @@ function las()
 }
 export las
 
+function mods_ip1()
+{
+        ${EPICS_SETUP}/lucid-launcher.sh IP1_MODS
+}
+export mods_ip1 
+
+function mods_crix()
+{
+        ${EPICS_SETUP}/lucid-launcher.sh CRIX_MODS
+}
+export mods_crix
+
 #function rix()
 #{
 #	case $SUBNET in
