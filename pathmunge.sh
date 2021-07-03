@@ -7,7 +7,7 @@ pathpurge()
 		echo Usage: pathpurge dirname
 		return
 	fi
-	if [ "$1" == "." ] ; then
+	if [ "$1" == "." -o "$1" == "//" ] ; then
 		# pathpurge doesn't support remove . from PATH
 		return
 	fi
@@ -48,6 +48,9 @@ edmpathpurge()
 	if [ "$1" == "." ] ; then
 		return
 	fi
+	if [ "$1" == ".." ] ; then
+		return
+	fi
 	while [ $# -gt 0 ] ;
 	do
 		EDMDATAFILES=`echo $EDMDATAFILES | sed -e "s%$1:%%g"`
@@ -82,6 +85,9 @@ ldpathpurge()
 		return
 	fi
 	if [ "$1" == "." ] ; then
+		return
+	fi
+	if [ "$1" == ".." ] ; then
 		return
 	fi
 	while [ $# -gt 0 ] ;
@@ -119,6 +125,9 @@ pythonpathpurge()
 		return
 	fi
 	if [ "$1" == "." ] ; then
+		return
+	fi
+	if [ "$1" == ".." ] ; then
 		return
 	fi
 	while [ $# -gt 0 ] ;
