@@ -487,6 +487,12 @@ function rix()
 }
 export rix
 
+function fms()
+{
+  /cds/group/pcds/epics-dev/cymel123/fms/fms-lucid.sh
+}
+export fms
+
 function hpl()
 {
 	if [ $SUBNET == $HPL_SUBNET ]; then
