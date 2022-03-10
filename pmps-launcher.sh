@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-source /reg/g/pcds/pyps/conda/dev_conda
+export PCDS_CONDA_VER=4.2.0
+source /cds/group/pcds/pyps/conda/pcds_conda
 
-pushd "/reg/g/pcds/epics-dev/screens/pydm/pmps-ui-$1"
+pushd "/cds/group/pcds/epics-dev/screens/pydm/pmps-ui"
 
 pydm --hide-nav-bar --hide-status-bar -m "CFG=$1" pmps.py &
