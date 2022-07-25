@@ -347,6 +347,12 @@ function las()
 }
 export las
 
+function timing()
+{
+        ${EPICS_SETUP}/lucid-launcher.sh TIMING
+}
+export timing
+
 function mods_ip1()
 {
         ${EPICS_SETUP}/lucid-launcher.sh IP1_MODS
@@ -487,11 +493,19 @@ function rix()
 }
 export rix
 
+
 function fms()
 {
-  /cds/group/pcds/epics-dev/cymel123/fms/fms-lucid.sh
+  /reg/g/pcds/epics-dev/cymel123/fms/LucidScreens/MainScreen/fms-lucid.sh
 }
 export fms
+
+function FMS()
+{
+        ${EPICS_SETUP}/lucid-launcher.sh FMS
+}
+export FMS
+
 
 function hpl()
 {
