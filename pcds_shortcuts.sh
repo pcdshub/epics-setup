@@ -487,6 +487,12 @@ function tmo()
 }
 export tmo
 
+function txi()
+{
+	${EPICS_SETUP}/lucid-launcher.sh TXI
+}
+export txi
+
 function rix()
 {
 	${EPICS_SETUP}/lucid-launcher.sh RIX
