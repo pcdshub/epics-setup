@@ -48,7 +48,7 @@ case $HOSTNAME in
 		#EPICS_CA_ADDR_LIST=172.21.39.255
 		EPICS_CA_ADDR_LIST=172.21.95.255
 		;;
-	rix-console | rix-daq | rix-monitor | rix-control )
+	rix-console | rix-daq | rix-monitor | rix-control | rix-hutch01 )
 		EPICS_CA_AUTO_ADDR_LIST=NO
 		EPICS_CA_ADDR_LIST=172.21.143.255
 		;;
