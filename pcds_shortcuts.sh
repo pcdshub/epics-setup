@@ -502,7 +502,7 @@ export rix
 
 function fms()
 {
-  /reg/g/pcds/epics-dev/cymel123/fms/LucidScreens/MainScreen/fms-lucid.sh
+  /reg/g/pcds/epics-dev/cymel123/fms/LUCID/LucidScreens/MainScreen/fms-lucid.sh
 }
 export fms
 
