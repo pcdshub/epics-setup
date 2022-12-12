@@ -24,6 +24,7 @@ setenv EPICS_EXTENSIONS ${EPICS_SITE_TOP}/extensions/R0.2.0
 
 setenv EPICS_BASE ${EPICS_SITE_TOP}/base/${BASE_MODULE_VERSION}
 setenv EPICS_MODULES ${EPICS_SITE_TOP}/${BASE_MODULE_VERSION}/modules
+setenv EPICS_MODULES_TOP $EPICS_MODULES
 
 # MCB - Let's do this later.
 ## Unset any stale V4 support for versions prior to EPICS 7
