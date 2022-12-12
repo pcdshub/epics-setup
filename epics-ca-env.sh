@@ -55,7 +55,8 @@ case $HOSTNAME in
 	xpp-daq | xpp-daq2 | xpp-control )
 		EPICS_CA_AUTO_ADDR_LIST=NO
 		#EPICS_CA_ADDR_LIST=172.21.38.255
-		EPICS_CA_ADDR_LIST="172.21.87.255 172.21.46.255"
+		#EPICS_CA_ADDR_LIST="172.21.87.255 172.21.46.255"
+		EPICS_CA_ADDR_LIST="172.21.87.255"
 		;;
 	xcs-console | xcs-daq | xcs-control | ioc-xcs-misc1 )
 		EPICS_CA_AUTO_ADDR_LIST=NO
