@@ -3,6 +3,7 @@
 *SAVE
 *ORIG
 *NEW
+tags
 *.new
 *OLD
 .bck/
