@@ -14,21 +14,39 @@
 #       PVDATA              - Path to top of PVA PvDataCPP release
 #       PVAPY               - Path to top of PVA pvaPy release
 #
+
+# Check that essential env path variables are defined and exist
 if [ -z "$EPICS_SITE_TOP" ]; then
 	echo "generic-epics-setup Error: EPICS_SITE_TOP undefined."
-	return -1
+	return
+fi
+if [ ! -d ${EPICS_SITE_TOP} ]; then
+	echo "generic-epics-setup Error EPICS_SITE_TOP does not exist: ${EPICS_SITE_TOP}"
+	return
 fi
 if [ -z "$EPICS_BASE" ]; then
 	echo "generic-epics-setup Error: EPICS_BASE undefined."
-	return -1
+	return
+fi
+if [ ! -d ${EPICS_BASE} ]; then
+	echo "generic-epics-setup Error EPICS_BASE does not exist: ${EPICS_BASE}"
+	return
 fi
 if [ -z "$SETUP_SITE_TOP" ]; then
 	echo "generic-epics-setup Error: SETUP_SITE_TOP undefined."
-	return -1
+	return
+fi
+if [ ! -d ${SETUP_SITE_TOP} ]; then
+	echo "generic-epics-setup Error SETUP_SITE_TOP does not exist: ${SETUP_SITE_TOP}"
+	return
 fi
 if [ -z "$TOOLS_SITE_TOP" ]; then
 	echo "generic-epics-setup Error: TOOLS_SITE_TOP undefined."
-	return -1
+	return
+fi
+if [ ! -d ${TOOLS_SITE_TOP} ]; then
+	echo "generic-epics-setup Error TOOLS_SITE_TOP does not exist: ${TOOLS_SITE_TOP}"
+	return
 fi
 
 if [ -z "$EPICS_CA_AUTO_ADDR_LIST" ]; then
