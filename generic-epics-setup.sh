@@ -42,11 +42,13 @@ if [ ! -d ${SETUP_SITE_TOP} ]; then
 fi
 if [ -z "$TOOLS_SITE_TOP" ]; then
 	echo "generic-epics-setup Error: TOOLS_SITE_TOP undefined."
-	return
+	# Sigh.  We do not need/have this on apalis, so we cannot just exit.
+	#return
 fi
 if [ ! -d ${TOOLS_SITE_TOP} ]; then
 	echo "generic-epics-setup Error TOOLS_SITE_TOP does not exist: ${TOOLS_SITE_TOP}"
-	return
+	# Sigh.  We do not need/have this on apalis, so we cannot just exit.
+	#return
 fi
 
 if [ -z "$EPICS_CA_AUTO_ADDR_LIST" ]; then

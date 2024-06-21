@@ -475,9 +475,11 @@ function lfe()
 }
 export lfe
 
+# 23/07/15: roberttk was asked by awallace to also open nalms with the KFE lucid
 function kfe()
 {
 	${EPICS_SETUP}/lucid-launcher.sh KFE
+  /cds/home/r/roberttk/tmp/start_gmd_nalms.sh
 }
 export kfe
 
@@ -499,6 +501,23 @@ function rix()
 }
 export rix
 
+function ued()
+{
+	${EPICS_SETUP}/lucid-launcher.sh UED
+}
+export ued 
+
+function icl()
+{
+	${EPICS_SETUP}/lucid-launcher.sh ICL
+}
+export icl
+
+function rrl()
+{
+        ${EPICS_SETUP}/lucid-launcher.sh RRL
+}
+export rrl
 
 function fms()
 {
