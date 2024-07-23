@@ -83,6 +83,10 @@ case $HOSTNAME in
 		EPICS_CA_ADDR_LIST=134.79.165.255
 		#EPICS_CA_ADDR_LIST=172.21.32.255
 		;;
+	ctl-las-lhn-sp01 | ctl-las-lhn-sp02 | ctl-las-ftl-srv01 | ctl-las-ftl-sp01 )
+		EPICS_CA_AUTO_ADDR_LIST=NO
+		EPICS_CA_ADDR_LIST=172.21.163.255
+		;;
 	ued-daq | ued-monitor | ctl-ued-cam-01 | ctl-ued-pgp-01 | ioc-ued-ccd01 | drp-ued-cmp001 | drp-ued-cmp002 )
 		EPICS_CA_AUTO_ADDR_LIST=NO
 		EPICS_CA_ADDR_LIST='172.21.36.255:5064 172.27.99.255:5058'
