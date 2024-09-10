@@ -83,7 +83,7 @@ case $HOSTNAME in
 		EPICS_CA_ADDR_LIST=134.79.165.255
 		#EPICS_CA_ADDR_LIST=172.21.32.255
 		;;
-	ctl-las-lhn-sp01 | ctl-las-lhn-sp02 | ctl-las-ftl-srv01 | ctl-las-ftl-sp01 )
+	ctl-las-lhn-sp01 | ctl-las-lhn-sp02 | ctl-las-ftl-sp01 )
 		EPICS_CA_AUTO_ADDR_LIST=NO
 		EPICS_CA_ADDR_LIST=172.21.163.255
 		;;
