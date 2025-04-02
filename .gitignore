@@ -10,3 +10,4 @@ tags
 CVS/
 configure/
 *.swp
+logs
