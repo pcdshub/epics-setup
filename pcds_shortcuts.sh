@@ -366,6 +366,18 @@ function mods_crix()
 }
 export mods_crix
 
+function mods_ip2()
+{
+        ${EPICS_SETUP}/lucid-launcher.sh IP2_MODS
+}
+export mods_ip2
+
+function mods_qrix()
+{
+        ${EPICS_SETUP}/lucid-launcher.sh QRIX_MODS
+}
+export mods_qrix
+
 #function rix()
 #{
 #	case $SUBNET in
@@ -480,7 +492,7 @@ export lfe
 function kfe()
 {
 	${EPICS_SETUP}/lucid-launcher.sh KFE
-  /cds/home/r/roberttk/tmp/start_gmd_nalms.sh
+  slam --topics GMDXGMD --bootstrap-servers 172.24.5.232:9094 &
 }
 export kfe
 
@@ -513,6 +525,12 @@ function icl()
 	${EPICS_SETUP}/lucid-launcher.sh ICL
 }
 export icl
+
+function abl()
+{
+	${EPICS_SETUP}/lucid-launcher.sh ABL
+}
+export abl
 
 function rrl()
 {
