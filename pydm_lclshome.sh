@@ -10,5 +10,6 @@ if [ -z "$SETUP_SITE_TOP" ]; then
 fi
 source $SETUP_SITE_TOP/edmPath_lclsHome.sh
 
+export PYDM=/cds/group/pcds/package/epics/lcls/tools/pydm/display
 PYDM_DISPLAYS_PATH=$LCLS_TOOLS/pydm/display/:$PYDM_DISPLAYS_PATH PYDM_DEFAULT_PROTOCOL=ca pydm --stylesheet $LCLS_TOOLS/pydm/stylesheet/default.qss $LCLS_TOOLS/pydm/display/lcls/lclshome/lclshome.py ${@}
 
