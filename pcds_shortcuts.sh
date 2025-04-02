@@ -538,19 +538,6 @@ function rrl()
 }
 export rrl
 
-function fms()
-{
-  /reg/g/pcds/epics-dev/cymel123/fms/LUCID/LucidScreens/MainScreen/fms-lucid.sh
-}
-export fms
-
-function FMS()
-{
-        ${EPICS_SETUP}/lucid-launcher.sh FMS
-}
-export FMS
-
-
 function hpl()
 {
 	if [ $SUBNET == $HPL_SUBNET ]; then
