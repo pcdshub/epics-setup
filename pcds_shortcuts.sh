@@ -553,6 +553,11 @@ function gw()
 	/reg/g/pcds/epics-dev/screens/edm/gateway/current/gwhome
 }
 export gw
+function switchtool()
+{
+  /cds/group/pcds/pyps/apps/switchtool/latest/switchtool "$@"
+}
+export switchtool
 
 
 function updateScreenLinks
