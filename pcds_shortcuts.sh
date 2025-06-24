@@ -315,19 +315,7 @@ export pcds
 
 function xpp()
 {
-	case $SUBNET in
-	${XPP_SUBNET[0]} |	\
-	${XPP_SUBNET[1]} |	\
-	${XPP_SUBNET[2]} |	\
-	${XPP_SUBNET[3]} )
-		echo "Warning: Launching live XPP screen ..."
-		/reg/g/pcds/epics-dev/screens/edm/xpp/current/xpphome_forxpp
-		;;
-	* )
-		echo "Launching read-only XPP screen ..."
-		/reg/g/pcds/epics-dev/screens/edm/xpp/current/xpphome
-		;;
-	esac
+    ${EPICS_SETUP}/lucid-launcher.sh XPP
 }
 export xpp
 
