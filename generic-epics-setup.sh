@@ -56,6 +56,13 @@ if [ -z "$EPICS_CA_AUTO_ADDR_LIST" ]; then
 	source ${SETUP_SITE_TOP}/epics-ca-env.sh
 fi
 
+# Clear variables that are set by other EPICS deployments, but unused here. We want to avoid
+# cases where users have dangling envvars pointing at /afs or /sdf
+unset PACKAGE_TOP
+unset EPICS_PACKAGE_TOP
+unset TOOLS
+unset TOOLS_DATA
+
 # get some functions for manipulating assorted env path variables
 source ${SETUP_SITE_TOP}/pathmunge.sh
 
