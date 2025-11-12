@@ -508,6 +508,12 @@ function ued()
 }
 export ued 
 
+function k3()
+{
+	${EPICS_SETUP}/lucid-launcher.sh K3
+}
+export k3
+
 function icl()
 {
 	${EPICS_SETUP}/lucid-launcher.sh ICL
