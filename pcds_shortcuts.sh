@@ -549,7 +549,7 @@ function gw()
 export gw
 function switchtool()
 {
-  /cds/group/pcds/pyps/apps/switchtool/latest/switchtool "$@"
+  /cds/group/pcds/pyps/apps/switchtool/latest/scripts/switchtool "$@"
 }
 export switchtool
 
