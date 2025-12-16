@@ -198,7 +198,7 @@ function find_pv( )
 			fi
 
 			# Look for IocManager Configs
-			${PYPS_SITE_TOP}/apps/ioc/latest/find_ioc --name $ioc
+			${PYPS_SITE_TOP}/apps/ioc/latest-R3/scripts/find_ioc --name $ioc
 		done
 	done
 }
