@@ -48,7 +48,7 @@ function ssh_show_procServ( )
 {
 	PROCSERV_HOST=`hostname -s`
 	if [ -e /usr/bin/expand ]; then
-		EXPAND_TABS='/usr/bin/expand --tabs=7,17,43,53,73'
+		EXPAND_TABS='/usr/bin/expand --tabs=9,19,45,55,75'
 	else
 		EXPAND_TABS='cat'
 	fi
@@ -62,10 +62,10 @@ function ssh_show_procServ( )
 	if [ -z "$1" ]; then
 		SSH_CMD=""
 	elif [ -z "$2" ]; then
-		SSH_CMD="ssh $1"
+		SSH_CMD="ssh -o LogLevel=error $1"
 		PROCSERV_HOST=$1
 	else
-		SSH_CMD="ssh $2@$1"
+		SSH_CMD="ssh -o LogLevel=error $2@$1"
 		PROCSERV_HOST=$1
 	fi
 	# ps output is piped through sed to remove unwanted ps header
@@ -107,7 +107,7 @@ export ssh_show_procServ
 function show_epics_sioc( )
 {
 	if [ -e /usr/bin/expand ]; then
-		EXPAND_TABS='/usr/bin/expand --tabs=7,17,43,53,73'
+		EXPAND_TABS='/usr/bin/expand --tabs=9,19,45,55,75'
 	else
 		EXPAND_TABS='cat'
 	fi
