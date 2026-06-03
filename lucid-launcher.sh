@@ -14,8 +14,8 @@ case "$1" in
 esac
 
 if [ "$2" == "dev" ]; then
-  echo "Loading lucid-stale-fix dev build"
-  export PYTHONPATH="/cds/group/pcds/pyps/apps/dev/lucid-stale-fix:$PYTHONPATH"
+  echo "No active dev builds, loading standard build."
 fi
 
 lucid "$1" --toolbar="$LUCID_CONFIG"/"$1"_toolbar.yaml &
+
