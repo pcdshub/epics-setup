@@ -78,7 +78,7 @@ case $HOSTNAME in
         EPICS_CA_ADDR_LIST=172.21.75.255
 		#EPICS_CA_ADDR_LIST="172.21.75.255 172.21.46.255"
 		;;
-	pscaa0* | pscaesrv | pscaasrv )
+	pscaa0* | pscaesrv | pscaasrv | psctlws0* )
 		EPICS_CA_AUTO_ADDR_LIST=NO
 		EPICS_CA_ADDR_LIST=134.79.165.255
 		#EPICS_CA_ADDR_LIST=172.21.32.255
@@ -97,7 +97,7 @@ export EPICS_CA_ADDR_LIST
 
 # URL and firefox launcher for the PCDS Archiver Appliance Management web U/I
 # Recommend firefox version 43 or newer or google-chrome version 44 or newer
-export ARCHIVER_URL=http://pscaa02.slac.stanford.edu:17665/mgmt/ui/index.html
+export ARCHIVER_URL=http://psctlws01.pcdsn:8329/mgmt/ui/index.html
 alias Archiver="firefox --no-remote $ARCHIVER_URL 2>1 > /dev/null&"
 alias ArchiveManager="firefox --no-remote $ARCHIVER_URL 2>1 > /dev/null&"
 
