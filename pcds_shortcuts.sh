@@ -315,7 +315,7 @@ export pcds
 
 function xpp()
 {
-    ${EPICS_SETUP}/lucid-launcher.sh XPP
+  ${PYPS_SITE_TOP}/config/xpp/xpp_home.sh &
 }
 export xpp
 
@@ -472,15 +472,13 @@ export kpmps
 
 function lfe()
 {
-	${EPICS_SETUP}/lucid-launcher.sh LFE
+  ${PYPS_SITE_TOP}/config/lfe/lfe_home.sh &
 }
 export lfe
 
-# 23/07/15: roberttk was asked by awallace to also open nalms with the KFE lucid
 function kfe()
 {
-	${EPICS_SETUP}/lucid-launcher.sh KFE
-  slam --topics GMDXGMD --bootstrap-servers 172.24.5.232:9094 &
+  ${PYPS_SITE_TOP}/config/kfe/kfe_home.sh &
 }
 export kfe
 
@@ -498,7 +496,7 @@ export txi
 
 function rix()
 {
-	${EPICS_SETUP}/lucid-launcher.sh RIX
+  ${PYPS_SITE_TOP}/config/rix/rix_home.sh &
 }
 export rix
 
