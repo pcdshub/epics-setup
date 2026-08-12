@@ -476,7 +476,6 @@ function lfe()
 }
 export lfe
 
-# 23/07/15: roberttk was asked by awallace to also open nalms with the KFE lucid
 function kfe()
 {
   ${PYPS_SITE_TOP}/config/kfe/kfe_home.sh &
