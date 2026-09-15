@@ -223,7 +223,8 @@ export SRV_SUBNET=32
 export DMZ_SUBNET=33
 export CDS_SUBNET=35
 export DET_SUBNET=(58 59)
-export FEE_SUBNET=(88 89 90 91)
+export LFE_SUBNET=(88 89 90 91)
+export KFE_SUBNET=(92 93 94 95)
 export TMO_SUBNET=(28 132 133 134 135)
 export XPP_SUBNET=(22 84 85 86 87)
 export RIX_SUBNET=(140 141 142 143)
@@ -244,22 +245,25 @@ export DEV_BC=134.79.${DEV_SUBNET}.255
 
 # Check if a given subnet matches the current host's, and warn if we have write access.
 #
-# Usage: subnet_check <subnet_name> [<screen_name>]
-#   subnet_name must match one of the subnets defined above.
-#   If screen_name is not provided, the subnet name will be used again.
+# Usage: subnet_check <screen_name> <subnet_name> [..., <subnet_name>, ...]
+#   screen_name is the name of the screen we're trying to open
+#   Each subnet_name must match one of the subnets defined above.
 function subnet_check()
 {
-    subnet="$1"
-    hutchname="${2:-$subnet}"
-    varname="${subnet^^}_SUBNET[@]"
-    subnet_vals="${!varname}"
-    for number in $subnet_vals; do
-        if (( number == SUBNET )); then
-            echo "Warning: launching live ${hutchname^^} screen"
-            return
-        fi
+    screen_name="$1"
+    shift
+    for subnet_name in "$@"; do
+        varname="${subnet_name^^}_SUBNET[@]"
+        #subnet_vals="${!varname}"
+        #for number in $subnet_vals; do
+        for number in "${!varname}"; do
+            if (( number == SUBNET )); then
+                echo "Warning: launching live ${screen_name^^} screen"
+                return
+            fi
+        done
     done
-    echo "Launching read-only ${hutchname^^} screen"
+    echo "Launching read-only ${screen_name^^} screen"
 }
 
 
@@ -280,32 +284,28 @@ export pydm_lclshome
 
 function lfe()
 {
-    # Mixed subnet access, all hxr subnets?
-    # subnet_check lfe
+    subnet_check lfe lfe xpp xcs mfx cxi mec
     "${PYPS_SITE_TOP}"/config/lfe/lfe_home.sh &
 }
 export lfe
 
 function kfe()
 {
-    # Mixed subnet access, all sxr subnets?
-    # subnet_check kfe
+    subnet_check kfe kfe tmo rix
     "${PYPS_SITE_TOP}"/config/kfe/kfe_home.sh &
 }
 export kfe
 
 function lpmps()
 {
-    # Mixed subnet access, all hxr subnets?
-    # subnet_check lfe
+    subnet_check lpmps lfe xpp xcs mfx cxi mec
     "${PYPS_SITE_TOP}"/config/lfe/lpmps.sh &
 }
 export lpmps
 
 function kpmps()
 {
-    # Mixed subnet access, all sxr subnets?
-    # subnet_check kfe
+    subnet_check kpmps kfe tmo rix
     "${PYPS_SITE_TOP}"/config/kfe/kpmps.sh &
 }
 export kpmps
@@ -317,70 +317,70 @@ export kpmps
 
 function tmo()
 {
-    subnet_check tmo
+    subnet_check tmo tmo
     "${PYPS_SITE_TOP}"/config/tmo/tmo_home.sh &
 }
 export tmo
 
 function rix()
 {
-    subnet_check rix
+    subnet_check rix rix
     "${PYPS_SITE_TOP}"/config/rix/rix_home.sh &
 }
 export rix
 
 function txi()
 {
-    subnet_check txi
+    subnet_check txi txi lfe
     "${PYPS_SITE_TOP}"/config/txi/txi_home.sh &
 }
 export txi
 
 function k3()
 {
-    subnet_check txi k3
+    subnet_check txi txi kfe
     "${PYPS_SITE_TOP}"/config/txi/k3_home.sh &
 }
 export k3
 
 function xpp()
 {
-    subnet_check xpp
+    subnet_check xpp xpp
     "${PYPS_SITE_TOP}"/config/xpp/xpp_home.sh &
 }
 export xpp
 
 function xcs()
 {
-    subnet_check xcs
+    subnet_check xcs xcs
     "${PYPS_SITE_TOP}"/config/xcs/xcs_home.sh &
 }
 export xcs
 
 function cxi()
 {
-    subnet_check cxi
+    subnet_check cxi cxi
     "${PYPS_SITE_TOP}"/config/cxi/cxi_home.sh &
 }
 export cxi
 
 function mfx()
 {
-    subnet_check mfx
+    subnet_check mfx mfx
     "${PYPS_SITE_TOP}"/config/mfx/mfx_home.sh &
 }
 export mfx
 
 function mec()
 {
-    subnet_check mec
+    subnet_check mec mec
     "${PYPS_SITE_TOP}"/config/mec/mec_home.sh &
 }
 export mec
 
 function ued()
 {
-    subnet_check ued
+    subnet_check ued ued
     "${PYPS_SITE_TOP}"/config/ued/ued_home.sh &
 }
 export ued 
@@ -392,46 +392,42 @@ export ued
 
 function las()
 {
-    subnet_check las
+    subnet_check las las
     "${PYPS_SITE_TOP}"/config/las/las_home.sh &
 }
 export las
 
 function timing()
 {
-    subnet_check las timing
+    subnet_check timing las
     "${PYPS_SITE_TOP}"/config/las/timing_home.sh &
 }
 export timing
 
 function mods_ip1()
 {
-    # Mixed subnet access, tmo and las?
-    # subnet_check las ip1
+    subnet_check ip1 las tmo
     "${PYPS_SITE_TOP}"/config/las/mods_ip1_home.sh &
 }
 export mods_ip1 
 
 function mods_ip2()
 {
-    # Mixed subnet access, tmo and las?
-    # subnet_check las ip2
+    subnet_check ip2 las tmo
     "${PYPS_SITE_TOP}"/config/las/mods_ip2_home.sh &
 }
 export mods_ip2
 
 function mods_crix()
 {
-    # Mixed subnet access, rix and las?
-    # subnet_check las crix
+    subnet_check crix las rix
     "${PYPS_SITE_TOP}"/config/las/mods_crix_home.sh &
 }
 export mods_crix
 
 function mods_qrix()
 {
-    # Mixed subnet access, rix and las?
-    # subnet_check las qrix
+    subnet_check qrix las rix
     "${PYPS_SITE_TOP}"/config/las/mods_qrix_home.sh &
 }
 export mods_qrix
@@ -443,7 +439,7 @@ export mods_qrix
 
 function icl()
 {
-    subnet_check icl
+    subnet_check icl icl
     "${PYPS_SITE_TOP}"/config/icl/icl_home.sh &
 }
 export icl
@@ -451,7 +447,7 @@ export icl
 function abl()
 {
     # No abl subnet in this file yet
-    # subnet_check abl
+    # subnet_check abl abl
     "${PYPS_SITE_TOP}"/config/abl/abl_home.sh &
 }
 export abl
