@@ -242,18 +242,24 @@ export TXI_SUBNET=(136 137 138 139)
 
 export DEV_BC=134.79.${DEV_SUBNET}.255
 
+# Check if a given subnet matches the current host's, and warn if we have write access.
+#
+# Usage: subnet_check <subnet_name> [<screen_name>]
+#   subnet_name must match one of the subnets defined above.
+#   If screen_name is not provided, the subnet name will be used again.
 function subnet_check()
 {
-    hutchname="$1"
-    varname="${hutchname^^}_SUBNET"
+    subnet="$1"
+    hutchname="${2:-$subnet}"
+    varname="${subnet^^}_SUBNET[@]"
     subnet_vals="${!varname}"
-    for number in "${subnet_vals[@]}"; do
+    for number in $subnet_vals; do
         if (( number == SUBNET )); then
             echo "Warning: launching live ${hutchname^^} screen"
             return
         fi
     done
-    echo "Warning: launching read-only ${hutchname^^} screen"
+    echo "Launching read-only ${hutchname^^} screen"
 }
 
 
@@ -274,26 +280,32 @@ export pydm_lclshome
 
 function lfe()
 {
-    subnet_check lfe
+    # Mixed subnet access, all hxr subnets?
+    # subnet_check lfe
     "${PYPS_SITE_TOP}"/config/lfe/lfe_home.sh &
 }
 export lfe
 
 function kfe()
 {
-    subnet_check kfe
+    # Mixed subnet access, all sxr subnets?
+    # subnet_check kfe
     "${PYPS_SITE_TOP}"/config/kfe/kfe_home.sh &
 }
 export kfe
 
 function lpmps()
 {
+    # Mixed subnet access, all hxr subnets?
+    # subnet_check lfe
     "${PYPS_SITE_TOP}"/config/lfe/lpmps.sh &
 }
 export lpmps
 
 function kpmps()
 {
+    # Mixed subnet access, all sxr subnets?
+    # subnet_check kfe
     "${PYPS_SITE_TOP}"/config/kfe/kpmps.sh &
 }
 export kpmps
@@ -326,7 +338,7 @@ export txi
 
 function k3()
 {
-    subnet_check txi
+    subnet_check txi k3
     "${PYPS_SITE_TOP}"/config/txi/k3_home.sh &
 }
 export k3
@@ -387,35 +399,39 @@ export las
 
 function timing()
 {
-    subnet_check las
+    subnet_check las timing
     "${PYPS_SITE_TOP}"/config/las/timing_home.sh &
 }
 export timing
 
 function mods_ip1()
 {
-    subnet_check las
+    # Mixed subnet access, tmo and las?
+    # subnet_check las ip1
     "${PYPS_SITE_TOP}"/config/las/mods_ip1_home.sh &
 }
 export mods_ip1 
 
 function mods_ip2()
 {
-    subnet_check las
+    # Mixed subnet access, tmo and las?
+    # subnet_check las ip2
     "${PYPS_SITE_TOP}"/config/las/mods_ip2_home.sh &
 }
 export mods_ip2
 
 function mods_crix()
 {
-    subnet_check las
+    # Mixed subnet access, rix and las?
+    # subnet_check las crix
     "${PYPS_SITE_TOP}"/config/las/mods_crix_home.sh &
 }
 export mods_crix
 
 function mods_qrix()
 {
-    subnet_check las
+    # Mixed subnet access, rix and las?
+    # subnet_check las qrix
     "${PYPS_SITE_TOP}"/config/las/mods_qrix_home.sh &
 }
 export mods_qrix
@@ -431,6 +447,14 @@ function icl()
     "${PYPS_SITE_TOP}"/config/icl/icl_home.sh &
 }
 export icl
+
+function abl()
+{
+    # No abl subnet in this file yet
+    # subnet_check abl
+    "${PYPS_SITE_TOP}"/config/abl/abl_home.sh &
+}
+export abl
 
 function gw()
 {

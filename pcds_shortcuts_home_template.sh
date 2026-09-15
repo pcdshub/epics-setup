@@ -16,7 +16,8 @@
 HUTCH=tst
 
 # Option 1: edm home
-# /cds/group/pcds/epics-dev/screens/edm/"${HUTCH,,}"/current/"${HUTCH,,}home"
+# /cds/group/pcds/epics-dev/screens/edm/"${HUTCH,,}/current/${HUTCH,,}home"
+
 # Option 2: lucid launcher with dev_conda
 # "${EPICS_SETUP}"/lucid-launcher.sh "${HUTCH^^}"
 
@@ -36,7 +37,7 @@ source /cds/group/pcds/engineering_tools/"${ENGTOOLS}"/scripts/ctrlenv_setup.sh
 ctrlenv-activate "${PIXIBASE}"/"${ENVVER}"
 
 # Option 3: lucid launcher with pixi
-# lucid "$1" --toolbar="$LUCID_CONFIG"/"$1"_toolbar.yaml &
+# lucid "${HUTCH^^}" --toolbar="${EPICS_SITE_TOP}-dev/screens/pydm/lucid_config"/"${HUTCH^^}"_toolbar.yaml
 
 # Option 4: pydm home with pixi
 cd /cds/group/pcds/epics-dev/screens/pydm/"${HUTCH,,}"
