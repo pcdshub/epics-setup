@@ -254,8 +254,6 @@ function subnet_check()
     shift
     for subnet_name in "$@"; do
         varname="${subnet_name^^}_SUBNET[@]"
-        #subnet_vals="${!varname}"
-        #for number in $subnet_vals; do
         for number in "${!varname}"; do
             if (( number == SUBNET )); then
                 echo "Warning: launching live ${screen_name^^} screen"
