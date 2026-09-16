@@ -283,28 +283,28 @@ export pydm_lclshome
 
 function lfe()
 {
-    subnet_check lfe lfe xpp xcs mfx cxi mec
+    subnet_check lfe lfe txi xpp xcs mfx cxi mec
     "${PYPS_SITE_TOP}"/config/lfe/lfe_home.sh &
 }
 export lfe
 
 function kfe()
 {
-    subnet_check kfe kfe tmo rix
+    subnet_check kfe kfe tmo rix txi
     "${PYPS_SITE_TOP}"/config/kfe/kfe_home.sh &
 }
 export kfe
 
 function lpmps()
 {
-    subnet_check lpmps lfe xpp xcs mfx cxi mec
+    subnet_check lpmps lfe txi xpp xcs mfx cxi mec
     "${PYPS_SITE_TOP}"/config/lfe/lpmps.sh &
 }
 export lpmps
 
 function kpmps()
 {
-    subnet_check kpmps kfe tmo rix
+    subnet_check kpmps kfe tmo rix txi
     "${PYPS_SITE_TOP}"/config/kfe/kpmps.sh &
 }
 export kpmps
@@ -330,7 +330,7 @@ export rix
 
 function txi()
 {
-    subnet_check txi txi lfe
+    subnet_check txi txi lfe kfe
     "${PYPS_SITE_TOP}"/config/txi/txi_home.sh &
 }
 export txi
