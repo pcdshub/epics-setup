@@ -54,36 +54,36 @@ function ssh_show_procServ( )
     fi
     # ps output is piped through sed to remove unwanted ps header
     # and uninteresting procServ parameters and keywords
-    $SSH_CMD ps -C procServ -o pid,user,command     |\
-                sed     -e "s/\S*procServ /procServ /"  \
-                     -e "s/--restrict//"             \
-                     -e "s/--savelog//"              \
-                     -e "s/--allow//g"               \
-                     -e "s/-i\s\+\S\+//"             \
-                     -e "s/--ignore\s\+\S\+//"       \
-                     -e "s/--coresize\s\+\S\+//"     \
-                     -e "s/--logfile\s\+\S\+//"      \
-                     -e "s/--killcmd\s\+\S\+//"      \
-                     -e "s/--killsig\s\+\S\+//"      \
-                     -e "s/-k\s\+\S\+//"             \
-                     -e "s/--logport\s\+\S\+//"      \
-                     -e "s/-l\s\+\S\+//"             \
-                     -e "s/--pidfile\s\+\S\+//"      \
-                     -e "s/-p\s\+\S\+//"             \
-                     -e "s/--noautorestart//"        \
-                     -e "s/--oneshot//"              \
-                     -e "s/--foreground//"           \
-                     -e "s/\s-f\s/ /"                \
-                     -e "s/\s-o\s/ /"                \
-                     -e "s/--timefmt\s\+\S\+//"      \
-                     -e "s/--logstamp//"             \
-                     -e "s/--name//"                 \
-                     -e "s/\s-n\s/\s/"               \
-                     -e "s/^/$PROCSERV_HOST\t/"      \
-                     -e "s/  */\t/g"                 \
-                     -e "/PID\tUSER\tCOMMAND/d"     |\
-                $REORDER                            |\
-                $EXPAND_TABS
+    $SSH_CMD ps -C procServ -o pid,user,command |\
+        sed -e "s/\S*procServ /procServ /"       \
+            -e "s/--restrict//"                  \
+            -e "s/--savelog//"                   \
+            -e "s/--allow//g"                    \
+            -e "s/-i\s\+\S\+//"                  \
+            -e "s/--ignore\s\+\S\+//"            \
+            -e "s/--coresize\s\+\S\+//"          \
+            -e "s/--logfile\s\+\S\+//"           \
+            -e "s/--killcmd\s\+\S\+//"           \
+            -e "s/--killsig\s\+\S\+//"           \
+            -e "s/-k\s\+\S\+//"                  \
+            -e "s/--logport\s\+\S\+//"           \
+            -e "s/-l\s\+\S\+//"                  \
+            -e "s/--pidfile\s\+\S\+//"           \
+            -e "s/-p\s\+\S\+//"                  \
+            -e "s/--noautorestart//"             \
+            -e "s/--oneshot//"                   \
+            -e "s/--foreground//"                \
+            -e "s/\s-f\s/ /"                     \
+            -e "s/\s-o\s/ /"                     \
+            -e "s/--timefmt\s\+\S\+//"           \
+            -e "s/--logstamp//"                  \
+            -e "s/--name//"                      \
+            -e "s/\s-n\s/\s/"                    \
+            -e "s/^/$PROCSERV_HOST\t/"           \
+            -e "s/  */\t/g"                      \
+            -e "/PID\tUSER\tCOMMAND/d"          |\
+        $REORDER                                |\
+        $EXPAND_TABS
     return
 }
 export ssh_show_procServ
@@ -96,9 +96,9 @@ function show_epics_sioc( )
         EXPAND_TABS='cat'
     fi
     if [ -e /usr/bin/gawk -o -e /usr/bin/awk ]; then
-        echo "PID    USER    SIOC    COMMAND    HOSTNAME    PORT" | $EXPAND_TABS
+        echo $'PID\tUSER\tSIOC\tCOMMAND\tHOSTNAME\tPORT' | $EXPAND_TABS
     else
-        echo "HOSTNAME        PID    USER    COMMAND        PORT    SIOC" | $EXPAND_TABS
+        echo $'HOSTNAME\tPID\tUSER\tCOMMAND\tPORT\tSIOC' | $EXPAND_TABS
     fi
     if [ ! $1 ];
     then
@@ -154,15 +154,15 @@ function find_pv( )
         ioc_list=`/bin/egrep -l -e "$pv" ${IOC_DATA}/ioc*/iocInfo/IOC.pvlist | /bin/cut -d / -f5`
         for ioc in $ioc_list;
         do
-            echo "    IOC:        $ioc"
+            echo $'\tIOC:\t\t'"$ioc"
 
             # Look for IOC PV root
             ioc_pv=`/bin/egrep UPTIME ${IOC_DATA}/$ioc/iocInfo/IOC.pvlist | /bin/sed -e "s/:UPTIME.*//"`
             if (( ${#ioc_pv} == 0 ));
             then
-                echo "    IOC_PV:        Not found!"
+                echo $'\tIOC_PV:\t\tNot found!'
             else
-                echo "    IOC_PV:        $ioc_pv"
+                echo $'\tIOC_PV:\t\t'"$ioc_pv"
             fi
 
             # Look for hard ioc
@@ -171,12 +171,12 @@ function find_pv( )
             then
                 for hioc in $hioc_list;
                 do
-                    echo "    HIOC:        $hioc"
-                    echo "    STARTUP:    ${IOC_COMMON}/hioc/$hioc/startup.cmd"
+                    echo $'\tHIOC:\t\t'"$hioc"
+                    echo $'\tSTARTUP:\t\t'"${IOC_COMMON}/hioc/$hioc/startup.cmd"
                     boot_list=`/bin/egrep -w -e "^chdir" ${IOC_COMMON}/hioc/$hioc/startup.cmd | /bin/cut -d \" -f2`
                     for d in $boot_list;
                     do
-                        echo "    BOOT_DIR:    $d"
+                        echo $'\tBOOT_DIR:\t\t'"$d"
                     done
                 done
             fi
