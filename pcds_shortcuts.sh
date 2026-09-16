@@ -240,6 +240,7 @@ export HPL_SUBNET=64
 export DEV_SUBNET=165
 export ICS_SUBNET=46
 export TXI_SUBNET=(136 137 138 139)
+export ABL_SUBNET=66
 
 export DEV_BC=134.79.${DEV_SUBNET}.255
 
@@ -444,8 +445,7 @@ export icl
 
 function abl()
 {
-    # No abl subnet in this file yet
-    # subnet_check abl abl
+    subnet_check abl abl
     "${PYPS_SITE_TOP}"/config/abl/abl_home.sh &
 }
 export abl
