@@ -257,7 +257,7 @@ function subnet_check()
         varname="${subnet_name^^}_SUBNET[@]"
         for number in "${!varname}"; do
             if (( number == SUBNET )); then
-                echo "Warning: launching live ${screen_name^^} screen"
+                echo "Warning: launching write-enabled ${screen_name^^} screen"
                 return
             fi
         done
