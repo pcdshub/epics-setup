@@ -241,6 +241,8 @@ export DEV_SUBNET=165
 export ICS_SUBNET=46
 export TXI_SUBNET=(136 137 138 139)
 export ABL_SUBNET=66
+export LAS_SUBNET=(160 161 162 163)
+export LASDEV_SUBNET=(12 13)
 
 export DEV_BC=134.79.${DEV_SUBNET}.255
 
@@ -431,6 +433,11 @@ function mods_qrix()
 }
 export mods_qrix
 
+function lasdev()
+{
+    subnet_check lasdev lasdev
+    "${PYPS_SITE_TOP}"/config/lasdev/lasdev_home.sh &
+}
 
 #
 # Other screens
